@@ -1,0 +1,6 @@
+framework module Pods_MunchBunch {
+  umbrella header "Pods-MunchBunch-umbrella.h"
+
+  export *
+  module * { export * }
+}
