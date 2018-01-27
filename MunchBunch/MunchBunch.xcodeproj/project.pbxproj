@@ -12,6 +12,7 @@
 		9D0E5D46200B603500CDE9B4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D0E5D44200B603500CDE9B4 /* Main.storyboard */; };
 		9D0E5D48200B603500CDE9B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D0E5D47200B603500CDE9B4 /* Assets.xcassets */; };
 		9D0E5D4B200B603500CDE9B4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D0E5D49200B603500CDE9B4 /* LaunchScreen.storyboard */; };
+		9D9C3A4A201C916900DACDBF /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A49201C916900DACDBF /* UIScrollView+EmptyDataSet.m */; };
 		9DC3D067200C5926000B6A4B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3D066200C5926000B6A4B /* HomeViewController.swift */; };
 		9DC3D069200C5940000B6A4B /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3D068200C5940000B6A4B /* SignUpViewController.swift */; };
 		9DC3D06B200C5AC2000B6A4B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3D06A200C5AC2000B6A4B /* Constants.swift */; };
@@ -20,7 +21,6 @@
 		9DC3D071200F515E000B6A4B /* Truck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3D070200F515E000B6A4B /* Truck.swift */; };
 		9DC3D077200F52DF000B6A4B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3D076200F52DF000B6A4B /* User.swift */; };
 		9DD7EFC92010AAB80000DE7A /* ValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD7EFC82010AAB80000DE7A /* ValidationError.swift */; };
-		9DD7EFCD20113A620000DE7A /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DD7EFCB20113A610000DE7A /* UIScrollView+EmptyDataSet.m */; };
 		9DD7EFCF2011411F0000DE7A /* MyTrucksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD7EFCE2011411F0000DE7A /* MyTrucksTableViewController.swift */; };
 		F2282DD2A6C1DB747F43E134 /* Pods_MunchBunch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BB420E5813E33ACA1B31E3F /* Pods_MunchBunch.framework */; };
 /* End PBXBuildFile section */
@@ -35,6 +35,8 @@
 		9D0E5D47200B603500CDE9B4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9D0E5D4A200B603500CDE9B4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9D0E5D4C200B603500CDE9B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9D9C3A48201C915E00DACDBF /* UIScrollView+EmptyDataSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+EmptyDataSet.h"; path = "../../../../../Downloads/DZNEmptyDataSet-master/Source/UIScrollView+EmptyDataSet.h"; sourceTree = "<group>"; };
+		9D9C3A49201C916900DACDBF /* UIScrollView+EmptyDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+EmptyDataSet.m"; path = "../../../../../Downloads/DZNEmptyDataSet-master/Source/UIScrollView+EmptyDataSet.m"; sourceTree = "<group>"; };
 		9DC3D066200C5926000B6A4B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		9DC3D068200C5940000B6A4B /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		9DC3D06A200C5AC2000B6A4B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -44,8 +46,6 @@
 		9DC3D076200F52DF000B6A4B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9DD7EFC82010AAB80000DE7A /* ValidationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationError.swift; sourceTree = "<group>"; };
 		9DD7EFCA20113A600000DE7A /* MunchBunch-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MunchBunch-Bridging-Header.h"; sourceTree = "<group>"; };
-		9DD7EFCB20113A610000DE7A /* UIScrollView+EmptyDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+EmptyDataSet.m"; path = "../../../../Downloads/DZNEmptyDataSet-master/Source/UIScrollView+EmptyDataSet.m"; sourceTree = "<group>"; };
-		9DD7EFCC20113A610000DE7A /* UIScrollView+EmptyDataSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+EmptyDataSet.h"; path = "../../../../Downloads/DZNEmptyDataSet-master/Source/UIScrollView+EmptyDataSet.h"; sourceTree = "<group>"; };
 		9DD7EFCE2011411F0000DE7A /* MyTrucksTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTrucksTableViewController.swift; sourceTree = "<group>"; };
 		C79DA9948EFD5E3DA969E59A /* Pods-MunchBunch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MunchBunch.release.xcconfig"; path = "Pods/Target Support Files/Pods-MunchBunch/Pods-MunchBunch.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -83,8 +83,8 @@
 		9D0E5D3F200B603500CDE9B4 /* MunchBunch */ = {
 			isa = PBXGroup;
 			children = (
-				9DD7EFCC20113A610000DE7A /* UIScrollView+EmptyDataSet.h */,
-				9DD7EFCB20113A610000DE7A /* UIScrollView+EmptyDataSet.m */,
+				9D9C3A48201C915E00DACDBF /* UIScrollView+EmptyDataSet.h */,
+				9D9C3A49201C916900DACDBF /* UIScrollView+EmptyDataSet.m */,
 				9DC3D073200F5171000B6A4B /* Model */,
 				9DC3D072200F5166000B6A4B /* ViewControllers */,
 				9D0E5D40200B603500CDE9B4 /* AppDelegate.swift */,
@@ -276,7 +276,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9DD7EFCD20113A620000DE7A /* UIScrollView+EmptyDataSet.m in Sources */,
 				9DC3D06B200C5AC2000B6A4B /* Constants.swift in Sources */,
 				9DD7EFC92010AAB80000DE7A /* ValidationError.swift in Sources */,
 				9DD7EFCF2011411F0000DE7A /* MyTrucksTableViewController.swift in Sources */,
@@ -287,6 +286,7 @@
 				9DC3D067200C5926000B6A4B /* HomeViewController.swift in Sources */,
 				9DC3D06F200CA268000B6A4B /* MapViewController.swift in Sources */,
 				9DC3D077200F52DF000B6A4B /* User.swift in Sources */,
+				9D9C3A4A201C916900DACDBF /* UIScrollView+EmptyDataSet.m in Sources */,
 				9DC3D071200F515E000B6A4B /* Truck.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

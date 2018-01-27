@@ -14,6 +14,8 @@ import Validator
 
 class SignUpViewController: UIViewController {
     
+    let defaults = UserDefaults.standard
+    
     @IBOutlet weak var textFieldFirstName: UITextField!
     @IBOutlet weak var textFieldLastName: UITextField!
     @IBOutlet weak var textFieldEmail: UITextField!
@@ -41,15 +43,19 @@ class SignUpViewController: UIViewController {
                 "lname":lname,
                 "email":email,
                 "hasTruck":false
-            ] as [String : Any]
+                ] as [String : Any]
             
-            Alamofire.request(SERVER_URL + "user", method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+            Alamofire.request(SERVER_URL + REGISTER, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
                 debugPrint(response)
                 switch response.result {
-                case .success:
+                case .success(let data):
                     print("User creation successful")
-                // TODO: send a request to auth endpoint to get JWT for new user
+                    
+                    let json = JSON(data)
+                    let token = json["data"]["token"].string
+                    self.defaults.set(token, forKey: "token")
                     self.performSegue(withIdentifier: "homeSegue", sender: sender)
+                    
                 case .failure(let error):
                     print(error)
                 }
@@ -62,7 +68,7 @@ class SignUpViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         view.backgroundColor = GradientColor(UIGradientStyle.leftToRight, frame: view.frame, colors: [FlatLime(), FlatGreen()])
         textFieldFirstName.setBottomLine(borderColor: FlatWhite(), placeholderText: "First name")
@@ -84,21 +90,22 @@ class SignUpViewController: UIViewController {
         textFieldPassword.addValidation(rules: rules)
         textFieldPassword.addValidation(rules: rules)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
+

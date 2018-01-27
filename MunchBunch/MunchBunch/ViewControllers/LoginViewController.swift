@@ -29,7 +29,7 @@ class LoginViewController: UIViewController {
             "password":password
         ]
         
-        Alamofire.request(SERVER_URL + "auth/authenticate", method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+        Alamofire.request(SERVER_URL + AUTHENTICATE, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
             switch response.result {
             case .success(let data):
                 print("Auth successful")
@@ -38,7 +38,7 @@ class LoginViewController: UIViewController {
                 let token = json["data"]["token"].string
                 self.defaults.set(token, forKey: "token")
                 self.performSegue(withIdentifier: "loginSegue", sender: sender)
-
+                
             case .failure(let error):
                 print(error)
             }
@@ -65,12 +65,12 @@ class LoginViewController: UIViewController {
         textFieldPassword.addValidation(rules: rules)
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    
 }
 
