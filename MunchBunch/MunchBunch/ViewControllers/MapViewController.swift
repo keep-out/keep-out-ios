@@ -36,11 +36,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         centerMapOnLocation(location: initialLocation)
         
         if let token = defaults.object(forKey: "token") as? String {
-            let authHeader = "Bearer " + token
             
             // Create auth header
             let headers: HTTPHeaders = [
-                "Authorization":authHeader
+                "x-access-token":token
             ]
             
             Alamofire.request(SERVER_URL + "trucks", method: .get, headers: headers).responseJSON {

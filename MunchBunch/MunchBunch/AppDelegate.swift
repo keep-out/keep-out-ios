@@ -8,6 +8,9 @@
 
 import UIKit
 import ChameleonFramework
+import SwiftyBeaver
+
+let log = SwiftyBeaver.self
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,6 +27,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Set navbar title text color
         navigationBarAppearance.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
+        
+        // Set the console and log file destination for the
+        // SwiftyBeaver loggin framework
+        let console = ConsoleDestination()
+        let file = FileDestination()
+        
+        // Set format for logger
+        console.format = "$DHH:mm:ss$d $L $M"
+        
+        log.addDestination(console)
+        log.addDestination(file)
+        
+        log.info("Application started")
         
         return true
     }

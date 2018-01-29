@@ -263,40 +263,39 @@
             </objects>
             <point key="canvasLocation" x="2822" y="752"/>
         </scene>
-        <!--Home View Controller-->
-        <scene sceneID="on1-6K-NjS">
+        <!--Home Table View Controller-->
+        <scene sceneID="9uV-0w-kGf">
             <objects>
-                <viewController id="4Ws-Tq-HTw" customClass="HomeViewController" customModule="MunchBunch" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="a3g-00-C7V">
+                <tableViewController id="6rB-Nw-Zh9" customClass="HomeTableViewController" customModule="MunchBunch" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="9U0-40-H8i">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8xZ-Xh-M0b">
-                                <rect key="frame" x="166" y="323" width="42" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="dTh-X7-jtS"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="9VT-Nh-fh9">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="t3I-A2-jMN"/>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="labelTest" destination="8xZ-Xh-M0b" id="FEa-eg-k2h"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Aso-V8-fYR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="kaG-Qx-pyB">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kaG-Qx-pyB" id="Sm4-OK-Hnh">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="6rB-Nw-Zh9" id="vLS-zy-g9Y"/>
+                            <outlet property="delegate" destination="6rB-Nw-Zh9" id="6YP-Rc-N4F"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="tHm-Lr-nBZ"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DVg-48-BfM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2822" y="72"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Tab Bar View Controller-->
         <scene sceneID="4RX-yi-pTx">
             <objects>
-                <tabBarController id="Q59-VF-Qfb" sceneMemberID="viewController">
+                <tabBarController id="Q59-VF-Qfb" customClass="TabBarViewController" customModule="MunchBunch" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Pjo-k1-I3T">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -362,7 +361,9 @@
         <scene sceneID="deF-ch-cQz">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JWd-Ug-mqV" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="recents" id="bka-6Y-oWd"/>
+                    <tabBarItem key="tabBarItem" id="bka-6Y-oWd">
+                        <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Npt-R4-Cha">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -370,7 +371,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="4Ws-Tq-HTw" kind="relationship" relationship="rootViewController" id="KtN-nF-9gG"/>
+                        <segue destination="6rB-Nw-Zh9" kind="relationship" relationship="rootViewController" id="ugp-P9-6nl"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Nd-zJ-bvB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -381,7 +382,9 @@
         <scene sceneID="EcJ-p9-V09">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Rnc-Bw-925" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="search" id="HHv-dG-sG4"/>
+                    <tabBarItem key="tabBarItem" id="HHv-dG-sG4">
+                        <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ADV-Qz-nSV">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -400,7 +403,9 @@
         <scene sceneID="Jra-hw-8XO">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="AVZ-sI-Eb2" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="topRated" id="lzA-cT-sb2"/>
+                    <tabBarItem key="tabBarItem" id="lzA-cT-sb2">
+                        <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bJq-QJ-d2w">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -419,7 +424,9 @@
         <scene sceneID="e8K-bO-kKm">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="smA-dH-1xf" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" selectedImage="profile-icon" systemItem="more" id="nAB-8i-GYI"/>
+                    <tabBarItem key="tabBarItem" title="" id="nAB-8i-GYI">
+                        <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="PvL-sg-KN9">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -437,7 +444,6 @@
     </scenes>
     <resources>
         <image name="munch_bunch_logo" width="1647" height="1000"/>
-        <image name="profile-icon" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="jpD-Of-L2K"/>
