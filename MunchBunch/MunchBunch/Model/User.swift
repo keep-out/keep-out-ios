@@ -14,5 +14,4 @@ struct User {
     let fname: String
     let lname: String
     let email: String
-    let hasTruck: Bool
 }

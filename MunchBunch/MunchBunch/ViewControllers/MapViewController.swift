@@ -11,6 +11,7 @@ import Alamofire
 import MapKit
 import CoreLocation
 import SwiftyJSON
+import SwiftyBeaver
 
 class MapViewController: UIViewController, CLLocationManagerDelegate {
     
@@ -38,11 +39,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         if let token = defaults.object(forKey: "token") as? String {
             
             // Create auth header
-            let headers: HTTPHeaders = [
-                "x-access-token":token
-            ]
+            let headers: HTTPHeaders = [ "x-access-token":token ]
             
-            Alamofire.request(SERVER_URL + "trucks", method: .get, headers: headers).responseJSON {
+            Alamofire.request(SERVER_URL + TRUCKS, method: .get, headers: headers).responseJSON {
                 response in                
                 // Parse trucks response
                 switch response.result {
@@ -75,12 +74,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         for i in 0..<trucksJSON.count {
             let id = trucksJSON[i]["id"].int!
             let name = trucksJSON[i]["name"].string!
+            let phone = trucksJSON[i]["phone"].string!
             
             // TODO: Check if truck is currently broadcasting location
             let latitude = trucksJSON[i]["coordinate"]["latitude"].double!
             let longitude = trucksJSON[i]["coordinate"]["longitude"].double!
             let coordinate = CLLocationCoordinate2DMake(latitude, longitude)
-            let truck = Truck(id: id, name: name, coordinate: coordinate)
+            let truck = Truck(id: id, name: name, phone: phone, coordinate: coordinate)
             trucks.append(truck)
         }
         return trucks

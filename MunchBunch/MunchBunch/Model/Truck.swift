@@ -13,11 +13,13 @@ class Truck: NSObject, MKAnnotation {
     
     let id: Int
     let name: String
+    let phone: String
     let coordinate: CLLocationCoordinate2D
     
-    init(id: Int, name: String, coordinate: CLLocationCoordinate2D) {
+    init(id: Int, name: String, phone: String, coordinate: CLLocationCoordinate2D) {
         self.id = id
         self.name = name
+        self.phone = phone == "" ? "No phone number available" : phone
         self.coordinate = coordinate
         
         super.init()

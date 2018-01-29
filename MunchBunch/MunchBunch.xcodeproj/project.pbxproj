@@ -15,6 +15,7 @@
 		9D9C3A4A201C916900DACDBF /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A49201C916900DACDBF /* UIScrollView+EmptyDataSet.m */; };
 		9D9C3A4C201E76AB00DACDBF /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A4B201E76AB00DACDBF /* TabBarViewController.swift */; };
 		9D9C3A4E201EA9F000DACDBF /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A4D201EA9F000DACDBF /* HomeTableViewController.swift */; };
+		9D9C3A52201FD5ED00DACDBF /* TruckTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A51201FD5ED00DACDBF /* TruckTableViewCell.swift */; };
 		9DC3D067200C5926000B6A4B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3D066200C5926000B6A4B /* HomeViewController.swift */; };
 		9DC3D069200C5940000B6A4B /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3D068200C5940000B6A4B /* SignUpViewController.swift */; };
 		9DC3D06B200C5AC2000B6A4B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3D06A200C5AC2000B6A4B /* Constants.swift */; };
@@ -41,6 +42,7 @@
 		9D9C3A49201C916900DACDBF /* UIScrollView+EmptyDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+EmptyDataSet.m"; path = "../../../../../Downloads/DZNEmptyDataSet-master/Source/UIScrollView+EmptyDataSet.m"; sourceTree = "<group>"; };
 		9D9C3A4B201E76AB00DACDBF /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		9D9C3A4D201EA9F000DACDBF /* HomeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
+		9D9C3A51201FD5ED00DACDBF /* TruckTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruckTableViewCell.swift; sourceTree = "<group>"; };
 		9DC3D066200C5926000B6A4B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		9DC3D068200C5940000B6A4B /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		9DC3D06A200C5AC2000B6A4B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				9DD7EFCE2011411F0000DE7A /* MyTrucksTableViewController.swift */,
 				9D9C3A4B201E76AB00DACDBF /* TabBarViewController.swift */,
 				9D9C3A4D201EA9F000DACDBF /* HomeTableViewController.swift */,
+				9D9C3A51201FD5ED00DACDBF /* TruckTableViewCell.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 			files = (
 				9DC3D06B200C5AC2000B6A4B /* Constants.swift in Sources */,
 				9DD7EFC92010AAB80000DE7A /* ValidationError.swift in Sources */,
+				9D9C3A52201FD5ED00DACDBF /* TruckTableViewCell.swift in Sources */,
 				9DD7EFCF2011411F0000DE7A /* MyTrucksTableViewController.swift in Sources */,
 				9DC3D06D200CA1B6000B6A4B /* Extensions.swift in Sources */,
 				9D9C3A4E201EA9F000DACDBF /* HomeTableViewController.swift in Sources */,

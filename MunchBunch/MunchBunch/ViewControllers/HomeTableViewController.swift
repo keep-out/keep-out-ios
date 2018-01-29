@@ -7,12 +7,19 @@
 //
 
 import UIKit
+import CoreLocation
+import Alamofire
 import ChameleonFramework
+import SwiftyJSON
 import SwiftyBeaver
 
 class HomeTableViewController: UITableViewController {
     
     let defaults = UserDefaults.standard
+    
+    // Empty array of trucks that will be filled on load and on
+    // table view refresh
+    var trucks: [Truck] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,14 +28,54 @@ class HomeTableViewController: UITableViewController {
         view.backgroundColor = FlatWhite()
         
         if let token = defaults.object(forKey: "token") as? String {
-            log.info("Token: \(token)")
+            loadTrucks(token: token)
         }
+        
+        
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    func loadTrucks(token: String) {
+        log.info("Token: \(token)")
+        let headers: HTTPHeaders = [ "x-access-token":token ]
+        Alamofire.request(SERVER_URL + TRUCKS, method: .get, headers: headers).responseJSON {
+            response in
+            switch response.result {
+            case .success(let data):
+                log.info("Get trucks successful")
+                let json = JSON(data)
+                let trucksJSON: [JSON] = json["data"].arrayValue
+                self.trucks = self.parseTrucks(trucksJSON: trucksJSON)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func parseTrucks(trucksJSON: [JSON]) -> [Truck] {
+        var trucks: [Truck] = []
+        for i in 0..<trucksJSON.count {
+            let id = trucksJSON[i]["id"].int!
+            let name = trucksJSON[i]["name"].string!
+            let phone = trucksJSON[i]["phone"].string!
+            
+            // TODO: Check if truck is currently broadcasting location
+            let latitude = trucksJSON[i]["latitude"].double!
+            let longitude = trucksJSON[i]["longitude"].double!
+            let coordinate = CLLocationCoordinate2DMake(latitude, longitude)
+            let truck = Truck(id: id, name: name, phone: phone, coordinate: coordinate)
+            trucks.append(truck)
+        }
+        log.info("Done parsing trucks")
+        return trucks
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,23 +87,24 @@ class HomeTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        log.info("# of trucks: \(trucks.count)")
+        return trucks.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
+        let cell = tableView.dequeueReusableCell(withIdentifier: "localTruckCell", for: indexPath) as! TruckTableViewCell
+        
+        let truck: Truck = trucks[indexPath.row]
+        
+        cell.textLabel?.text = truck.name + " " + truck.phone
 
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.
