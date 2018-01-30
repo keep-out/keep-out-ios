@@ -10,30 +10,42 @@ import UIKit
 import SkeletonView
 import ChameleonFramework
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UITableViewDelegate, SkeletonTableViewDataSource {
 
-    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var profileImageView: UIImageView! {
+        didSet {
+            profileImageView.layer.cornerRadius = profileImageView.frame.width/2
+            profileImageView.clipsToBounds = true
+        }
+    }
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var followedLabel: UILabel!
+    @IBOutlet weak var profileTableView: UITableView!
+    
+    override func viewDidAppear(_ animated: Bool) {
+        view.showAnimatedSkeleton()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Make profileImageView circular
-        initImageView(imageView: profileImageView)
-        
-        self.view.isSkeletonable = true
-        profileImageView.isSkeletonable = true
-        usernameLabel.isSkeletonable = true
-        nameLabel.isSkeletonable = true
-        
-        self.view.showAnimatedSkeleton()
-        
+        self.navigationItem.title = "Profile"
+        self.profileTableView.rowHeight = 100;
     }
     
-    func initImageView(imageView: UIImageView) {
-        imageView.layer.cornerRadius = profileImageView.frame.width / 2
-        imageView.clipsToBounds = true
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 4;
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = profileTableView.dequeueReusableCell(withIdentifier: "profileCell", for: indexPath) as! ProfileTableViewCell
+        cell.cellTitle.text = "Title \(indexPath.row)"
+        cell.cellDescription.text = "Description \(indexPath.row)"
+        return cell
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdenfierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "profileCell"
     }
 
     override func didReceiveMemoryWarning() {
