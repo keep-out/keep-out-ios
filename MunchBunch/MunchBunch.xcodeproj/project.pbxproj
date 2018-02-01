@@ -99,6 +99,7 @@
 				9D9C3A49201C916900DACDBF /* UIScrollView+EmptyDataSet.m */,
 				9D9C3A5920214B7500DACDBF /* Geo */,
 				9DC3D073200F5171000B6A4B /* Model */,
+				9D9C3A5C2023B7D200DACDBF /* Network */,
 				9DC3D072200F5166000B6A4B /* ViewControllers */,
 				9D0E5D40200B603500CDE9B4 /* AppDelegate.swift */,
 				9D0E5D44200B603500CDE9B4 /* Main.storyboard */,
@@ -118,6 +119,13 @@
 				9D9C3A5A20214B9100DACDBF /* GeoUtil.swift */,
 			);
 			path = Geo;
+			sourceTree = "<group>";
+		};
+		9D9C3A5C2023B7D200DACDBF /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		9DC3D072200F5166000B6A4B /* ViewControllers */ = {
@@ -280,6 +288,7 @@
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/FontAwesomeKit/FontAwesomeKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SkeletonView/SkeletonView.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/Validator/Validator.framework",
@@ -290,6 +299,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FontAwesomeKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkeletonView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Validator.framework",

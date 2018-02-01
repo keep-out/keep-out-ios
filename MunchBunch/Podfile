@@ -12,5 +12,6 @@ target 'MunchBunch' do
   pod 'SwiftyBeaver'
   pod 'Validator'
   pod 'SkeletonView'
+  pod 'SwiftKeychainWrapper'
   pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git', :branch => 'wip/swift4'
 end

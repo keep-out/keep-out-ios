@@ -30,6 +30,8 @@ class HomeTableViewController: UITableViewController {
     
         if let token = defaults.object(forKey: "token") as? String {
             loadTrucks(token: token)
+        } else {
+            // Need to reauth using Keychain credentials to get a new JWT
         }
         
         

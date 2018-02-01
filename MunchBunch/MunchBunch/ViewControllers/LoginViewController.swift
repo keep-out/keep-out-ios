@@ -11,6 +11,7 @@ import Alamofire
 import SwiftyJSON
 import ChameleonFramework
 import Validator
+import SwiftKeychainWrapper
 
 class LoginViewController: UIViewController {
     
@@ -32,7 +33,15 @@ class LoginViewController: UIViewController {
         Alamofire.request(SERVER_URL + AUTHENTICATE, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
             switch response.result {
             case .success(let data):
-                print("Auth successful")
+                log.info("Auth successful")
+                
+                // Save username, password to Keychain
+                KeychainWrapper.standard.set(username, forKey: "username")
+                KeychainWrapper.standard.set(password, forKey: "password")
+                
+                // TODO: Remove logging of credentials
+                log.info(KeychainWrapper.standard.string(forKey: "username")!)
+                log.info(KeychainWrapper.standard.string(forKey: "password")!)
                 
                 let json = JSON(data)
                 let token = json["data"]["token"].string

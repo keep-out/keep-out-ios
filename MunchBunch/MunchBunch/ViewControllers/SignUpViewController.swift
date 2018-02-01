@@ -11,6 +11,7 @@ import Alamofire
 import SwiftyJSON
 import ChameleonFramework
 import Validator
+import SwiftKeychainWrapper
 
 class SignUpViewController: UIViewController {
     
@@ -49,7 +50,11 @@ class SignUpViewController: UIViewController {
                 debugPrint(response)
                 switch response.result {
                 case .success(let data):
-                    print("User creation successful")
+                    log.info("User creation successful")
+                    
+                    // Save username, password to Keychain
+                    KeychainWrapper.standard.set(username, forKey: "username")
+                    KeychainWrapper.standard.set(password, forKey: "password")
                     
                     let json = JSON(data)
                     let token = json["data"]["token"].string
