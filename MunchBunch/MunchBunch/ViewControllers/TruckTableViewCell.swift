@@ -7,12 +7,23 @@
 //
 
 import UIKit
+import ChameleonFramework
 
 class TruckTableViewCell: UITableViewCell {
 
+    
+    @IBOutlet weak var separatorLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var address1Label: UILabel!
+    @IBOutlet weak var address2Label: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        separatorLabel.backgroundColor = FlatWhite()
+        nameLabel.textColor = FlatGreenDark()
+        address1Label.textColor = FlatGrayDark()
+        address2Label.textColor = FlatGrayDark()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

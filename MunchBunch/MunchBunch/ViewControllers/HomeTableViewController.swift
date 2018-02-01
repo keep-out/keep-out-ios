@@ -26,7 +26,8 @@ class HomeTableViewController: UITableViewController {
         
         self.navigationItem.title = "Home"
         view.backgroundColor = FlatWhite()
-        
+        self.tableView.rowHeight = 90
+    
         if let token = defaults.object(forKey: "token") as? String {
             loadTrucks(token: token)
         }
@@ -66,12 +67,14 @@ class HomeTableViewController: UITableViewController {
             let id = trucksJSON[i]["id"].int!
             let name = trucksJSON[i]["name"].string!
             let phone = trucksJSON[i]["phone"].string!
+            let address = trucksJSON[i]["address"].string!
+            let city = trucksJSON[i]["city"].string!
+            let state = trucksJSON[i]["state"].string!
+            let zip = trucksJSON[i]["zip"].int!
             
             // TODO: Check if truck is currently broadcasting location
-            let latitude = trucksJSON[i]["latitude"].double!
-            let longitude = trucksJSON[i]["longitude"].double!
-            let coordinate = CLLocationCoordinate2DMake(latitude, longitude)
-            let truck = Truck(id: id, name: name, phone: phone, coordinate: coordinate)
+            let truck = Truck(id: id, name: name, phone: phone,
+                address: address, city: city, state: state, zip: zip)
             trucks.append(truck)
         }
         log.info("Done parsing trucks")
@@ -99,7 +102,11 @@ class HomeTableViewController: UITableViewController {
         
         let truck: Truck = trucks[indexPath.row]
         
-        cell.textLabel?.text = truck.name + " " + truck.phone
+        cell.selectionStyle = .none
+        cell.nameLabel.text = truck.name
+        cell.address1Label.text = truck.address
+        cell.address2Label.text = "\(truck.city), \(truck.state) \(truck.zip)"
+        // cell.textLabel?.text = "\(truck.name). \(truck.phone). \(truck.address), \(truck.city), \(truck.state) \(truck.zip)"
 
         return cell
     }

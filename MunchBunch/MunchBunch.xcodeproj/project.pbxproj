@@ -18,6 +18,7 @@
 		9D9C3A52201FD5ED00DACDBF /* TruckTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A51201FD5ED00DACDBF /* TruckTableViewCell.swift */; };
 		9D9C3A54202066D900DACDBF /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A53202066D900DACDBF /* ProfileViewController.swift */; };
 		9D9C3A56202115E500DACDBF /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A55202115E500DACDBF /* ProfileTableViewCell.swift */; };
+		9D9C3A5B20214B9100DACDBF /* GeoUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A5A20214B9100DACDBF /* GeoUtil.swift */; };
 		9DC3D067200C5926000B6A4B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3D066200C5926000B6A4B /* HomeViewController.swift */; };
 		9DC3D069200C5940000B6A4B /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3D068200C5940000B6A4B /* SignUpViewController.swift */; };
 		9DC3D06B200C5AC2000B6A4B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3D06A200C5AC2000B6A4B /* Constants.swift */; };
@@ -47,6 +48,7 @@
 		9D9C3A51201FD5ED00DACDBF /* TruckTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruckTableViewCell.swift; sourceTree = "<group>"; };
 		9D9C3A53202066D900DACDBF /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		9D9C3A55202115E500DACDBF /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
+		9D9C3A5A20214B9100DACDBF /* GeoUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoUtil.swift; sourceTree = "<group>"; };
 		9DC3D066200C5926000B6A4B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		9DC3D068200C5940000B6A4B /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		9DC3D06A200C5AC2000B6A4B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			children = (
 				9D9C3A48201C915E00DACDBF /* UIScrollView+EmptyDataSet.h */,
 				9D9C3A49201C916900DACDBF /* UIScrollView+EmptyDataSet.m */,
+				9D9C3A5920214B7500DACDBF /* Geo */,
 				9DC3D073200F5171000B6A4B /* Model */,
 				9DC3D072200F5166000B6A4B /* ViewControllers */,
 				9D0E5D40200B603500CDE9B4 /* AppDelegate.swift */,
@@ -107,6 +110,14 @@
 				9DD7EFCA20113A600000DE7A /* MunchBunch-Bridging-Header.h */,
 			);
 			path = MunchBunch;
+			sourceTree = "<group>";
+		};
+		9D9C3A5920214B7500DACDBF /* Geo */ = {
+			isa = PBXGroup;
+			children = (
+				9D9C3A5A20214B9100DACDBF /* GeoUtil.swift */,
+			);
+			path = Geo;
 			sourceTree = "<group>";
 		};
 		9DC3D072200F5166000B6A4B /* ViewControllers */ = {
@@ -300,6 +311,7 @@
 				9D9C3A52201FD5ED00DACDBF /* TruckTableViewCell.swift in Sources */,
 				9DD7EFCF2011411F0000DE7A /* MyTrucksTableViewController.swift in Sources */,
 				9DC3D06D200CA1B6000B6A4B /* Extensions.swift in Sources */,
+				9D9C3A5B20214B9100DACDBF /* GeoUtil.swift in Sources */,
 				9D9C3A4E201EA9F000DACDBF /* HomeTableViewController.swift in Sources */,
 				9D9C3A54202066D900DACDBF /* ProfileViewController.swift in Sources */,
 				9D0E5D43200B603500CDE9B4 /* LoginViewController.swift in Sources */,

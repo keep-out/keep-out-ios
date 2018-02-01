@@ -69,28 +69,28 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func parseTrucks(trucksJSON: [JSON]) -> [Truck] {
-        var trucks: [Truck] = []
-        for i in 0..<trucksJSON.count {
-            let id = trucksJSON[i]["id"].int!
-            let name = trucksJSON[i]["name"].string!
-            let phone = trucksJSON[i]["phone"].string!
-            
-            // TODO: Check if truck is currently broadcasting location
-            let latitude = trucksJSON[i]["coordinate"]["latitude"].double!
-            let longitude = trucksJSON[i]["coordinate"]["longitude"].double!
-            let coordinate = CLLocationCoordinate2DMake(latitude, longitude)
-            let truck = Truck(id: id, name: name, phone: phone, coordinate: coordinate)
-            trucks.append(truck)
-        }
-        return trucks
-    }
+//    func parseTrucks(trucksJSON: [JSON]) -> [Truck] {
+//        var trucks: [Truck] = []
+//        for i in 0..<trucksJSON.count {
+//            let id = trucksJSON[i]["id"].int!
+//            let name = trucksJSON[i]["name"].string!
+//            let phone = trucksJSON[i]["phone"].string!
+//            
+//            // TODO: Check if truck is currently broadcasting location
+//            let latitude = trucksJSON[i]["coordinate"]["latitude"].double!
+//            let longitude = trucksJSON[i]["coordinate"]["longitude"].double!
+//            let coordinate = CLLocationCoordinate2DMake(latitude, longitude)
+//            let truck = Truck(id: id, name: name, phone: phone, coordinate: coordinate)
+//            trucks.append(truck)
+//        }
+//        return trucks
+//    }
     
-    func addTrucksToMapView(trucks: [Truck]) {
-        for i in 0..<trucks.count {
-            mapView.addAnnotation(trucks[i])
-        }
-    }
+//    func addTrucksToMapView(trucks: [Truck]) {
+//        for i in 0..<trucks.count {
+//            mapView.addAnnotation(trucks[i])
+//        }
+//    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let userLocation:CLLocation = locations[0] as CLLocation
