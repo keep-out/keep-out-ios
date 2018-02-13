@@ -12,6 +12,7 @@ import Alamofire
 import ChameleonFramework
 import SwiftyJSON
 import SwiftyBeaver
+import SwiftKeychainWrapper
 
 class HomeTableViewController: UITableViewController {
     
@@ -28,14 +29,33 @@ class HomeTableViewController: UITableViewController {
         view.backgroundColor = FlatWhite()
         self.tableView.rowHeight = 90
     
+        // Get JWT or refresh if expired
         if let token = defaults.object(forKey: "token") as? String {
             loadTrucks(token: token)
         } else {
-            // Need to reauth using Keychain credentials to get a new JWT
+            // Get new JWT
+            let username: String = KeychainWrapper.standard.string(forKey: "username")!
+            let password: String = KeychainWrapper.standard.string(forKey: "password")!
+            let parameters = [
+                "username":username,
+                "password":password
+            ]
+            Alamofire.request(SERVER_URL + AUTHENTICATE, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+                switch response.result {
+                case .success(let data):
+                    log.info("JWT refreshed")
+                    
+                    let json = JSON(data)
+                    let token = json["data"]["token"].string
+                    self.defaults.set(token, forKey: "token")
+                
+                // Need to handle network error - user will not be able to access page
+                case .failure(let error):
+                    print(error)
+                }
+            }
         }
         
-        
-
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 

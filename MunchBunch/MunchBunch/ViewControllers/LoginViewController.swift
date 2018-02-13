@@ -39,10 +39,6 @@ class LoginViewController: UIViewController {
                 KeychainWrapper.standard.set(username, forKey: "username")
                 KeychainWrapper.standard.set(password, forKey: "password")
                 
-                // TODO: Remove logging of credentials
-                log.info(KeychainWrapper.standard.string(forKey: "username")!)
-                log.info(KeychainWrapper.standard.string(forKey: "password")!)
-                
                 let json = JSON(data)
                 let token = json["data"]["token"].string
                 self.defaults.set(token, forKey: "token")
