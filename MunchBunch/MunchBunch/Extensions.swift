@@ -18,6 +18,7 @@ extension UITextField {
         
         let borderLine = UIView()
         let height = 2.0
+        log.info(self.frame.width)
         borderLine.frame = CGRect(x: 0, y: Double(self.frame.height) - height, width: Double(self.frame.width), height: height)
         
         borderLine.backgroundColor = borderColor

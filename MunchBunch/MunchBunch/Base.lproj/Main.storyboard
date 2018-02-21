@@ -322,6 +322,7 @@
                                     <outlet property="address2Label" destination="1zt-8E-ibF" id="9Al-GQ-p3k"/>
                                     <outlet property="nameLabel" destination="4d7-9s-G3R" id="d7s-Ya-nYF"/>
                                     <outlet property="separatorLabel" destination="ZFr-5Z-yq6" id="tx4-xv-Rev"/>
+                                    <outlet property="truckImage" destination="fxb-lu-2eM" id="mEw-LH-2kZ"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

@@ -9,27 +9,43 @@
 import Foundation
 import MapKit
 
+//truck_id SERIAL,
+//twitter_handle TEXT,
+//url TEXT,
+//name TEXT NOT NULL,
+//phone TEXT,
+//address TEXT,
+//date_open DATE,
+//time_open TIME,
+//time_range INTEGER,
+//broadcasting BOOLEAN NOT NULL,
+//CONSTRAINT trucks_pkey PRIMARY KEY (truck_id)
+
 // class Truck: NSObject, MKAnnotation {
 class Truck: NSObject {
     
     let id: Int
+    let handle: String
+    let url: URL
     let name: String
     let phone: String
     let address: String
-    let city: String
-    let state: String
-    let zip: Int
+    let dateOpen: String
+    let timeOpen: Int
+    let broadcasting: Bool
     // let coordinate: CLLocationCoordinate2D
     
-    init(id: Int, name: String, phone: String, address: String,
-         city: String, state: String, zip: Int) {
+    init(id: Int, handle: String, url: URL, name: String, phone: String, address: String,
+         dateOpen: String, timeOpen: Int, broadcasting: Bool) {
         self.id = id
+        self.handle = handle
+        self.url = url
         self.name = name
         self.phone = phone == "" ? "No phone number available" : phone
         self.address = address
-        self.city = city
-        self.state = state
-        self.zip = zip
+        self.dateOpen = dateOpen
+        self.timeOpen = timeOpen
+        self.broadcasting = broadcasting
         
         // let addr = "\(address), \(city), \(state) \(zip)"
         // let temp = addrToCoord(address: addr)

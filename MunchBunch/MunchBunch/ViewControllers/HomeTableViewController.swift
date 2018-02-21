@@ -21,6 +21,7 @@ class HomeTableViewController: UITableViewController {
     // Empty array of trucks that will be filled on load and on
     // table view refresh
     var trucks: [Truck] = []
+    var images: [UIImage] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,6 +75,8 @@ class HomeTableViewController: UITableViewController {
                 let json = JSON(data)
                 let trucksJSON: [JSON] = json["data"].arrayValue
                 self.trucks = self.parseTrucks(trucksJSON: trucksJSON)
+                // TODO: Pull truck images from S3
+                
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
@@ -83,20 +86,44 @@ class HomeTableViewController: UITableViewController {
         }
     }
     
+//    // Downloads data from S3
+//    func downloadTruckImages(trucks: [Truck], token: String) -> [UIImage] {
+//        var images: [UIImage] = []
+//        let headers: HTTPHeaders = [ "x-access-token":token ]
+//        for i in 0..<trucks.count {
+//            let url = SERVER_URL + S3 + TRUCKS + PHOTO + String(trucks[i].id)
+//            Alamofire.request(url, method: .get, headers: headers).responseJSON {
+//                response in
+//                switch response.result {
+//                case .success(let data):
+//                    log.info("Get image successful")
+//                    let json = JSON(data)
+//                    let base64Data: String = json["data"].string!
+//                case .failure(let error):
+//                    print(error)
+//                }
+//            }
+//        }
+//        return images;
+//    }
+    
     func parseTrucks(trucksJSON: [JSON]) -> [Truck] {
         var trucks: [Truck] = []
         for i in 0..<trucksJSON.count {
             let id = trucksJSON[i]["id"].int!
+            let handle = trucksJSON[i]["twitter_handle"].string!
+            let url = URL(string: trucksJSON[i]["url"].string!)
             let name = trucksJSON[i]["name"].string!
             let phone = trucksJSON[i]["phone"].string!
             let address = trucksJSON[i]["address"].string!
-            let city = trucksJSON[i]["city"].string!
-            let state = trucksJSON[i]["state"].string!
-            let zip = trucksJSON[i]["zip"].int!
+            let dateOpen = trucksJSON[i]["date_open"].string!
+            let timeOpen = trucksJSON[i]["time_open"].int!
+            let broadcasting = trucksJSON[i]["broadcasting"].bool!
             
-            // TODO: Check if truck is currently broadcasting location
-            let truck = Truck(id: id, name: name, phone: phone,
-                address: address, city: city, state: state, zip: zip)
+            // Create the truck object
+            let truck = Truck(id: id, handle: handle, url: url!, name: name,
+                phone: phone, address: address, dateOpen: dateOpen,
+                timeOpen: timeOpen, broadcasting: broadcasting)
             trucks.append(truck)
         }
         log.info("Done parsing trucks")
@@ -127,8 +154,31 @@ class HomeTableViewController: UITableViewController {
         cell.selectionStyle = .none
         cell.nameLabel.text = truck.name
         cell.address1Label.text = truck.address
-        cell.address2Label.text = "\(truck.city), \(truck.state) \(truck.zip)"
-        // cell.textLabel?.text = "\(truck.name). \(truck.phone). \(truck.address), \(truck.city), \(truck.state) \(truck.zip)"
+        
+        let session = URLSession(configuration: .default)
+        
+        // Creating a dataTask
+        let getImageFromUrl = session.dataTask(with: truck.url) { (data, response, error) in
+            if let e = error {
+                log.error("Error Occurred: \(e)")
+            } else {
+                // In case of now error, checking wheather the response is nil or not
+                if (response as? HTTPURLResponse) != nil {
+                    // Checking if the response contains an image
+                    if let imageData = data {
+                        // Getting the image
+                        let image = UIImage(data: imageData)
+                        cell.truckImage.image = image
+                    } else {
+                        log.error("Image file is currupted")
+                    }
+                } else {
+                    log.error("No response from server")
+                }
+            }
+        }
+        // Starting the download task
+        getImageFromUrl.resume()
 
         return cell
     }

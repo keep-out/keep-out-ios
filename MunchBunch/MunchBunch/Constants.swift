@@ -13,4 +13,6 @@ let AUTHENTICATE: String = "auth/authenticate"
 let REGISTER: String = "auth/register"
 let TRUCKS: String = "trucks"
 let USERS: String = "users"
-
+let S3: String = "s3/"
+let PHOTO: String = "/photo/"
+let SCHEDULE: String = "/schedule/"

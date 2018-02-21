@@ -8,6 +8,7 @@
 
 import UIKit
 import ChameleonFramework
+import SwiftKeychainWrapper
 
 class HomeViewController: UIViewController {
     @IBOutlet weak var labelTest: UILabel!

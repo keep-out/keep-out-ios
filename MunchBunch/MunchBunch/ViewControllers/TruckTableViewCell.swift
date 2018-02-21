@@ -11,7 +11,7 @@ import ChameleonFramework
 
 class TruckTableViewCell: UITableViewCell {
 
-    
+    @IBOutlet weak var truckImage: UIImageView!
     @IBOutlet weak var separatorLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var address1Label: UILabel!
