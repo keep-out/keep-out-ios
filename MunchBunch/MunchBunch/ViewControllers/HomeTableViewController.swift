@@ -13,6 +13,7 @@ import ChameleonFramework
 import SwiftyJSON
 import SwiftyBeaver
 import SwiftKeychainWrapper
+import Kingfisher
 
 class HomeTableViewController: UITableViewController {
     
@@ -154,31 +155,7 @@ class HomeTableViewController: UITableViewController {
         cell.selectionStyle = .none
         cell.nameLabel.text = truck.name
         cell.address1Label.text = truck.address
-        
-        let session = URLSession(configuration: .default)
-        
-        // Creating a dataTask
-        let getImageFromUrl = session.dataTask(with: truck.url) { (data, response, error) in
-            if let e = error {
-                log.error("Error Occurred: \(e)")
-            } else {
-                // In case of now error, checking wheather the response is nil or not
-                if (response as? HTTPURLResponse) != nil {
-                    // Checking if the response contains an image
-                    if let imageData = data {
-                        // Getting the image
-                        let image = UIImage(data: imageData)
-                        cell.truckImage.image = image
-                    } else {
-                        log.error("Image file is currupted")
-                    }
-                } else {
-                    log.error("No response from server")
-                }
-            }
-        }
-        // Starting the download task
-        getImageFromUrl.resume()
+        cell.truckImage.kf.setImage(with: truck.url)
 
         return cell
     }
