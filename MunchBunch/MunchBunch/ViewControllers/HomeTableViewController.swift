@@ -61,8 +61,7 @@ class HomeTableViewController: UITableViewController {
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     func loadTrucks(token: String) {
@@ -86,27 +85,6 @@ class HomeTableViewController: UITableViewController {
             }
         }
     }
-    
-//    // Downloads data from S3
-//    func downloadTruckImages(trucks: [Truck], token: String) -> [UIImage] {
-//        var images: [UIImage] = []
-//        let headers: HTTPHeaders = [ "x-access-token":token ]
-//        for i in 0..<trucks.count {
-//            let url = SERVER_URL + S3 + TRUCKS + PHOTO + String(trucks[i].id)
-//            Alamofire.request(url, method: .get, headers: headers).responseJSON {
-//                response in
-//                switch response.result {
-//                case .success(let data):
-//                    log.info("Get image successful")
-//                    let json = JSON(data)
-//                    let base64Data: String = json["data"].string!
-//                case .failure(let error):
-//                    print(error)
-//                }
-//            }
-//        }
-//        return images;
-//    }
     
     func parseTrucks(trucksJSON: [JSON]) -> [Truck] {
         var trucks: [Truck] = []

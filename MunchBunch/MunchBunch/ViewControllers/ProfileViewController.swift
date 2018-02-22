@@ -28,6 +28,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, SkeletonTabl
     @IBOutlet weak var profileTableView: UITableView!
     
     let defaults = UserDefaults.standard
+    var userId: Int = 0
     var trucks: [Truck] = []
     
     override func viewDidAppear(_ animated: Bool) {
@@ -39,10 +40,32 @@ class ProfileViewController: UIViewController, UITableViewDelegate, SkeletonTabl
         self.navigationItem.title = "Profile"
         view.backgroundColor = FlatWhite()
         self.profileTableView.rowHeight = 100;
-        
-//        if let token = defaults.object(forKey: "token") as? String {
-//             loadTrucks(token: token)
-//        }
+        if let token = defaults.object(forKey: "token") as? String {
+            userId = (defaults.object(forKey: "userId") as? Int)!
+            loadUserInfo(token: token)
+        }
+    }
+    
+    func loadUserInfo(token: String) {
+        if (userId != 0) {
+            let url: String = SERVER_URL + USERS + "/" + String(userId)
+            let headers: HTTPHeaders = [ "x-access-token":token ]
+            Alamofire.request(url, method: .get, headers: headers).responseJSON {
+                response in
+                switch response.result {
+                case .success(let data):
+                    log.info("Got user info")
+                    let json = JSON(data)
+                    self.usernameLabel.text = json["data"]["username"].string!
+                    self.nameLabel.text =
+                        "\(json["data"]["first_name"].string!) \(json["data"]["last_name"].string!)"
+                    // Done loading data, hide skeleton
+                    self.view.hideSkeleton()
+                case .failure(let error):
+                    log.error(error)
+                }
+            }
+        }
     }
     
     // TODO: Refactor code to keep networking logic in separate file for better reuse
