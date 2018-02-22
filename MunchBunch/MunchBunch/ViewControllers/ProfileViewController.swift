@@ -40,6 +40,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, SkeletonTabl
         self.navigationItem.title = "Profile"
         view.backgroundColor = FlatWhite()
         self.profileTableView.rowHeight = 100;
+        self.usernameLabel.textColor = FlatGreen()
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
         if let token = defaults.object(forKey: "token") as? String {
             userId = (defaults.object(forKey: "userId") as? Int)!
             loadUserInfo(token: token)
@@ -56,9 +58,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate, SkeletonTabl
                 case .success(let data):
                     log.info("Got user info")
                     let json = JSON(data)
-                    self.usernameLabel.text = json["data"]["username"].string!
+                    self.usernameLabel.text = "@\(json["data"]["username"].string!)"
                     self.nameLabel.text =
                         "\(json["data"]["first_name"].string!) \(json["data"]["last_name"].string!)"
+                    self.followedLabel.text = "0 trucks followed"
+                    self.profileImageView.image = #imageLiteral(resourceName: "defaultUser")
+                    self.profileImageView.layer.borderWidth = 3
+                    self.profileImageView.layer.borderColor = FlatGray().cgColor
                     // Done loading data, hide skeleton
                     self.view.hideSkeleton()
                 case .failure(let error):
