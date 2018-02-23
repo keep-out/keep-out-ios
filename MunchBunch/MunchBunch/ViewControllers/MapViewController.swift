@@ -18,7 +18,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var mapView: MKMapView!
     
     var locationManager: CLLocationManager!
-    let regionRadius: CLLocationDistance = 2000
+    let regionRadius: CLLocationDistance = 40000
     
     let defaults = UserDefaults.standard
     
@@ -34,34 +34,39 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         // Initialize mapView, get nearby trucks, annotate mapView
         // TODO: Set to user's current location
         let initialLocation = CLLocation(latitude: 34.0224, longitude: -118.2851)
-        centerMapOnLocation(location: initialLocation)
-        
-        if let token = defaults.object(forKey: "token") as? String {
-            
-            // Create auth header
-            let headers: HTTPHeaders = [ "x-access-token":token ]
-            
-            Alamofire.request(SERVER_URL + TRUCKS, method: .get, headers: headers).responseJSON {
-                response in                
-                // Parse trucks response
-                switch response.result {
-                case .success(let data):
-                    print("Get trucks successful")
-                    let json = JSON(data)
-                    let trucksJSON: [JSON] = json["data"].arrayValue
-                    // TODO: Remove this when tested
-                    for i in 0..<trucksJSON.count {
-                        let truck = trucksJSON[i]["name"].string!
-                        print(truck)
-                    }
-                    // Parse truck json data into Truck objects
-                    // self.trucks = self.parseTrucks(trucksJSON: trucksJSON)
-                    // self.addTrucksToMapView(trucks: self.trucks)
-                case .failure(let error):
-                    print(error)
-                }
-            }
+        for x in 0..<Trucks.trucks.count {
+            print(Trucks.trucks[x].coordinate.latitude)
+            print(Trucks.trucks[x].coordinate.longitude)
         }
+        centerMapOnLocation(location: initialLocation)
+        mapView.addAnnotations(Trucks.trucks)
+        
+//        if let token = defaults.object(forKey: "token") as? String {
+//
+//            // Create auth header
+//            let headers: HTTPHeaders = [ "x-access-token":token ]
+//
+//            Alamofire.request(SERVER_URL + TRUCKS, method: .get, headers: headers).responseJSON {
+//                response in
+//                // Parse trucks response
+//                switch response.result {
+//                case .success(let data):
+//                    print("Get trucks successful")
+//                    let json = JSON(data)
+//                    let trucksJSON: [JSON] = json["data"].arrayValue
+//                    // TODO: Remove this when tested
+//                    for i in 0..<trucksJSON.count {
+//                        let truck = trucksJSON[i]["name"].string!
+//                        print(truck)
+//                    }
+//                    // Parse truck json data into Truck objects
+//                    // self.trucks = self.parseTrucks(trucksJSON: trucksJSON)
+//                    // self.addTrucksToMapView(trucks: self.trucks)
+//                case .failure(let error):
+//                    print(error)
+//                }
+//            }
+//        }
     }
 
     override func didReceiveMemoryWarning() {

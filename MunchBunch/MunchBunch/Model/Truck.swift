@@ -8,22 +8,10 @@
 
 import Foundation
 import MapKit
+import CoreLocation
 
-//truck_id SERIAL,
-//twitter_handle TEXT,
-//url TEXT,
-//name TEXT NOT NULL,
-//phone TEXT,
-//address TEXT,
-//date_open DATE,
-//time_open TIME,
-//time_range INTEGER,
-//broadcasting BOOLEAN NOT NULL,
-//CONSTRAINT trucks_pkey PRIMARY KEY (truck_id)
+class Truck: NSObject, MKAnnotation {
 
-// class Truck: NSObject, MKAnnotation {
-class Truck: NSObject {
-    
     let id: Int
     let handle: String
     let url: URL
@@ -31,12 +19,13 @@ class Truck: NSObject {
     let phone: String
     let address: String
     let dateOpen: String
-    let timeOpen: Int
+    let timeOpen: String
     let broadcasting: Bool
-    // let coordinate: CLLocationCoordinate2D
+    let title: String?
+    let coordinate: CLLocationCoordinate2D
     
     init(id: Int, handle: String, url: URL, name: String, phone: String, address: String,
-         dateOpen: String, timeOpen: Int, broadcasting: Bool) {
+         dateOpen: String, timeOpen: String, broadcasting: Bool, coordinate: CLLocationCoordinate2D) {
         self.id = id
         self.handle = handle
         self.url = url
@@ -46,11 +35,13 @@ class Truck: NSObject {
         self.dateOpen = dateOpen
         self.timeOpen = timeOpen
         self.broadcasting = broadcasting
-        
-        // let addr = "\(address), \(city), \(state) \(zip)"
-        // let temp = addrToCoord(address: addr)
-        // self.coordinate = temp! == nil ? temp! : CLLocationCoordinate2D(latitude: 0, longitude: 0)
+        self.title = name
+        self.coordinate = coordinate
         
         super.init()
+    }
+    
+    var subtitle: String? {
+        return handle
     }
 }

@@ -15,13 +15,16 @@ import SwiftyBeaver
 import SwiftKeychainWrapper
 import Kingfisher
 
+struct Trucks {
+    static var trucks: [Truck] = []
+}
+
 class HomeTableViewController: UITableViewController {
     
     let defaults = UserDefaults.standard
     
     // Empty array of trucks that will be filled on load and on
     // table view refresh
-    var trucks: [Truck] = []
     var images: [UIImage] = []
 
     override func viewDidLoad() {
@@ -74,7 +77,7 @@ class HomeTableViewController: UITableViewController {
                 log.info("Get trucks successful")
                 let json = JSON(data)
                 let trucksJSON: [JSON] = json["data"].arrayValue
-                self.trucks = self.parseTrucks(trucksJSON: trucksJSON)
+                Trucks.trucks = self.parseTrucks(trucksJSON: trucksJSON)
                 // TODO: Pull truck images from S3
                 
                 DispatchQueue.main.async {
@@ -89,20 +92,32 @@ class HomeTableViewController: UITableViewController {
     func parseTrucks(trucksJSON: [JSON]) -> [Truck] {
         var trucks: [Truck] = []
         for i in 0..<trucksJSON.count {
-            let id = trucksJSON[i]["id"].int!
+            let id = trucksJSON[i]["truck_id"].int!
             let handle = trucksJSON[i]["twitter_handle"].string!
             let url = URL(string: trucksJSON[i]["url"].string!)
             let name = trucksJSON[i]["name"].string!
             let phone = trucksJSON[i]["phone"].string!
             let address = trucksJSON[i]["address"].string!
             let dateOpen = trucksJSON[i]["date_open"].string!
-            let timeOpen = trucksJSON[i]["time_open"].int!
+            let timeOpen = trucksJSON[i]["time_open"].string!
             let broadcasting = trucksJSON[i]["broadcasting"].bool!
+            var coordinate = CLLocationCoordinate2D.init(latitude: 0, longitude: 0)
+            let geoCoder = CLGeocoder()
+            geoCoder.geocodeAddressString(address) { (placemarks, error) in
+                guard
+                    let placemarks = placemarks,
+                    let location = placemarks.first?.location
+                else {
+                    // handle no location found
+                    return
+                }
+                coordinate = location.coordinate
+            }
             
             // Create the truck object
             let truck = Truck(id: id, handle: handle, url: url!, name: name,
                 phone: phone, address: address, dateOpen: dateOpen,
-                timeOpen: timeOpen, broadcasting: broadcasting)
+                timeOpen: timeOpen, broadcasting: broadcasting, coordinate: coordinate)
             trucks.append(truck)
         }
         log.info("Done parsing trucks")
@@ -121,14 +136,14 @@ class HomeTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        log.info("# of trucks: \(trucks.count)")
-        return trucks.count
+        log.info("# of trucks: \(Trucks.trucks.count)")
+        return Trucks.trucks.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "localTruckCell", for: indexPath) as! TruckTableViewCell
         
-        let truck: Truck = trucks[indexPath.row]
+        let truck: Truck = Trucks.trucks[indexPath.row]
         
         cell.selectionStyle = .none
         cell.nameLabel.text = truck.name
