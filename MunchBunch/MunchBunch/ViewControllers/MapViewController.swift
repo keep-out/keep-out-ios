@@ -87,12 +87,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
 //        return trucks
 //    }
     
-//    func addTrucksToMapView(trucks: [Truck]) {
-//        for i in 0..<trucks.count {
-//            mapView.addAnnotation(trucks[i])
-//        }
-//    }
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let userLocation:CLLocation = locations[0] as CLLocation
         locationManager.stopUpdatingLocation()

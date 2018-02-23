@@ -259,23 +259,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="localTruckCell" rowHeight="90" id="kaG-Qx-pyB" customClass="TruckTableViewCell" customModule="MunchBunch" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="90"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="localTruckCell" rowHeight="80" id="kaG-Qx-pyB" customClass="TruckTableViewCell" customModule="MunchBunch" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kaG-Qx-pyB" id="Sm4-OK-Hnh">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZFr-5Z-yq6">
-                                            <rect key="frame" x="0.0" y="80" width="375" height="10"/>
-                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="10" id="tXA-q0-aqB"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fxb-lu-2eM">
                                             <rect key="frame" x="10" y="10" width="60" height="60"/>
                                             <color key="backgroundColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -306,14 +296,11 @@
                                     <constraints>
                                         <constraint firstItem="4d7-9s-G3R" firstAttribute="top" secondItem="Sm4-OK-Hnh" secondAttribute="top" constant="10" id="0yl-WI-vgv"/>
                                         <constraint firstItem="fxb-lu-2eM" firstAttribute="leading" secondItem="Sm4-OK-Hnh" secondAttribute="leading" constant="10" id="4bg-DU-3Cf"/>
-                                        <constraint firstAttribute="trailing" secondItem="ZFr-5Z-yq6" secondAttribute="trailing" id="IRb-Se-DeH"/>
                                         <constraint firstItem="4d7-9s-G3R" firstAttribute="leading" secondItem="fxb-lu-2eM" secondAttribute="trailing" constant="10" id="L7Q-n4-WWU"/>
                                         <constraint firstItem="1zt-8E-ibF" firstAttribute="leading" secondItem="fxb-lu-2eM" secondAttribute="trailing" constant="10" id="Nkm-WX-1pJ"/>
-                                        <constraint firstItem="ZFr-5Z-yq6" firstAttribute="leading" secondItem="Sm4-OK-Hnh" secondAttribute="leading" id="PjP-Hv-hXz"/>
                                         <constraint firstItem="hBB-e7-vsr" firstAttribute="leading" secondItem="fxb-lu-2eM" secondAttribute="trailing" constant="10" id="Qxa-8I-lbx"/>
                                         <constraint firstItem="1zt-8E-ibF" firstAttribute="top" secondItem="hBB-e7-vsr" secondAttribute="bottom" constant="1" id="S1L-ee-P3S"/>
                                         <constraint firstItem="hBB-e7-vsr" firstAttribute="top" secondItem="4d7-9s-G3R" secondAttribute="bottom" constant="1" id="dUB-wC-K8N"/>
-                                        <constraint firstAttribute="bottom" secondItem="ZFr-5Z-yq6" secondAttribute="bottom" id="llU-MZ-Ixs"/>
                                         <constraint firstItem="fxb-lu-2eM" firstAttribute="top" secondItem="Sm4-OK-Hnh" secondAttribute="top" constant="10" id="rDL-zG-A5F"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -321,7 +308,6 @@
                                     <outlet property="address1Label" destination="hBB-e7-vsr" id="5db-ob-1Z4"/>
                                     <outlet property="address2Label" destination="1zt-8E-ibF" id="9Al-GQ-p3k"/>
                                     <outlet property="nameLabel" destination="4d7-9s-G3R" id="d7s-Ya-nYF"/>
-                                    <outlet property="separatorLabel" destination="ZFr-5Z-yq6" id="tx4-xv-Rev"/>
                                     <outlet property="truckImage" destination="fxb-lu-2eM" id="mEw-LH-2kZ"/>
                                 </connections>
                             </tableViewCell>
@@ -361,10 +347,12 @@
         <scene sceneID="2UJ-r8-0Bk">
             <objects>
                 <tableViewController id="R9a-Yp-zfW" customClass="MyTrucksTableViewController" customModule="MunchBunch" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="TiD-Ym-Kx9">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="TiD-Ym-Kx9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="separatorColor" red="0.90823972225189209" green="0.92638683319091797" blue="0.9317171573638916" alpha="1" colorSpace="calibratedRGB"/>
+                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="favoriteTruckCell" id="OFp-DA-Blt">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
@@ -373,6 +361,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>
