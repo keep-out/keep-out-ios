@@ -22,7 +22,7 @@ class Truck: NSObject, MKAnnotation {
     let timeOpen: String
     let broadcasting: Bool
     let title: String?
-    let coordinate: CLLocationCoordinate2D
+    var coordinate: CLLocationCoordinate2D
     
     init(id: Int, handle: String, url: URL, name: String, phone: String, address: String,
          dateOpen: String, timeOpen: String, broadcasting: Bool, coordinate: CLLocationCoordinate2D) {
@@ -43,5 +43,10 @@ class Truck: NSObject, MKAnnotation {
     
     var subtitle: String? {
         return handle
+    }
+    
+    // Update the coordinate
+    func updateCoordinate(coordinate: CLLocationCoordinate2D) {
+        self.coordinate = coordinate
     }
 }

@@ -34,10 +34,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         // Initialize mapView, get nearby trucks, annotate mapView
         // TODO: Set to user's current location
         let initialLocation = CLLocation(latitude: 34.0224, longitude: -118.2851)
-        for x in 0..<Trucks.trucks.count {
-            print(Trucks.trucks[x].coordinate.latitude)
-            print(Trucks.trucks[x].coordinate.longitude)
-        }
         centerMapOnLocation(location: initialLocation)
         mapView.addAnnotations(Trucks.trucks)
         

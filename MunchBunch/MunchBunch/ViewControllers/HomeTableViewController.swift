@@ -101,27 +101,35 @@ class HomeTableViewController: UITableViewController {
             let dateOpen = trucksJSON[i]["date_open"].string!
             let timeOpen = trucksJSON[i]["time_open"].string!
             let broadcasting = trucksJSON[i]["broadcasting"].bool!
-            var coordinate = CLLocationCoordinate2D.init(latitude: 0, longitude: 0)
-            let geoCoder = CLGeocoder()
-            geoCoder.geocodeAddressString(address) { (placemarks, error) in
-                guard
-                    let placemarks = placemarks,
-                    let location = placemarks.first?.location
-                else {
-                    // handle no location found
-                    return
-                }
-                coordinate = location.coordinate
-            }
-            
+            let location = CLLocationCoordinate2D.init(latitude: 0, longitude: 0)
             // Create the truck object
             let truck = Truck(id: id, handle: handle, url: url!, name: name,
-                phone: phone, address: address, dateOpen: dateOpen,
-                timeOpen: timeOpen, broadcasting: broadcasting, coordinate: coordinate)
+                              phone: phone, address: address, dateOpen: dateOpen,
+                              timeOpen: timeOpen, broadcasting: broadcasting, coordinate: location)
             trucks.append(truck)
+            
+            addressFromString(address: address, completion: {
+                coordinate in
+                truck.updateCoordinate(coordinate: coordinate)
+            })
+        
         }
         log.info("Done parsing trucks")
         return trucks
+    }
+    
+    func addressFromString(address: String, completion: @escaping (CLLocationCoordinate2D!) -> () ) {
+        let geoCoder = CLGeocoder()
+        geoCoder.geocodeAddressString(address) { (placemarks, error) in
+            guard
+                let placemarks = placemarks,
+                let location = placemarks.first?.location
+                else {
+                    // handle no location found
+                    return
+            }
+            completion(location.coordinate)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -136,7 +144,6 @@ class HomeTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        log.info("# of trucks: \(Trucks.trucks.count)")
         return Trucks.trucks.count
     }
 
