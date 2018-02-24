@@ -12,6 +12,7 @@
 		9D0E5D46200B603500CDE9B4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D0E5D44200B603500CDE9B4 /* Main.storyboard */; };
 		9D0E5D48200B603500CDE9B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D0E5D47200B603500CDE9B4 /* Assets.xcassets */; };
 		9D0E5D4B200B603500CDE9B4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D0E5D49200B603500CDE9B4 /* LaunchScreen.storyboard */; };
+		9D7F460D2040AB43002B6F41 /* NetworkUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7F460C2040AB43002B6F41 /* NetworkUtil.swift */; };
 		9D9C3A4A201C916900DACDBF /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A49201C916900DACDBF /* UIScrollView+EmptyDataSet.m */; };
 		9D9C3A4C201E76AB00DACDBF /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A4B201E76AB00DACDBF /* TabBarViewController.swift */; };
 		9D9C3A4E201EA9F000DACDBF /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A4D201EA9F000DACDBF /* HomeTableViewController.swift */; };
@@ -19,6 +20,7 @@
 		9D9C3A54202066D900DACDBF /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A53202066D900DACDBF /* ProfileViewController.swift */; };
 		9D9C3A56202115E500DACDBF /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A55202115E500DACDBF /* ProfileTableViewCell.swift */; };
 		9D9C3A5B20214B9100DACDBF /* GeoUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A5A20214B9100DACDBF /* GeoUtil.swift */; };
+		9DB339F420411532005B7E04 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB339F320411532005B7E04 /* SampleData.swift */; };
 		9DC3D067200C5926000B6A4B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3D066200C5926000B6A4B /* HomeViewController.swift */; };
 		9DC3D069200C5940000B6A4B /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3D068200C5940000B6A4B /* SignUpViewController.swift */; };
 		9DC3D06B200C5AC2000B6A4B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3D06A200C5AC2000B6A4B /* Constants.swift */; };
@@ -41,6 +43,7 @@
 		9D0E5D47200B603500CDE9B4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9D0E5D4A200B603500CDE9B4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9D0E5D4C200B603500CDE9B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9D7F460C2040AB43002B6F41 /* NetworkUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtil.swift; sourceTree = "<group>"; };
 		9D9C3A48201C915E00DACDBF /* UIScrollView+EmptyDataSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+EmptyDataSet.h"; path = "../../../../../Downloads/DZNEmptyDataSet-master/Source/UIScrollView+EmptyDataSet.h"; sourceTree = "<group>"; };
 		9D9C3A49201C916900DACDBF /* UIScrollView+EmptyDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+EmptyDataSet.m"; path = "../../../../../Downloads/DZNEmptyDataSet-master/Source/UIScrollView+EmptyDataSet.m"; sourceTree = "<group>"; };
 		9D9C3A4B201E76AB00DACDBF /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
@@ -49,6 +52,7 @@
 		9D9C3A53202066D900DACDBF /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		9D9C3A55202115E500DACDBF /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		9D9C3A5A20214B9100DACDBF /* GeoUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoUtil.swift; sourceTree = "<group>"; };
+		9DB339F320411532005B7E04 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		9DC3D066200C5926000B6A4B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		9DC3D068200C5940000B6A4B /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		9DC3D06A200C5AC2000B6A4B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -124,6 +128,8 @@
 		9D9C3A5C2023B7D200DACDBF /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				9D7F460C2040AB43002B6F41 /* NetworkUtil.swift */,
+				9DB339F320411532005B7E04 /* SampleData.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -289,6 +295,8 @@
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/FontAwesomeKit/FontAwesomeKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
+				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/SkeletonView/SkeletonView.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
@@ -302,6 +310,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FontAwesomeKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkeletonView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
@@ -323,6 +333,7 @@
 				9DC3D06B200C5AC2000B6A4B /* Constants.swift in Sources */,
 				9DD7EFC92010AAB80000DE7A /* ValidationError.swift in Sources */,
 				9D9C3A52201FD5ED00DACDBF /* TruckTableViewCell.swift in Sources */,
+				9DB339F420411532005B7E04 /* SampleData.swift in Sources */,
 				9DD7EFCF2011411F0000DE7A /* MyTrucksTableViewController.swift in Sources */,
 				9DC3D06D200CA1B6000B6A4B /* Extensions.swift in Sources */,
 				9D9C3A5B20214B9100DACDBF /* GeoUtil.swift in Sources */,
@@ -331,6 +342,7 @@
 				9D0E5D43200B603500CDE9B4 /* LoginViewController.swift in Sources */,
 				9D0E5D41200B603500CDE9B4 /* AppDelegate.swift in Sources */,
 				9DC3D069200C5940000B6A4B /* SignUpViewController.swift in Sources */,
+				9D7F460D2040AB43002B6F41 /* NetworkUtil.swift in Sources */,
 				9DC3D067200C5926000B6A4B /* HomeViewController.swift in Sources */,
 				9D9C3A56202115E500DACDBF /* ProfileTableViewCell.swift in Sources */,
 				9DC3D06F200CA268000B6A4B /* MapViewController.swift in Sources */,

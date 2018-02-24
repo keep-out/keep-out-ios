@@ -7,6 +7,7 @@ target 'MunchBunch' do
 
   # Pods for MunchBunch
   pod 'Alamofire', '~> 4.5'
+  pod 'Moya', '~> 11.0'
   pod 'Kingfisher', '~> 4.0'
   pod 'FontAwesomeKit/FontAwesome'
   pod 'SwiftyJSON'

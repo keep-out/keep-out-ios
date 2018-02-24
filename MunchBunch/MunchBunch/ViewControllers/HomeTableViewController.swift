@@ -74,10 +74,8 @@ class HomeTableViewController: UITableViewController {
                 }
             }
         }
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
 
+        // Adds edit bar button item to the nav bar
         self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
