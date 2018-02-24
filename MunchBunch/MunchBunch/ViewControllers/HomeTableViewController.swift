@@ -15,6 +15,7 @@ import SwiftyBeaver
 import SwiftKeychainWrapper
 import Kingfisher
 import CRRefresh
+import Moya
 
 struct Trucks {
     static var trucks: [Truck] = []
@@ -23,6 +24,7 @@ struct Trucks {
 class HomeTableViewController: UITableViewController {
     
     let defaults = UserDefaults.standard
+    var provider: MoyaProvider<Service>?
     
     // Empty array of trucks that will be filled on load and on
     // table view refresh
@@ -50,7 +52,23 @@ class HomeTableViewController: UITableViewController {
     
         // Get JWT or refresh if expired
         if let token = defaults.object(forKey: "token") as? String {
-            loadTrucks(token: token)
+            provider = MoyaProvider<Service>(plugins: [AuthPlugin(token: token)])
+            // loadTrucks(token: token)
+            provider!.request(.getAllTrucks) { result in
+                switch result {
+                case let .success(response):
+                    let json = JSON(response.data)
+                    print("Response: \(json.dictionary!)")
+                    let jsonArray: [JSON] = json["data"].arrayValue
+                    Trucks.trucks = self.parseTrucks(trucksJSON: jsonArray)
+                    
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                case let .failure(error):
+                    log.error(error)
+                }
+            }
         } else {
             // Get new JWT
             let username: String = KeychainWrapper.standard.string(forKey: "username")!
@@ -80,7 +98,6 @@ class HomeTableViewController: UITableViewController {
     }
     
     func loadTrucks(token: String) {
-        log.info("Token: \(token)")
         let headers: HTTPHeaders = [ "x-access-token":token ]
         Alamofire.request(SERVER_URL + TRUCKS, method: .get, headers: headers).responseJSON {
             response in

@@ -49,9 +49,9 @@ extension Service: TargetType {
     var method: Moya.Method {
         switch self {
         case .authenticate, .register:
-            return .get
-        case .getAllTrucks, .getAllUsers, .getTruck, .getUser:
             return .post
+        case .getAllTrucks, .getAllUsers, .getTruck, .getUser:
+            return .get
         case .deleteUser:
             return .delete
         }
