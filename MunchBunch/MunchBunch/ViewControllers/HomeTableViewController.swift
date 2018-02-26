@@ -58,7 +58,6 @@ class HomeTableViewController: UITableViewController {
                 switch result {
                 case let .success(response):
                     let json = JSON(response.data)
-                    print("Response: \(json.dictionary!)")
                     let jsonArray: [JSON] = json["data"].arrayValue
                     Trucks.trucks = self.parseTrucks(trucksJSON: jsonArray)
                     
@@ -95,27 +94,6 @@ class HomeTableViewController: UITableViewController {
 
         // Adds edit bar button item to the nav bar
         self.navigationItem.rightBarButtonItem = self.editButtonItem
-    }
-    
-    func loadTrucks(token: String) {
-        let headers: HTTPHeaders = [ "x-access-token":token ]
-        Alamofire.request(SERVER_URL + TRUCKS, method: .get, headers: headers).responseJSON {
-            response in
-            switch response.result {
-            case .success(let data):
-                log.info("Get trucks successful")
-                let json = JSON(data)
-                let trucksJSON: [JSON] = json["data"].arrayValue
-                Trucks.trucks = self.parseTrucks(trucksJSON: trucksJSON)
-                // TODO: Pull truck images from S3
-                
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
     }
     
     func parseTrucks(trucksJSON: [JSON]) -> [Truck] {
