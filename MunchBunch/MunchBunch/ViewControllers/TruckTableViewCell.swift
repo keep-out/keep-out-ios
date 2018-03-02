@@ -9,6 +9,12 @@
 import UIKit
 import ChameleonFramework
 import FontAwesomeKit
+import Alamofire
+import Moya
+
+protocol TruckTableViewCellDelegate: class {
+    func didPressButton(_ tag: Int, _ followed: Bool)
+}
 
 class TruckTableViewCell: UITableViewCell {
 
@@ -17,6 +23,8 @@ class TruckTableViewCell: UITableViewCell {
     @IBOutlet weak var address1Label: UILabel!
     @IBOutlet weak var address2Label: UILabel!
     @IBOutlet weak var followIcon: UIButton!
+    
+    weak var truckTableViewCellDelegate: TruckTableViewCellDelegate?
     
     // Follow icon
     let followIconUnselected: UIImage = FAKFontAwesome.bookmarkOIcon(withSize: 20).image(with: CGSize(width: 30, height: 30))
@@ -42,13 +50,15 @@ class TruckTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    @IBAction func followIconTouched(_ sender: Any) {
+    @IBAction func followIconTouched(_ sender: UIButton) {
         if (!select) {
             followIcon.setImage(followIconSelected, for: .normal)
             select = true;
+            truckTableViewCellDelegate?.didPressButton(self.tag, true)
         } else {
             followIcon.setImage(followIconUnselected, for: .normal)
             select = false;
+            truckTableViewCellDelegate?.didPressButton(self.tag, false)
         }
     }
     

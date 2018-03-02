@@ -21,7 +21,7 @@ struct Trucks {
     static var trucks: [Truck] = []
 }
 
-class HomeTableViewController: UITableViewController {
+class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate {
     
     let defaults = UserDefaults.standard
     var provider: MoyaProvider<Service>?
@@ -158,11 +158,21 @@ extension HomeTableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "localTruckCell", for: indexPath) as! TruckTableViewCell
+        cell.truckTableViewCellDelegate = self
+        cell.tag = indexPath.row
         let truck: Truck = Trucks.trucks[indexPath.row]
         cell.selectionStyle = .none
         cell.nameLabel.text = truck.name
         cell.address1Label.text = truck.address
         cell.truckImage.kf.setImage(with: truck.url)
         return cell
+    }
+    
+    func didPressButton(_ tag: Int, _ followed: Bool) {
+        let truck: Truck = Trucks.trucks[tag]
+        // Get truckId and userId
+        let truckId: Int = truck.id
+        let userId: Int = (defaults.object(forKey: "userId") as? Int)!
+        print("truckId: \(truckId), userId: \(userId)")
     }
 }
