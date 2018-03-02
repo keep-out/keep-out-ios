@@ -7,14 +7,13 @@
 //
 
 import UIKit
-import SkeletonView
 import Alamofire
 import ChameleonFramework
 import SwiftyJSON
 import SwiftyBeaver
 import CoreLocation
 
-class ProfileViewController: UIViewController, UITableViewDelegate, SkeletonTableViewDataSource {
+class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var profileImageView: UIImageView! {
         didSet {
@@ -30,10 +29,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, SkeletonTabl
     let defaults = UserDefaults.standard
     var userId: Int = 0
     var trucks: [Truck] = []
-    
-    override func viewDidAppear(_ animated: Bool) {
-        view.showAnimatedSkeleton()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,8 +60,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, SkeletonTabl
                     self.profileImageView.image = #imageLiteral(resourceName: "defaultUser")
                     self.profileImageView.layer.borderWidth = 3
                     self.profileImageView.layer.borderColor = FlatGray().cgColor
-                    // Done loading data, hide skeleton
-                    self.view.hideSkeleton()
                 case .failure(let error):
                     log.error(error)
                 }
@@ -123,10 +116,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, SkeletonTabl
         cell.cellTitle.text = "\(trucks[indexPath.row].name)"
         cell.cellDescription.text = "\(trucks[indexPath.row].phone)"
         return cell
-    }
-    
-    func collectionSkeletonView(_ skeletonView: UITableView, cellIdenfierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
-        return "profileCell"
     }
 
     override func didReceiveMemoryWarning() {

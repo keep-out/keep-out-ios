@@ -7,6 +7,7 @@ PODS:
   - FontAwesomeKit/Core (2.2.1)
   - FontAwesomeKit/FontAwesome (2.2.1):
     - FontAwesomeKit/Core
+  - GoogleAnalytics (3.17.0)
   - Kingfisher (4.6.2)
   - Moya (11.0.0):
     - Moya/Core (= 11.0.0)
@@ -25,6 +26,7 @@ DEPENDENCIES:
   - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`, branch `wip/swift4`)
   - CRRefresh
   - FontAwesomeKit/FontAwesome
+  - GoogleAnalytics
   - Kingfisher (~> 4.0)
   - Moya (~> 11.0)
   - SkeletonView
@@ -48,6 +50,7 @@ SPEC CHECKSUMS:
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   CRRefresh: fa89bab742592500ce9f76301c152544ec5264e8
   FontAwesomeKit: 3614979b3dbb0ec3f7fac1bd760b91f66c31db67
+  GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
   Kingfisher: 55b9c395bf8d3949676ad3861111923990ab68cf
   Moya: be29766339783963a70d1279d69c891ab3a1393c
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
@@ -57,6 +60,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
   Validator: 309a430b6b5430a327d8c84a3246036badaa2dcb
 
-PODFILE CHECKSUM: 4da6ce60e89184e1378641c0f0c4eee3654a03c0
+PODFILE CHECKSUM: e083bef5dd780fda81f3d1987b5d2544a39198ca
 
 COCOAPODS: 1.3.1
