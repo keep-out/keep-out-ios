@@ -16,6 +16,11 @@ enum Service {
     case register(username: String, hashed_password: String,
         first_name: String, last_name: String, email: String)
     
+    // Bookmark endpoints
+    case getAllBookmarks(id: Int)
+    case addBookmark(userId: Int, truckId: Int)
+    case deleteBookmark(userId: Int, truckId: Int)
+    
     // Truck endpoints
     case getAllTrucks
     case getTruck(id: Int)
@@ -35,6 +40,10 @@ extension Service: TargetType {
             return AUTHENTICATE
         case .register:
             return REGISTER
+        case .getAllBookmarks(let id):
+            return "\(BOOKMARKS)/\(id)"
+        case .addBookmark, .deleteBookmark:
+            return BOOKMARKS
         case .getAllTrucks:
             return TRUCKS
         case .getTruck(let id):
@@ -48,11 +57,11 @@ extension Service: TargetType {
     
     var method: Moya.Method {
         switch self {
-        case .authenticate, .register:
+        case .authenticate, .register, .addBookmark:
             return .post
-        case .getAllTrucks, .getAllUsers, .getTruck, .getUser:
+        case .getAllBookmarks, .getAllTrucks, .getAllUsers, .getTruck, .getUser:
             return .get
-        case .deleteUser:
+        case .deleteBookmark, .deleteUser:
             return .delete
         }
     }
@@ -67,8 +76,16 @@ extension Service: TargetType {
             return .requestParameters(parameters: ["username": username,
                 "hashed_password": hashed_password, "first_name": first_name,
                 "last_name": last_name, "email": email], encoding: JSONEncoding.default)
+        
+        case .addBookmark(let userId, let truckId):
+            return .requestParameters(parameters: ["user_id": userId,
+                "truck_id": truckId], encoding: JSONEncoding.default)
             
-        case .getAllTrucks, .getTruck, .getAllUsers, .getUser, .deleteUser:
+        case .deleteBookmark(let userId, let truckId):
+            return .requestParameters(parameters: ["user_id": userId,
+                "truck_id": truckId], encoding: JSONEncoding.default)
+            
+        case .getAllBookmarks, .getAllTrucks, .getTruck, .getAllUsers, .getUser, .deleteUser:
             return .requestPlain
         }
     }
@@ -79,6 +96,12 @@ extension Service: TargetType {
             return AUTHENTICATE_SAMPLE.utf8Encoded
         case .register(_, _, _, _, _):
             return REGISTER_SAMPLE.utf8Encoded
+        case .getAllBookmarks(_):
+            return GET_ALL_BOOKMARKS_SAMPLE.utf8Encoded
+        case .addBookmark(_, _):
+            return ADD_BOOKMARK_SAMPLE.utf8Encoded
+        case .deleteBookmark(_, _):
+            return DELETE_BOOKMARK_SAMPLE.utf8Encoded
         case .getAllTrucks:
             return GET_ALL_TRUCKS_SAMPLE.utf8Encoded
         case .getTruck(_):

@@ -173,6 +173,26 @@ extension HomeTableViewController {
         // Get truckId and userId
         let truckId: Int = truck.id
         let userId: Int = (defaults.object(forKey: "userId") as? Int)!
-        print("truckId: \(truckId), userId: \(userId)")
+        if (followed) {
+            // Add bookmark
+            provider!.request(.addBookmark(userId: userId, truckId: truckId)) { result in
+                switch result {
+                case .success(_):
+                    log.info("added bookmark")
+                case let .failure(error):
+                    log.error(error)
+                }
+            }
+        } else {
+            // Delete bookmark
+            provider!.request(.deleteBookmark(userId: userId, truckId: truckId)) { result in
+                switch result {
+                case .success(_):
+                    log.info("deleted bookmark")
+                case let .failure(error):
+                    log.error(error)
+                }
+            }
+        }
     }
 }
