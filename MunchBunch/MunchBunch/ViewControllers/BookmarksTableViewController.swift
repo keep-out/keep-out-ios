@@ -78,7 +78,6 @@ class BookmarksTableViewController: UITableViewController, TruckTableViewCellDel
                     let json = JSON(response.data)
                     let jsonArray: [JSON] = json["data"].arrayValue
                     Trucks.trucks = self.parseTrucks(trucksJSON: jsonArray)
-                    self.filterTrucks()
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                     }
@@ -140,15 +139,6 @@ class BookmarksTableViewController: UITableViewController, TruckTableViewCellDel
         }
         log.info("Done parsing trucks")
         return trucks
-    }
-    
-    func filterTrucks() {
-        for i in 0..<Trucks.trucks.count {
-            if (bookmarkIds.contains(Trucks.trucks[i].id)) {
-                BookmarkedTrucks.trucks.append(Trucks.trucks[i])
-                print("Adding truck")
-            }
-        }
     }
     
     func addressFromString(address: String, completion: @escaping (CLLocationCoordinate2D!) -> () ) {

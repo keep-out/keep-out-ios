@@ -56,7 +56,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                     self.usernameLabel.text = "@\(json["data"]["username"].string!)"
                     self.nameLabel.text =
                         "\(json["data"]["first_name"].string!) \(json["data"]["last_name"].string!)"
-                    self.followedLabel.text = "0 trucks followed"
+                    self.followedLabel.text = "\(BookmarkedTrucks.trucks.count) trucks followed"
                     self.profileImageView.image = #imageLiteral(resourceName: "defaultUser")
                     self.profileImageView.layer.borderWidth = 3
                     self.profileImageView.layer.borderColor = FlatGray().cgColor

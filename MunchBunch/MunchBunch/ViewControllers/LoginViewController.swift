@@ -15,6 +15,11 @@ import SwiftKeychainWrapper
 
 class LoginViewController: UIViewController {
     
+    @objc func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status and drop into background
+        view.endEditing(true)
+    }
+    
     let defaults = UserDefaults.standard
     
     @IBOutlet weak var textFieldUsername: UITextField!
@@ -66,6 +71,9 @@ class LoginViewController: UIViewController {
         textFieldPassword.setBottomLine(borderColor: FlatWhite(), placeholderText: "Password")
         buttonLogin.setBorder(borderColor: FlatWhite(), radius: 5.0, width: 2.0)
         
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)  // Allows dismissal of keyboard on tap anywhere on screen besides the keyboard itself
+        
         // MARK - POC of validation on input change
         var rules = ValidationRuleSet<String>()
         let testRule = ValidationRuleLength(min: 5, error: ValidationError(message: "😫"))
@@ -79,7 +87,6 @@ class LoginViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
     
 }
 
