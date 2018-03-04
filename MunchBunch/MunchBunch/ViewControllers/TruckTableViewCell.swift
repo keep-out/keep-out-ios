@@ -50,6 +50,11 @@ class TruckTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func setSelected() {
+        followIcon.setImage(followIconSelected, for: .normal)
+        select = true;
+    }
+    
     @IBAction func followIconTouched(_ sender: UIButton) {
         if (!select) {
             followIcon.setImage(followIconSelected, for: .normal)

@@ -1,5 +1,5 @@
 //
-//  HomeTableViewController.swift
+//  BookmarksTableViewController.swift
 //  MunchBunch
 //
 //  Created by Kevin Nguyen on 1/28/18.
@@ -17,12 +17,11 @@ import Kingfisher
 import CRRefresh
 import Moya
 
-struct Trucks {
+struct BookmarkedTrucks {
     static var trucks: [Truck] = []
 }
 
-class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate {
-    
+class BookmarksTableViewController: UITableViewController, TruckTableViewCellDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     let defaults = UserDefaults.standard
     var provider: MoyaProvider<Service>?
     
@@ -31,11 +30,15 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
     var images: [UIImage] = []
     // Bookmarked truckIds
     var bookmarkIds: [Int] = []
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "Home"
+        tableView.emptyDataSetSource = self
+        tableView.emptyDataSetDelegate = self
+        tableView.tableFooterView = UIView()
+        
+        self.navigationItem.title = "Bookmarks"
         view.backgroundColor = FlatWhite()
         self.tableView.rowHeight = 80
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
@@ -51,7 +54,7 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
                 self?.tableView.cr.resetNoMore()
             })
         }
-    
+        
         // Get JWT or refresh if expired
         if let token = defaults.object(forKey: "token") as? String {
             provider = MoyaProvider<Service>(plugins: [AuthPlugin(token: token)])
@@ -75,6 +78,7 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
                     let json = JSON(response.data)
                     let jsonArray: [JSON] = json["data"].arrayValue
                     Trucks.trucks = self.parseTrucks(trucksJSON: jsonArray)
+                    self.filterTrucks()
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                     }
@@ -98,14 +102,13 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
                     let json = JSON(data)
                     let token = json["data"]["token"].string
                     self.defaults.set(token, forKey: "token")
-                
+                    
                 // Need to handle network error - user will not be able to access page
                 case .failure(let error):
                     print(error)
                 }
             }
         }
-
         // Adds edit bar button item to the nav bar
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
@@ -133,10 +136,19 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
                 coordinate in
                 truck.updateCoordinate(coordinate: coordinate)
             })
-        
+            
         }
         log.info("Done parsing trucks")
         return trucks
+    }
+    
+    func filterTrucks() {
+        for i in 0..<Trucks.trucks.count {
+            if (bookmarkIds.contains(Trucks.trucks[i].id)) {
+                BookmarkedTrucks.trucks.append(Trucks.trucks[i])
+                print("Adding truck")
+            }
+        }
     }
     
     func addressFromString(address: String, completion: @escaping (CLLocationCoordinate2D!) -> () ) {
@@ -152,33 +164,113 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
             completion(location.coordinate)
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    // MARK - POC of DZEmptyDataSet
+    func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
+        let str = "Looks like you haven't followed any trucks yet."
+        let attrs = [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.headline)]
+        return NSAttributedString(string: str, attributes: attrs)
+    }
+    
+    func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
+        let str = "Follow food trucks by tapping the bookmark icon to see them here."
+        let attrs = [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)]
+        return NSAttributedString(string: str, attributes: attrs)
+    }
+    
+    func image(forEmptyDataSet scrollView: UIScrollView) -> UIImage? {
+        return UIImage(named: "temp_food_truck")
+    }
+    
+    //    func buttonTitle(forEmptyDataSet scrollView: UIScrollView, for state: UIControlState) -> NSAttributedString? {
+    //        let str = "Add Grokkleglob"
+    //        let attrs = [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.callout)]
+    //        return NSAttributedString(string: str, attributes: attrs)
+    //    }
+    //
+    //    func emptyDataSet(_ scrollView: UIScrollView, didTap button: UIButton) {
+    //        let ac = UIAlertController(title: "Button tapped!", message: nil, preferredStyle: .alert)
+    //        ac.addAction(UIAlertAction(title: "Hurray", style: .default))
+    //        present(ac, animated: true)
+    //    }
+    
+    /*
+     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+     let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+     
+     // Configure the cell...
+     
+     return cell
+     }
+     */
+    
+    /*
+     // Override to support conditional editing of the table view.
+     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+     // Return false if you do not want the specified item to be editable.
+     return true
+     }
+     */
+    
+    /*
+     // Override to support editing the table view.
+     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+     if editingStyle == .delete {
+     // Delete the row from the data source
+     tableView.deleteRows(at: [indexPath], with: .fade)
+     } else if editingStyle == .insert {
+     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+     }
+     }
+     */
+    
+    /*
+     // Override to support rearranging the table view.
+     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+     
+     }
+     */
+    
+    /*
+     // Override to support conditional rearranging of the table view.
+     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+     // Return false if you do not want the item to be re-orderable.
+     return true
+     }
+     */
+    
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
 }
 
 // MARK: - Table view data source
-extension HomeTableViewController {
+extension BookmarksTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Trucks.trucks.count
+        return BookmarkedTrucks.trucks.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "localTruckCell", for: indexPath) as! TruckTableViewCell
         cell.truckTableViewCellDelegate = self
         cell.tag = indexPath.row
-        let truck: Truck = Trucks.trucks[indexPath.row]
-        let truckId: Int = truck.id
-        if (bookmarkIds.contains(truckId)) {
-            cell.setSelected()
-        }
+        let truck: Truck = BookmarkedTrucks.trucks[indexPath.row]
+        cell.setSelected()
         cell.selectionStyle = .none
         cell.nameLabel.text = truck.name
         cell.address1Label.text = truck.address

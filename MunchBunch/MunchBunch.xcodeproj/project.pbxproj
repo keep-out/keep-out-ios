@@ -29,7 +29,7 @@
 		9DC3D071200F515E000B6A4B /* Truck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3D070200F515E000B6A4B /* Truck.swift */; };
 		9DC3D077200F52DF000B6A4B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3D076200F52DF000B6A4B /* User.swift */; };
 		9DD7EFC92010AAB80000DE7A /* ValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD7EFC82010AAB80000DE7A /* ValidationError.swift */; };
-		9DD7EFCF2011411F0000DE7A /* MyTrucksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD7EFCE2011411F0000DE7A /* MyTrucksTableViewController.swift */; };
+		9DD7EFCF2011411F0000DE7A /* BookmarksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD7EFCE2011411F0000DE7A /* BookmarksTableViewController.swift */; };
 		F2282DD2A6C1DB747F43E134 /* Pods_MunchBunch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BB420E5813E33ACA1B31E3F /* Pods_MunchBunch.framework */; };
 /* End PBXBuildFile section */
 
@@ -62,7 +62,7 @@
 		9DC3D076200F52DF000B6A4B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9DD7EFC82010AAB80000DE7A /* ValidationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationError.swift; sourceTree = "<group>"; };
 		9DD7EFCA20113A600000DE7A /* MunchBunch-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MunchBunch-Bridging-Header.h"; sourceTree = "<group>"; };
-		9DD7EFCE2011411F0000DE7A /* MyTrucksTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTrucksTableViewController.swift; sourceTree = "<group>"; };
+		9DD7EFCE2011411F0000DE7A /* BookmarksTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksTableViewController.swift; sourceTree = "<group>"; };
 		C79DA9948EFD5E3DA969E59A /* Pods-MunchBunch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MunchBunch.release.xcconfig"; path = "Pods/Target Support Files/Pods-MunchBunch/Pods-MunchBunch.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -141,7 +141,7 @@
 				9DC3D066200C5926000B6A4B /* HomeViewController.swift */,
 				9DC3D068200C5940000B6A4B /* SignUpViewController.swift */,
 				9DC3D06E200CA268000B6A4B /* MapViewController.swift */,
-				9DD7EFCE2011411F0000DE7A /* MyTrucksTableViewController.swift */,
+				9DD7EFCE2011411F0000DE7A /* BookmarksTableViewController.swift */,
 				9D9C3A4B201E76AB00DACDBF /* TabBarViewController.swift */,
 				9D9C3A4D201EA9F000DACDBF /* HomeTableViewController.swift */,
 				9D9C3A51201FD5ED00DACDBF /* TruckTableViewCell.swift */,
@@ -334,7 +334,7 @@
 				9DD7EFC92010AAB80000DE7A /* ValidationError.swift in Sources */,
 				9D9C3A52201FD5ED00DACDBF /* TruckTableViewCell.swift in Sources */,
 				9DB339F420411532005B7E04 /* SampleData.swift in Sources */,
-				9DD7EFCF2011411F0000DE7A /* MyTrucksTableViewController.swift in Sources */,
+				9DD7EFCF2011411F0000DE7A /* BookmarksTableViewController.swift in Sources */,
 				9DC3D06D200CA1B6000B6A4B /* Extensions.swift in Sources */,
 				9D9C3A5B20214B9100DACDBF /* GeoUtil.swift in Sources */,
 				9D9C3A4E201EA9F000DACDBF /* HomeTableViewController.swift in Sources */,
