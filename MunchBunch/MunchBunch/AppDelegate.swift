@@ -10,6 +10,7 @@ import UIKit
 import ChameleonFramework
 import SwiftyBeaver
 import Firebase
+import Flurry_iOS_SDK
 
 let log = SwiftyBeaver.self
 
@@ -21,6 +22,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // Use Flurry analytics
+        Flurry.startSession("8JTPQV36DJ87CC32C77Y", with: FlurrySessionBuilder
+            .init()
+            .withCrashReporting(true)
+            .withLogLevel(FlurryLogLevelAll))
         
         // Use Firebase library to configure APIs
         FirebaseApp.configure()

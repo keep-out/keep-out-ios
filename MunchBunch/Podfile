@@ -17,6 +17,8 @@ target 'MunchBunch' do
   pod 'SkeletonView'
   pod 'GoogleAnalytics'
   pod 'Firebase/Core'
+  pod 'Flurry-iOS-SDK/FlurrySDK' #Analytics Pod
+  pod 'Flurry-iOS-SDK/FlurryAds' #Advertising Pod (requires Analytics)
   pod 'SwiftKeychainWrapper'
   pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git', :branch => 'wip/swift4'
 end
