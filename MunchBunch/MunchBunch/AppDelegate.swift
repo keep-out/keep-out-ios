@@ -9,6 +9,7 @@
 import UIKit
 import ChameleonFramework
 import SwiftyBeaver
+import Firebase
 
 let log = SwiftyBeaver.self
 
@@ -20,6 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // Use Firebase library to configure APIs
+        FirebaseApp.configure()
+        
         let navigationBarAppearance = UINavigationBar.appearance()
         // Set navbar item color and background color
         navigationBarAppearance.tintColor = UIColor.white

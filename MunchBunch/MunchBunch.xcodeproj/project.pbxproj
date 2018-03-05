@@ -20,6 +20,7 @@
 		9D9C3A54202066D900DACDBF /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A53202066D900DACDBF /* ProfileViewController.swift */; };
 		9D9C3A56202115E500DACDBF /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A55202115E500DACDBF /* ProfileTableViewCell.swift */; };
 		9D9C3A5B20214B9100DACDBF /* GeoUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A5A20214B9100DACDBF /* GeoUtil.swift */; };
+		9D9DAADA204D1C0000FAFB6F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D9DAAD9204D1C0000FAFB6F /* GoogleService-Info.plist */; };
 		9DB339F420411532005B7E04 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB339F320411532005B7E04 /* SampleData.swift */; };
 		9DC3D067200C5926000B6A4B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3D066200C5926000B6A4B /* HomeViewController.swift */; };
 		9DC3D069200C5940000B6A4B /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3D068200C5940000B6A4B /* SignUpViewController.swift */; };
@@ -52,6 +53,7 @@
 		9D9C3A53202066D900DACDBF /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		9D9C3A55202115E500DACDBF /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		9D9C3A5A20214B9100DACDBF /* GeoUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoUtil.swift; sourceTree = "<group>"; };
+		9D9DAAD9204D1C0000FAFB6F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9DB339F320411532005B7E04 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		9DC3D066200C5926000B6A4B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		9DC3D068200C5940000B6A4B /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				9D0E5D47200B603500CDE9B4 /* Assets.xcassets */,
 				9D0E5D49200B603500CDE9B4 /* LaunchScreen.storyboard */,
 				9D0E5D4C200B603500CDE9B4 /* Info.plist */,
+				9D9DAAD9204D1C0000FAFB6F /* GoogleService-Info.plist */,
 				9DC3D06A200C5AC2000B6A4B /* Constants.swift */,
 				9DC3D06C200CA1B6000B6A4B /* Extensions.swift */,
 				9DD7EFCA20113A600000DE7A /* MunchBunch-Bridging-Header.h */,
@@ -242,6 +245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D0E5D4B200B603500CDE9B4 /* LaunchScreen.storyboard in Resources */,
+				9D9DAADA204D1C0000FAFB6F /* GoogleService-Info.plist in Resources */,
 				9D0E5D48200B603500CDE9B4 /* Assets.xcassets in Resources */,
 				9D0E5D46200B603500CDE9B4 /* Main.storyboard in Resources */,
 			);
@@ -294,6 +298,7 @@
 				"${BUILT_PRODUCTS_DIR}/CRRefresh/CRRefresh.framework",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/FontAwesomeKit/FontAwesomeKit.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
@@ -302,6 +307,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/Validator/Validator.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -309,6 +315,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CRRefresh.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FontAwesomeKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
@@ -317,6 +324,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Validator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
