@@ -15,7 +15,7 @@ import SwiftKeychainWrapper
 
 class SignUpViewController: UIViewController {
     
-    func dismissKeyboard() {
+    @objc func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status and drop into background
         view.endEditing(true)
     }
@@ -44,11 +44,10 @@ class SignUpViewController: UIViewController {
         } else {
             let parameters = [
                 "username":username,
-                "hash":password,
-                "fname":fname,
-                "lname":lname,
+                "hashed_password":password,
+                "first_name":fname,
+                "last_name":lname,
                 "email":email,
-                "hasTruck":false
                 ] as [String : Any]
             
             Alamofire.request(SERVER_URL + REGISTER, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
@@ -79,7 +78,7 @@ class SignUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.dismissKeyboard))
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SignUpViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)  // Allows dismissal of keyboard on tap anywhere on screen besides the keyboard itself
         
         // Do any additional setup after loading the view.

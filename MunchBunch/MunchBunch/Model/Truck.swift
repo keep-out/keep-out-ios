@@ -42,7 +42,7 @@ class Truck: NSObject, MKAnnotation {
     }
     
     var subtitle: String? {
-        return handle
+        return address
     }
     
     // Update the coordinate
