@@ -17,8 +17,6 @@
 		9D9C3A4C201E76AB00DACDBF /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A4B201E76AB00DACDBF /* TabBarViewController.swift */; };
 		9D9C3A4E201EA9F000DACDBF /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A4D201EA9F000DACDBF /* HomeTableViewController.swift */; };
 		9D9C3A52201FD5ED00DACDBF /* TruckTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A51201FD5ED00DACDBF /* TruckTableViewCell.swift */; };
-		9D9C3A54202066D900DACDBF /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A53202066D900DACDBF /* ProfileViewController.swift */; };
-		9D9C3A56202115E500DACDBF /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A55202115E500DACDBF /* ProfileTableViewCell.swift */; };
 		9D9C3A5B20214B9100DACDBF /* GeoUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A5A20214B9100DACDBF /* GeoUtil.swift */; };
 		9D9DAADA204D1C0000FAFB6F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D9DAAD9204D1C0000FAFB6F /* GoogleService-Info.plist */; };
 		9DB339F420411532005B7E04 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB339F320411532005B7E04 /* SampleData.swift */; };
@@ -50,8 +48,6 @@
 		9D9C3A4B201E76AB00DACDBF /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		9D9C3A4D201EA9F000DACDBF /* HomeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
 		9D9C3A51201FD5ED00DACDBF /* TruckTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruckTableViewCell.swift; sourceTree = "<group>"; };
-		9D9C3A53202066D900DACDBF /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		9D9C3A55202115E500DACDBF /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		9D9C3A5A20214B9100DACDBF /* GeoUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoUtil.swift; sourceTree = "<group>"; };
 		9D9DAAD9204D1C0000FAFB6F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9DB339F320411532005B7E04 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
@@ -148,8 +144,6 @@
 				9D9C3A4B201E76AB00DACDBF /* TabBarViewController.swift */,
 				9D9C3A4D201EA9F000DACDBF /* HomeTableViewController.swift */,
 				9D9C3A51201FD5ED00DACDBF /* TruckTableViewCell.swift */,
-				9D9C3A53202066D900DACDBF /* ProfileViewController.swift */,
-				9D9C3A55202115E500DACDBF /* ProfileTableViewCell.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -348,13 +342,11 @@
 				9DC3D06D200CA1B6000B6A4B /* Extensions.swift in Sources */,
 				9D9C3A5B20214B9100DACDBF /* GeoUtil.swift in Sources */,
 				9D9C3A4E201EA9F000DACDBF /* HomeTableViewController.swift in Sources */,
-				9D9C3A54202066D900DACDBF /* ProfileViewController.swift in Sources */,
 				9D0E5D43200B603500CDE9B4 /* LoginViewController.swift in Sources */,
 				9D0E5D41200B603500CDE9B4 /* AppDelegate.swift in Sources */,
 				9DC3D069200C5940000B6A4B /* SignUpViewController.swift in Sources */,
 				9D7F460D2040AB43002B6F41 /* NetworkUtil.swift in Sources */,
 				9DC3D067200C5926000B6A4B /* HomeViewController.swift in Sources */,
-				9D9C3A56202115E500DACDBF /* ProfileTableViewCell.swift in Sources */,
 				9DC3D06F200CA268000B6A4B /* MapViewController.swift in Sources */,
 				9DC3D077200F52DF000B6A4B /* User.swift in Sources */,
 				9D9C3A4C201E76AB00DACDBF /* TabBarViewController.swift in Sources */,
@@ -507,7 +499,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "MunchBunch/MunchBunch-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -525,7 +517,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "MunchBunch/MunchBunch-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

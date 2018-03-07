@@ -12,6 +12,7 @@ import SwiftyJSON
 import ChameleonFramework
 import Validator
 import SwiftKeychainWrapper
+import SwiftyBeaver
 
 class LoginViewController: UIViewController {
     
@@ -45,16 +46,20 @@ class LoginViewController: UIViewController {
                 KeychainWrapper.standard.set(password, forKey: "password")
                 
                 let json = JSON(data)
-                if let token = json["data"]["token"].string {
-                    self.defaults.set(token, forKey: "token")
+                if let code = json["code"].int {
+                    if code == 200 {
+                        if let token = json["data"]["token"].string {
+                            self.defaults.set(token, forKey: "token")
+                        }
+                        if let userId = json["data"]["id"].int {
+                            self.defaults.set(userId, forKey: "userId")
+                        }
+                        // Segue to home view controller
+                        self.performSegue(withIdentifier: "loginSegue", sender: sender)
+                    }
                 }
-                if let userId = json["data"]["id"].int {
-                    self.defaults.set(userId, forKey: "userId")
-                }
-                // Segue to home view controller
-                self.performSegue(withIdentifier: "loginSegue", sender: sender)
             case .failure(let error):
-                print(error)
+                log.error(error)
             }
         }
     }

@@ -43,70 +43,69 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
         self.tableView.separatorColor = FlatWhite()
         
         self.tableView.cr.addHeadRefresh(animator: FastAnimator()) { [weak self] in
-            print("Refresh")
             // TODO: Make network request to update trucks
+            Trucks.trucks.removeAll()
+            // Get JWT or refresh if expired
+            if let token = self?.defaults.object(forKey: "token") as? String {
+                self?.provider = MoyaProvider<Service>(plugins: [AuthPlugin(token: token)])
+                // loadTrucks(token: token)
+                let userId: Int! = self!.defaults.object(forKey: "userId") as? Int
+                print("userId: \(userId)");
+                self?.provider!.request(.getAllBookmarks(id: userId)) { result in
+                    switch result {
+                    case let .success(response):
+                        let bookmarks = JSON(response.data)
+                        let bookmarksArray: [JSON] = bookmarks["data"].arrayValue
+                        for i in 0..<bookmarksArray.count {
+                            self?.bookmarkIds.append(bookmarksArray[i]["truck_id"].int!)
+                        }
+                    case let .failure(error):
+                        log.error(error)
+                    }
+                }
+                self?.provider!.request(.getAllTrucks) { result in
+                    switch result {
+                    case let .success(response):
+                        let json = JSON(response.data)
+                        let jsonArray: [JSON] = json["data"].arrayValue
+                        Trucks.trucks = (self?.parseTrucks(trucksJSON: jsonArray))!
+                        DispatchQueue.main.async {
+                            self?.tableView.reloadData()
+                        }
+                    case let .failure(error):
+                        log.error(error)
+                    }
+                }
+            } else {
+                // Get new JWT
+                let username: String = KeychainWrapper.standard.string(forKey: "username")!
+                let password: String = KeychainWrapper.standard.string(forKey: "password")!
+                let parameters = [
+                    "username":username,
+                    "password":password
+                ]
+                Alamofire.request(SERVER_URL + AUTHENTICATE, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+                    switch response.result {
+                    case .success(let data):
+                        log.info("JWT refreshed")
+                        
+                        let json = JSON(data)
+                        let token = json["data"]["token"].string
+                        self?.defaults.set(token, forKey: "token")
+                        
+                    // Need to handle network error - user will not be able to access page
+                    case .failure(let error):
+                        log.error(error)
+                    }
+                }
+            }
             DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
                 self?.tableView.reloadData()
                 self?.tableView.cr.endHeaderRefresh()
                 self?.tableView.cr.resetNoMore()
             })
         }
-    
-        // Get JWT or refresh if expired
-        if let token = defaults.object(forKey: "token") as? String {
-            provider = MoyaProvider<Service>(plugins: [AuthPlugin(token: token)])
-            // loadTrucks(token: token)
-            let userId: Int! = self.defaults.object(forKey: "userId") as? Int
-            provider!.request(.getAllBookmarks(id: userId)) { result in
-                switch result {
-                case let .success(response):
-                    let bookmarks = JSON(response.data)
-                    let bookmarksArray: [JSON] = bookmarks["data"].arrayValue
-                    for i in 0..<bookmarksArray.count {
-                        self.bookmarkIds.append(bookmarksArray[i]["truck_id"].int!)
-                    }
-                case let .failure(error):
-                    log.error(error)
-                }
-            }
-            provider!.request(.getAllTrucks) { result in
-                switch result {
-                case let .success(response):
-                    let json = JSON(response.data)
-                    let jsonArray: [JSON] = json["data"].arrayValue
-                    Trucks.trucks = self.parseTrucks(trucksJSON: jsonArray)
-                    self.filterTrucks()
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                case let .failure(error):
-                    log.error(error)
-                }
-            }
-        } else {
-            // Get new JWT
-            let username: String = KeychainWrapper.standard.string(forKey: "username")!
-            let password: String = KeychainWrapper.standard.string(forKey: "password")!
-            let parameters = [
-                "username":username,
-                "password":password
-            ]
-            Alamofire.request(SERVER_URL + AUTHENTICATE, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-                switch response.result {
-                case .success(let data):
-                    log.info("JWT refreshed")
-                    
-                    let json = JSON(data)
-                    let token = json["data"]["token"].string
-                    self.defaults.set(token, forKey: "token")
-                
-                // Need to handle network error - user will not be able to access page
-                case .failure(let error):
-                    print(error)
-                }
-            }
-        }
-
+        self.tableView.cr.beginHeaderRefresh()
         // Adds edit bar button item to the nav bar
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
@@ -136,17 +135,7 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
             })
         
         }
-        log.info("Done parsing trucks")
         return trucks
-    }
-    
-    func filterTrucks() {
-        for i in 0..<Trucks.trucks.count {
-            if (bookmarkIds.contains(Trucks.trucks[i].id)) {
-                BookmarkedTrucks.trucks.append(Trucks.trucks[i])
-                print("Adding truck")
-            }
-        }
     }
     
     func addressFromString(address: String, completion: @escaping (CLLocationCoordinate2D!) -> () ) {

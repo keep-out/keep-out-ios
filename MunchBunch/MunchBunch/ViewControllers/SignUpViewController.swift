@@ -12,6 +12,7 @@ import SwiftyJSON
 import ChameleonFramework
 import Validator
 import SwiftKeychainWrapper
+import SwiftyBeaver
 
 class SignUpViewController: UIViewController {
     
@@ -22,9 +23,6 @@ class SignUpViewController: UIViewController {
     
     let defaults = UserDefaults.standard
     
-    @IBOutlet weak var textFieldFirstName: UITextField!
-    @IBOutlet weak var textFieldLastName: UITextField!
-    @IBOutlet weak var textFieldEmail: UITextField!
     @IBOutlet weak var textFieldUsername: UITextField!
     @IBOutlet weak var textFieldPassword: UITextField!
     @IBOutlet weak var textFieldRepeatedPassword: UITextField!
@@ -32,9 +30,6 @@ class SignUpViewController: UIViewController {
     
     @IBAction func didTouchSignUp(_ sender: Any) {
         // TODO: add form validation and error handling
-        let fname: String = textFieldFirstName.text!
-        let lname: String = textFieldLastName.text!
-        let email: String = textFieldEmail.text!
         let username: String = textFieldUsername.text!
         let password: String = textFieldPassword.text!
         let repeatedPassword: String = textFieldRepeatedPassword.text!
@@ -45,28 +40,29 @@ class SignUpViewController: UIViewController {
             let parameters = [
                 "username":username,
                 "hashed_password":password,
-                "first_name":fname,
-                "last_name":lname,
-                "email":email,
                 ] as [String : Any]
             
             Alamofire.request(SERVER_URL + REGISTER, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-                debugPrint(response)
                 switch response.result {
                 case .success(let data):
-                    log.info("User creation successful")
-                    
-                    // Save username, password to Keychain
-                    KeychainWrapper.standard.set(username, forKey: "username")
-                    KeychainWrapper.standard.set(password, forKey: "password")
-                    
                     let json = JSON(data)
-                    let token = json["data"]["token"].string
-                    self.defaults.set(token, forKey: "token")
-                    self.performSegue(withIdentifier: "homeSegue", sender: sender)
-                    
+                    if let code = json["code"].int {
+                        if code == 201 {
+                            // Save username, password to Keychain
+                            KeychainWrapper.standard.set(username, forKey: "username")
+                            KeychainWrapper.standard.set(password, forKey: "password")
+                            
+                            if let token = json["data"]["token"].string {
+                                self.defaults.set(token, forKey: "token")
+                            }
+                            if let userId = json["data"]["id"].int {
+                                self.defaults.set(userId, forKey: "userId")
+                            }
+                            self.performSegue(withIdentifier: "homeSegue", sender: sender)
+                        }
+                    }
                 case .failure(let error):
-                    print(error)
+                    log.error(error)
                 }
             }
         }
@@ -83,10 +79,7 @@ class SignUpViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         view.backgroundColor = GradientColor(UIGradientStyle.leftToRight, frame: view.frame, colors: [FlatLime(), FlatGreen()])
-        textFieldFirstName.setBottomLine(borderColor: FlatWhite(), placeholderText: "First name")
-        textFieldLastName.setBottomLine(borderColor: FlatWhite(), placeholderText: "Last name")
         textFieldUsername.setBottomLine(borderColor: FlatWhite(), placeholderText: "Username")
-        textFieldEmail.setBottomLine(borderColor: FlatWhite(), placeholderText: "Email")
         textFieldPassword.setBottomLine(borderColor: FlatWhite(), placeholderText: "Password")
         textFieldRepeatedPassword.setBottomLine(borderColor: FlatWhite(), placeholderText: "Repeat password")
         buttonSignUp.setBorder(borderColor: FlatWhite(), radius: 5.0, width: 2.0)
@@ -95,10 +88,7 @@ class SignUpViewController: UIViewController {
         var rules = ValidationRuleSet<String>()
         let testRule = ValidationRuleLength(min: 5, error: ValidationError(message: "😫"))
         rules.add(rule: testRule)
-        textFieldFirstName.addValidation(rules: rules)
-        textFieldLastName.addValidation(rules: rules)
         textFieldUsername.addValidation(rules: rules)
-        textFieldEmail.addValidation(rules: rules)
         textFieldPassword.addValidation(rules: rules)
         textFieldPassword.addValidation(rules: rules)
     }

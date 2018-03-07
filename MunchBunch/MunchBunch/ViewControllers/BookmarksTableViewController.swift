@@ -17,10 +17,6 @@ import Kingfisher
 import CRRefresh
 import Moya
 
-struct BookmarkedTrucks {
-    static var trucks: [Truck] = []
-}
-
 class BookmarksTableViewController: UITableViewController, TruckTableViewCellDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     let defaults = UserDefaults.standard
     var provider: MoyaProvider<Service>?
@@ -30,10 +26,11 @@ class BookmarksTableViewController: UITableViewController, TruckTableViewCellDel
     var images: [UIImage] = []
     // Bookmarked truckIds
     var bookmarkIds: [Int] = []
+    // Bookmarked trucks
+    var bookmarkedTrucks: [Truck] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.emptyDataSetSource = self
         tableView.emptyDataSetDelegate = self
         tableView.tableFooterView = UIView()
@@ -45,46 +42,8 @@ class BookmarksTableViewController: UITableViewController, TruckTableViewCellDel
         self.tableView.separatorInset = .zero
         self.tableView.separatorColor = FlatWhite()
         
-        self.tableView.cr.addHeadRefresh(animator: FastAnimator()) { [weak self] in
-            print("Refresh")
-            // TODO: Make network request to update trucks
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-                self?.tableView.reloadData()
-                self?.tableView.cr.endHeaderRefresh()
-                self?.tableView.cr.resetNoMore()
-            })
-        }
-        
-        // Get JWT or refresh if expired
-        if let token = defaults.object(forKey: "token") as? String {
-            provider = MoyaProvider<Service>(plugins: [AuthPlugin(token: token)])
-            // loadTrucks(token: token)
-            let userId: Int! = self.defaults.object(forKey: "userId") as? Int
-            provider!.request(.getAllBookmarks(id: userId)) { result in
-                switch result {
-                case let .success(response):
-                    let bookmarks = JSON(response.data)
-                    let bookmarksArray: [JSON] = bookmarks["data"].arrayValue
-                    for i in 0..<bookmarksArray.count {
-                        self.bookmarkIds.append(bookmarksArray[i]["truck_id"].int!)
-                    }
-                case let .failure(error):
-                    log.error(error)
-                }
-            }
-            provider!.request(.getAllTrucks) { result in
-                switch result {
-                case let .success(response):
-                    let json = JSON(response.data)
-                    let jsonArray: [JSON] = json["data"].arrayValue
-                    Trucks.trucks = self.parseTrucks(trucksJSON: jsonArray)
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                case let .failure(error):
-                    log.error(error)
-                }
-            }
+        if let token = self.defaults.object(forKey: "token") as? String {
+            self.provider = MoyaProvider<Service>(plugins: [AuthPlugin(token: token)])
         } else {
             // Get new JWT
             let username: String = KeychainWrapper.standard.string(forKey: "username")!
@@ -104,12 +63,51 @@ class BookmarksTableViewController: UITableViewController, TruckTableViewCellDel
                     
                 // Need to handle network error - user will not be able to access page
                 case .failure(let error):
-                    print(error)
+                    log.error(error)
                 }
             }
         }
+        
+        self.tableView.cr.addHeadRefresh(animator: FastAnimator()) { [weak self] in
+            // TODO: Make network request to update trucks
+            // Get JWT or refresh if expired
+            self?.bookmarkedTrucks.removeAll()
+            self?.bookmarkIds.removeAll()
+            // loadTrucks(token: token)
+            let userId: Int! = self!.defaults.object(forKey: "userId") as? Int
+            self?.provider!.request(.getAllBookmarks(id: userId)) { result in
+                switch result {
+                case let .success(response):
+                    let bookmarks = JSON(response.data)
+                    let bookmarksArray: [JSON] = bookmarks["data"].arrayValue
+                    if bookmarksArray.count > 0 {
+                        for i in 0..<bookmarksArray.count {
+                            self?.bookmarkIds.append(bookmarksArray[i]["truck_id"].int!)
+                        }
+                    }
+                    self?.filterTrucks()
+                case let .failure(error):
+                    log.error(error)
+                }
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                self?.tableView.reloadData()
+                self?.tableView.cr.endHeaderRefresh()
+                self?.tableView.cr.resetNoMore()
+            })
+        }
+        self.tableView.cr.beginHeaderRefresh()
+        
         // Adds edit bar button item to the nav bar
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    func filterTrucks() {
+        for i in 0..<Trucks.trucks.count {
+            if (bookmarkIds.contains(Trucks.trucks[i].id)) {
+                bookmarkedTrucks.append(Trucks.trucks[i])
+            }
+        }
     }
     
     func parseTrucks(trucksJSON: [JSON]) -> [Truck] {
@@ -173,21 +171,35 @@ class BookmarksTableViewController: UITableViewController, TruckTableViewCellDel
         return NSAttributedString(string: str, attributes: attrs)
     }
     
-    func image(forEmptyDataSet scrollView: UIScrollView) -> UIImage? {
-        return UIImage(named: "temp_food_truck")
+    func buttonTitle(forEmptyDataSet scrollView: UIScrollView, for state: UIControlState) -> NSAttributedString? {
+        let str = "Refresh Data"
+        let attrs = [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.callout)]
+        return NSAttributedString(string: str, attributes: attrs)
     }
-    
-    //    func buttonTitle(forEmptyDataSet scrollView: UIScrollView, for state: UIControlState) -> NSAttributedString? {
-    //        let str = "Add Grokkleglob"
-    //        let attrs = [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.callout)]
-    //        return NSAttributedString(string: str, attributes: attrs)
-    //    }
-    //
-    //    func emptyDataSet(_ scrollView: UIScrollView, didTap button: UIButton) {
-    //        let ac = UIAlertController(title: "Button tapped!", message: nil, preferredStyle: .alert)
-    //        ac.addAction(UIAlertAction(title: "Hurray", style: .default))
-    //        present(ac, animated: true)
-    //    }
+
+    func emptyDataSet(_ scrollView: UIScrollView, didTap button: UIButton) {
+        let userId: Int! = self.defaults.object(forKey: "userId") as? Int
+        self.provider!.request(.getAllBookmarks(id: userId)) { result in
+            switch result {
+            case let .success(response):
+                let bookmarks = JSON(response.data)
+                let bookmarksArray: [JSON] = bookmarks["data"].arrayValue
+                self.bookmarkIds.removeAll()
+                if bookmarksArray.count > 0 {
+                    for i in 0..<bookmarksArray.count {
+                        self.bookmarkIds.append(bookmarksArray[i]["truck_id"].int!)
+                    }
+                }
+                self.bookmarkedTrucks.removeAll()
+                self.filterTrucks()
+            case let .failure(error):
+                log.error(error)
+            }
+        }
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
     
     /*
      override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -252,14 +264,14 @@ extension BookmarksTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return BookmarkedTrucks.trucks.count
+        return bookmarkedTrucks.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "localTruckCell", for: indexPath) as! TruckTableViewCell
         cell.truckTableViewCellDelegate = self
         cell.tag = indexPath.row
-        let truck: Truck = BookmarkedTrucks.trucks[indexPath.row]
+        let truck: Truck = bookmarkedTrucks[indexPath.row]
         cell.setSelected()
         cell.selectionStyle = .none
         cell.nameLabel.text = truck.name
