@@ -23,6 +23,9 @@ class SignUpViewController: UIViewController {
     
     let defaults = UserDefaults.standard
     
+    @IBOutlet weak var textFieldFirstName: UITextField!
+    @IBOutlet weak var textFieldLastName: UITextField!
+    @IBOutlet weak var textFieldEmail: UITextField!
     @IBOutlet weak var textFieldUsername: UITextField!
     @IBOutlet weak var textFieldPassword: UITextField!
     @IBOutlet weak var textFieldRepeatedPassword: UITextField!
@@ -30,6 +33,9 @@ class SignUpViewController: UIViewController {
     
     @IBAction func didTouchSignUp(_ sender: Any) {
         // TODO: add form validation and error handling
+        let fname: String = textFieldFirstName.text!
+        let lname: String = textFieldLastName.text!
+        let email: String = textFieldEmail.text!
         let username: String = textFieldUsername.text!
         let password: String = textFieldPassword.text!
         let repeatedPassword: String = textFieldRepeatedPassword.text!
@@ -38,8 +44,11 @@ class SignUpViewController: UIViewController {
             // Passwords don't match!
         } else {
             let parameters = [
+                "email":email,
                 "username":username,
                 "hashed_password":password,
+                "first_name":fname,
+                "last_name":lname
                 ] as [String : Any]
             
             Alamofire.request(SERVER_URL + REGISTER, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
@@ -61,6 +70,7 @@ class SignUpViewController: UIViewController {
                             self.performSegue(withIdentifier: "homeSegue", sender: sender)
                         }
                     }
+                // TODO: Fix backend logic to return fail conditions
                 case .failure(let error):
                     log.error(error)
                 }
@@ -79,6 +89,9 @@ class SignUpViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         view.backgroundColor = GradientColor(UIGradientStyle.leftToRight, frame: view.frame, colors: [FlatLime(), FlatGreen()])
+        textFieldFirstName.setBottomLine(borderColor: FlatWhite(), placeholderText: "First name")
+        textFieldLastName.setBottomLine(borderColor: FlatWhite(), placeholderText: "Last name")
+        textFieldEmail.setBottomLine(borderColor: FlatWhite(), placeholderText: "Email")
         textFieldUsername.setBottomLine(borderColor: FlatWhite(), placeholderText: "Username")
         textFieldPassword.setBottomLine(borderColor: FlatWhite(), placeholderText: "Password")
         textFieldRepeatedPassword.setBottomLine(borderColor: FlatWhite(), placeholderText: "Repeat password")
@@ -88,9 +101,12 @@ class SignUpViewController: UIViewController {
         var rules = ValidationRuleSet<String>()
         let testRule = ValidationRuleLength(min: 5, error: ValidationError(message: "😫"))
         rules.add(rule: testRule)
+        textFieldFirstName.addValidation(rules: rules)
+        textFieldLastName.addValidation(rules: rules)
+        textFieldEmail.addValidation(rules: rules)
         textFieldUsername.addValidation(rules: rules)
         textFieldPassword.addValidation(rules: rules)
-        textFieldPassword.addValidation(rules: rules)
+        textFieldRepeatedPassword.addValidation(rules: rules)
     }
     
     override func didReceiveMemoryWarning() {

@@ -18,7 +18,7 @@ let log = SwiftyBeaver.self
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    let defaults = UserDefaults.standard
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -51,6 +51,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         log.addDestination(console)
         log.addDestination(file)
         
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let token = self.defaults.object(forKey: "token")
+        if token == nil {
+            // Set root view controller to login view
+            let loginViewController = mainStoryboard.instantiateViewController(withIdentifier: "LoginViewController")
+            self.window?.rootViewController = loginViewController
+        } else {
+            // Set root view controller to home view
+            let tabBarViewController = mainStoryboard.instantiateViewController(withIdentifier: "TabBarViewController") as! UITabBarController
+            self.window?.rootViewController = tabBarViewController
+        }
+        self.window?.makeKeyAndVisible()
         log.info("Application started")
         
         return true
