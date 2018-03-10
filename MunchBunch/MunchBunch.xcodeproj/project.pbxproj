@@ -26,8 +26,7 @@
 		9DC3D06F200CA268000B6A4B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3D06E200CA268000B6A4B /* MapViewController.swift */; };
 		9DC3D071200F515E000B6A4B /* Truck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3D070200F515E000B6A4B /* Truck.swift */; };
 		9DC3D077200F52DF000B6A4B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3D076200F52DF000B6A4B /* User.swift */; };
-		9DCC1ACC2053C58800699EC8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCC1ACB2053C58800699EC8 /* ProfileViewController.swift */; };
-		9DCC1ACE2053C71100699EC8 /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCC1ACD2053C71100699EC8 /* OptionsViewController.swift */; };
+		9DCC1ACE2053C71100699EC8 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCC1ACD2053C71100699EC8 /* SettingsViewController.swift */; };
 		9DD7EFC92010AAB80000DE7A /* ValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD7EFC82010AAB80000DE7A /* ValidationError.swift */; };
 		9DD7EFCF2011411F0000DE7A /* BookmarksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD7EFCE2011411F0000DE7A /* BookmarksTableViewController.swift */; };
 		F2282DD2A6C1DB747F43E134 /* Pods_MunchBunch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BB420E5813E33ACA1B31E3F /* Pods_MunchBunch.framework */; };
@@ -58,8 +57,7 @@
 		9DC3D06E200CA268000B6A4B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		9DC3D070200F515E000B6A4B /* Truck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Truck.swift; sourceTree = "<group>"; };
 		9DC3D076200F52DF000B6A4B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		9DCC1ACB2053C58800699EC8 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		9DCC1ACD2053C71100699EC8 /* OptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
+		9DCC1ACD2053C71100699EC8 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		9DD7EFC82010AAB80000DE7A /* ValidationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationError.swift; sourceTree = "<group>"; };
 		9DD7EFCA20113A600000DE7A /* MunchBunch-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MunchBunch-Bridging-Header.h"; sourceTree = "<group>"; };
 		9DD7EFCE2011411F0000DE7A /* BookmarksTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksTableViewController.swift; sourceTree = "<group>"; };
@@ -145,8 +143,7 @@
 				9D9C3A4B201E76AB00DACDBF /* TabBarViewController.swift */,
 				9D9C3A4D201EA9F000DACDBF /* HomeTableViewController.swift */,
 				9D9C3A51201FD5ED00DACDBF /* TruckTableViewCell.swift */,
-				9DCC1ACB2053C58800699EC8 /* ProfileViewController.swift */,
-				9DCC1ACD2053C71100699EC8 /* OptionsViewController.swift */,
+				9DCC1ACD2053C71100699EC8 /* SettingsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -346,10 +343,9 @@
 				9D9C3A5B20214B9100DACDBF /* GeoUtil.swift in Sources */,
 				9D9C3A4E201EA9F000DACDBF /* HomeTableViewController.swift in Sources */,
 				9D0E5D43200B603500CDE9B4 /* LoginViewController.swift in Sources */,
-				9DCC1ACC2053C58800699EC8 /* ProfileViewController.swift in Sources */,
 				9D0E5D41200B603500CDE9B4 /* AppDelegate.swift in Sources */,
 				9DC3D069200C5940000B6A4B /* SignUpViewController.swift in Sources */,
-				9DCC1ACE2053C71100699EC8 /* OptionsViewController.swift in Sources */,
+				9DCC1ACE2053C71100699EC8 /* SettingsViewController.swift in Sources */,
 				9D7F460D2040AB43002B6F41 /* NetworkUtil.swift in Sources */,
 				9DC3D06F200CA268000B6A4B /* MapViewController.swift in Sources */,
 				9DC3D077200F52DF000B6A4B /* User.swift in Sources */,

@@ -26,14 +26,14 @@ class TabBarViewController: UITabBarController {
             .image(with: CGSize(width: 30, height: 30)),
         FAKFontAwesome.bookmarkIcon(withSize: 20)
             .image(with: CGSize(width: 30, height: 30)),
-        FAKFontAwesome.userIcon(withSize: 20)
+        FAKFontAwesome.cogIcon(withSize: 20)
             .image(with: CGSize(width: 30, height: 30))
     ]
     
     let homeIcon = FAKFontAwesome.homeIcon(withSize: 20)
     let mapIcon = FAKFontAwesome.mapIcon(withSize: 20)
     let bookmarkIcon = FAKFontAwesome.bookmarkIcon(withSize: 20)
-    let userIcon = FAKFontAwesome.userIcon(withSize: 20)
+    let cogIcon = FAKFontAwesome.cogIcon(withSize: 20)
     
     override func viewWillAppear(_ animated: Bool) {
         self.tabBar.tintColor = FlatGreen()

@@ -22,8 +22,6 @@ class SignUpViewController: UIViewController {
     
     let defaults = UserDefaults.standard
     
-    @IBOutlet weak var textFieldFirstName: UITextField!
-    @IBOutlet weak var textFieldLastName: UITextField!
     @IBOutlet weak var textFieldEmail: UITextField!
     @IBOutlet weak var textFieldUsername: UITextField!
     @IBOutlet weak var textFieldPassword: UITextField!
@@ -32,8 +30,6 @@ class SignUpViewController: UIViewController {
     
     @IBAction func didTouchSignUp(_ sender: Any) {
         // TODO: add form validation and error handling
-        let fname: String = textFieldFirstName.text!
-        let lname: String = textFieldLastName.text!
         // Remove whitespaces from email string (in case of auto-complete)
         let email: String = textFieldEmail.text!.trimmingCharacters(in: .whitespaces)
         let username: String = textFieldUsername.text!
@@ -43,12 +39,6 @@ class SignUpViewController: UIViewController {
         // Passwords don't match!
         if password != repeatedPassword {
             // TODO: display message saying paswords don't match
-            return;
-        } else if fname.count == 0 || fname.count > 30 {
-            // TODO: display message saying fname isn't present or too long
-            return;
-        } else if lname.count == 0 || lname.count > 30 {
-            // TODO: display message saying lname isn't present or too long
             return;
         } else if username.count < 5 || username.count > 30 {
             // TODO: display message saying username is too short or too long
@@ -60,9 +50,7 @@ class SignUpViewController: UIViewController {
             let parameters = [
                 "email":email,
                 "username":username,
-                "hashed_password":password,
-                "first_name":fname,
-                "last_name":lname
+                "hashed_password":password
                 ] as [String : Any]
             
             Alamofire.request(SERVER_URL + REGISTER, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
@@ -103,8 +91,6 @@ class SignUpViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         view.backgroundColor = GradientColor(UIGradientStyle.leftToRight, frame: view.frame, colors: [FlatLime(), FlatGreen()])
-        textFieldFirstName.setBottomLine(borderColor: FlatWhite(), placeholderText: "First name")
-        textFieldLastName.setBottomLine(borderColor: FlatWhite(), placeholderText: "Last name")
         textFieldEmail.setBottomLine(borderColor: FlatWhite(), placeholderText: "Email")
         textFieldUsername.setBottomLine(borderColor: FlatWhite(), placeholderText: "Username")
         textFieldPassword.setBottomLine(borderColor: FlatWhite(), placeholderText: "Password")

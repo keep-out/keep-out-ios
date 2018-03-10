@@ -1,5 +1,5 @@
 //
-//  OptionsViewController.swift
+//  SettingsViewController.swift
 //  MunchBunch
 //
 //  Created by Kevin Nguyen on 3/9/18.
@@ -15,7 +15,7 @@ import SwiftKeychainWrapper
 import FontAwesomeKit
 import Moya
 
-class OptionsViewController: UIViewController {
+class SettingsViewController: UIViewController {
     
     let defaults = UserDefaults.standard
 
@@ -28,6 +28,8 @@ class OptionsViewController: UIViewController {
         // Remove username, password from keychain
         KeychainWrapper.standard.removeObject(forKey: "username")
         KeychainWrapper.standard.removeObject(forKey: "password")
+        
+        // TODO: Segue to login
     }
     override func viewDidLoad() {
         super.viewDidLoad()

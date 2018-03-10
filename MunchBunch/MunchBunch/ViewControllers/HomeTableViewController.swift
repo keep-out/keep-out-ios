@@ -50,7 +50,6 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
                 self?.provider = MoyaProvider<Service>(plugins: [AuthPlugin(token: token)])
                 // loadTrucks(token: token)
                 let userId: Int! = self!.defaults.object(forKey: "userId") as? Int
-                print("userId: \(userId)");
                 self?.provider!.request(.getAllBookmarks(id: userId)) { result in
                     switch result {
                     case let .success(response):

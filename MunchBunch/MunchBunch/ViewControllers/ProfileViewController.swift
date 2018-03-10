@@ -26,7 +26,7 @@ class ProfileViewController: UIViewController {
         self.navigationItem.title = "Profile"
         view.backgroundColor = FlatWhite()
         
-        self.navigationItem.rightBarButtonItem?.image = FAKFontAwesome.ellipsisHIcon(withSize: 20).image(with: CGSize(width: 30, height: 30))
+        self.navigationItem.rightBarButtonItem?.image = FAKFontAwesome.ellipsisHIcon(withSize: 25).image(with: CGSize(width: 30, height: 30))
     }
 
     override func didReceiveMemoryWarning() {
