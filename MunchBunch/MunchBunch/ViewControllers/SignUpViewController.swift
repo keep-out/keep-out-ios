@@ -10,7 +10,6 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import ChameleonFramework
-import Validator
 import SwiftKeychainWrapper
 import SwiftyBeaver
 
@@ -35,14 +34,29 @@ class SignUpViewController: UIViewController {
         // TODO: add form validation and error handling
         let fname: String = textFieldFirstName.text!
         let lname: String = textFieldLastName.text!
-        let email: String = textFieldEmail.text!
+        // Remove whitespaces from email string (in case of auto-complete)
+        let email: String = textFieldEmail.text!.trimmingCharacters(in: .whitespaces)
         let username: String = textFieldUsername.text!
         let password: String = textFieldPassword.text!
         let repeatedPassword: String = textFieldRepeatedPassword.text!
         
+        // Passwords don't match!
         if password != repeatedPassword {
-            // Passwords don't match!
-        } else {
+            // TODO: display message saying paswords don't match
+            return;
+        } else if fname.count == 0 || fname.count > 30 {
+            // TODO: display message saying fname isn't present or too long
+            return;
+        } else if lname.count == 0 || lname.count > 30 {
+            // TODO: display message saying lname isn't present or too long
+            return;
+        } else if username.count < 5 || username.count > 30 {
+            // TODO: display message saying username is too short or too long
+            return;
+        } else if password.count < 5 || password.count > 30 {
+            // TODO: display message saying password too short or too long
+            return;
+        } else { // Validation ok
             let parameters = [
                 "email":email,
                 "username":username,
@@ -96,17 +110,6 @@ class SignUpViewController: UIViewController {
         textFieldPassword.setBottomLine(borderColor: FlatWhite(), placeholderText: "Password")
         textFieldRepeatedPassword.setBottomLine(borderColor: FlatWhite(), placeholderText: "Repeat password")
         buttonSignUp.setBorder(borderColor: FlatWhite(), radius: 5.0, width: 2.0)
-        
-        // TODO: refactor and rethink necessary rules for each field
-        var rules = ValidationRuleSet<String>()
-        let testRule = ValidationRuleLength(min: 5, error: ValidationError(message: "😫"))
-        rules.add(rule: testRule)
-        textFieldFirstName.addValidation(rules: rules)
-        textFieldLastName.addValidation(rules: rules)
-        textFieldEmail.addValidation(rules: rules)
-        textFieldUsername.addValidation(rules: rules)
-        textFieldPassword.addValidation(rules: rules)
-        textFieldRepeatedPassword.addValidation(rules: rules)
     }
     
     override func didReceiveMemoryWarning() {

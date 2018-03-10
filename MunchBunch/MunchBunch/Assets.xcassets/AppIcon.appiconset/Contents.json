@@ -3,49 +3,49 @@
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "munch_bunch_app_icon_40.png",
+      "filename" : "mb_icon_40px.png",
       "scale" : "2x"
     },
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "munch_bunch_app_icon_60.png",
+      "filename" : "mb_icon_60px.png",
       "scale" : "3x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "munch_bunch_app_icon.png",
+      "filename" : "mb_icon_60px-1.png",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "munch_bunch_app_icon_87.png",
+      "filename" : "mb_icon_87px.png",
       "scale" : "3x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "munch_bunch_app_icon_80.png",
+      "filename" : "mb_icon_80px.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "munch_bunch_app_icon_120.png",
+      "filename" : "mb_icon_120px.png",
       "scale" : "3x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "munch_bunch_app_icon_120-1.png",
+      "filename" : "mb_icon_120px-1.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "munch_bunch_app_icon_180.png",
+      "filename" : "mb_icon_180px.png",
       "scale" : "3x"
     },
     {

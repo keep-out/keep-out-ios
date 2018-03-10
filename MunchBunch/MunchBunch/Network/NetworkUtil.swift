@@ -73,9 +73,9 @@ extension Service: TargetType {
                 "password": password], encoding: JSONEncoding.default)
             
         case .register(let username, let hashed_password, let first_name, let last_name, let email):
-            return .requestParameters(parameters: ["username": username,
+            return .requestParameters(parameters: ["email": email, "username": username,
                 "hashed_password": hashed_password, "first_name": first_name,
-                "last_name": last_name, "email": email], encoding: JSONEncoding.default)
+                "last_name": last_name], encoding: JSONEncoding.default)
         
         case .addBookmark(let userId, let truckId):
             return .requestParameters(parameters: ["user_id": userId,
