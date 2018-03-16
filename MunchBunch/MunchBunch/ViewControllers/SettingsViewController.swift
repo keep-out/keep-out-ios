@@ -25,11 +25,13 @@ class SettingsViewController: UIViewController {
         // Remove token, userId from user defaults
         defaults.removeObject(forKey: "token")
         defaults.removeObject(forKey: "userId")
+        
         // Remove username, password from keychain
         KeychainWrapper.standard.removeObject(forKey: "username")
         KeychainWrapper.standard.removeObject(forKey: "password")
         
-        // TODO: Segue to login
+        // Segue to login
+        self.performSegue(withIdentifier: "logoutSegue", sender: sender)
     }
     override func viewDidLoad() {
         super.viewDidLoad()

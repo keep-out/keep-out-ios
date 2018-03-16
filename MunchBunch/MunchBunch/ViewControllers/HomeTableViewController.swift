@@ -114,24 +114,28 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
         for i in 0..<trucksJSON.count {
             let id = trucksJSON[i]["truck_id"].int!
             let handle = trucksJSON[i]["twitter_handle"].string!
-            let url = URL(string: trucksJSON[i]["url"].string!)
+            let url = trucksJSON[i]["url"].string
             let name = trucksJSON[i]["name"].string!
-            let phone = trucksJSON[i]["phone"].string!
-            let address = trucksJSON[i]["address"].string!
-            let dateOpen = trucksJSON[i]["date_open"].string!
-            let timeOpen = trucksJSON[i]["time_open"].string!
+            let phone = trucksJSON[i]["phone"].string
+            let address = trucksJSON[i]["address"].string
+            let dateOpen = trucksJSON[i]["date_open"].string
+            let timeOpen = trucksJSON[i]["time_open"].string
             let broadcasting = trucksJSON[i]["broadcasting"].bool!
             let location = CLLocationCoordinate2D.init(latitude: 0, longitude: 0)
+            
             // Create the truck object
-            let truck = Truck(id: id, handle: handle, url: url!, name: name,
+            let truck = Truck(id: id, handle: handle, url: url, name: name,
                               phone: phone, address: address, dateOpen: dateOpen,
                               timeOpen: timeOpen, broadcasting: broadcasting, coordinate: location)
             trucks.append(truck)
             
-            addressFromString(address: address, completion: {
-                coordinate in
-                truck.updateCoordinate(coordinate: coordinate)
-            })
+            // Get coordinate from address string
+            if (address != nil) {
+                addressFromString(address: address!, completion: {
+                    coordinate in
+                    truck.updateCoordinate(coordinate: coordinate)
+                })
+            }
         
         }
         return trucks

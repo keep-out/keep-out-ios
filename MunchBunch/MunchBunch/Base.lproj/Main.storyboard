@@ -133,7 +133,7 @@
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zbx-sy-ebH">
                                 <rect key="frame" x="35" y="300" width="305" height="30"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Repeat password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fmV-h6-xp6">
@@ -450,10 +450,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KZC-Or-KB7">
-                                <rect key="frame" x="0.0" y="578" width="375" height="40"/>
+                                <rect key="frame" x="0.0" y="568" width="375" height="50"/>
                                 <color key="backgroundColor" red="0.87058823529999996" green="0.28627450980000002" blue="0.33725490200000002" alpha="1" colorSpace="custom" customColorSpace="adobeRGB1998"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="VN3-JG-l7K"/>
+                                    <constraint firstAttribute="height" constant="50" id="VN3-JG-l7K"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
                                 <state key="normal" title="Logout">
@@ -461,6 +461,7 @@
                                 </state>
                                 <connections>
                                     <action selector="logoutButtonTouched:" destination="TfA-gD-129" eventType="touchUpInside" id="r3V-x3-F8t"/>
+                                    <segue destination="BYZ-38-t0r" kind="presentation" identifier="logoutSegue" id="ial-M0-C7W"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -476,7 +477,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FmZ-CG-J0F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3062" y="1557"/>
+            <point key="canvasLocation" x="3041" y="1558"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="deF-ch-cQz">
@@ -567,6 +568,6 @@
         <image name="munch_bunch_logo" width="1647" height="1000"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="jpD-Of-L2K"/>
+        <segue reference="5Lc-wW-Wmp"/>
     </inferredMetricsTieBreakers>
 </document>

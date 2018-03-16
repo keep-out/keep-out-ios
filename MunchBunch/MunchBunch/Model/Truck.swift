@@ -24,16 +24,16 @@ class Truck: NSObject, MKAnnotation {
     let title: String?
     var coordinate: CLLocationCoordinate2D
     
-    init(id: Int, handle: String, url: URL, name: String, phone: String, address: String,
-         dateOpen: String, timeOpen: String, broadcasting: Bool, coordinate: CLLocationCoordinate2D) {
+    init(id: Int, handle: String, url: String?, name: String, phone: String?, address: String?,
+         dateOpen: String?, timeOpen: String?, broadcasting: Bool, coordinate: CLLocationCoordinate2D) {
         self.id = id
-        self.handle = handle
-        self.url = url
+        self.handle = "@\(handle)"
+        self.url = url == nil ? URL(string: "https://s3-us-west-1.amazonaws.com/api.truck-profile-images.munch-bunch/not-available.png")! : URL(string: url!)!
         self.name = name
-        self.phone = phone == "" ? "No phone number available" : phone
-        self.address = address
-        self.dateOpen = dateOpen
-        self.timeOpen = timeOpen
+        self.phone = phone == nil ? "No phone number available" : phone!
+        self.address = address == nil ? "No address available" : address!
+        self.dateOpen = dateOpen == nil ? "" : dateOpen!
+        self.timeOpen = timeOpen == nil ? "" : dateOpen!
         self.broadcasting = broadcasting
         self.title = name
         self.coordinate = coordinate
