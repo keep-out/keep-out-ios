@@ -21,10 +21,11 @@ struct Trucks {
     static var trucks: [Truck] = []
 }
 
-class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate {
+class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate, CLLocationManagerDelegate {
     
     let defaults = UserDefaults.standard
     var provider: MoyaProvider<Service>?
+    let locationManager = CLLocationManager()
     
     // Empty array of trucks that will be filled on load and on
     // table view refresh
@@ -41,6 +42,14 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
         self.tableView.separatorInset = .zero
         self.tableView.separatorColor = FlatWhite()
+        
+        isAuthorizedtoGetUserLocation()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.requestLocation()
+        }
         
         self.tableView.cr.addHeadRefresh(animator: FastAnimator()) { [weak self] in
             // TODO: Make network request to update trucks
@@ -62,10 +71,11 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
                         log.error(error)
                     }
                 }
-                self?.provider!.request(.getAllTrucks) { result in
+                self?.provider!.request(.getLocalTrucks(lat: self?.defaults.value(forKey: "latitude") as! Float, long: self?.defaults.value(forKey: "longitude") as! Float, radius: 100000)) { result in
                     switch result {
                     case let .success(response):
                         let json = JSON(response.data)
+                        print(json.dictionary!)
                         let jsonArray: [JSON] = json["data"].arrayValue
                         Trucks.trucks = (self?.parseTrucks(trucksJSON: jsonArray))!
                         DispatchQueue.main.async {
@@ -87,11 +97,11 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
                     switch response.result {
                     case .success(let data):
                         log.info("JWT refreshed")
-                        
+
                         let json = JSON(data)
                         let token = json["data"]["token"].string
                         self?.defaults.set(token, forKey: "token")
-                        
+
                     // Need to handle network error - user will not be able to access page
                     case .failure(let error):
                         log.error(error)
@@ -141,6 +151,17 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
         return trucks
     }
     
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        defaults.set(locValue.latitude, forKey: "latitude")
+        defaults.set(locValue.longitude, forKey: "longitude")
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Did location updates is called but failed getting location \(error)")
+    }
+    
     func addressFromString(address: String, completion: @escaping (CLLocationCoordinate2D!) -> () ) {
         let geoCoder = CLGeocoder()
         geoCoder.geocodeAddressString(address) { (placemarks, error) in
@@ -164,6 +185,14 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
 
 // MARK: - Table view data source
 extension HomeTableViewController {
+    
+    // If we have no permission to access user location, then ask user for permission.
+    func isAuthorizedtoGetUserLocation() {
+        if CLLocationManager.authorizationStatus() != .authorizedWhenInUse     {
+            locationManager.requestWhenInUseAuthorization()
+        }
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
