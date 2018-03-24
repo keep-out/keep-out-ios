@@ -33,6 +33,9 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
     var images: [UIImage] = []
     // Bookmarked truckIds
     var bookmarkIds: [Int] = []
+    
+    var offset: Int = 0
+    var lastItems: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +57,8 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.requestLocation()
         }
+        offset = 0
+        lastItems = false
         
         if let lat = defaults.object(forKey: "latitude") as? Float {
             if let long = defaults.object(forKey: "longitude") as? Float {
@@ -77,9 +82,7 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
                                 log.error(error)
                             }
                         }
-                        print("LATITUDE: \(lat)")
-                        print("LONGITUDE: \(long)")
-                        self?.provider!.request(.getLocalTrucks(lat: lat, long: long, radius: 100000)) { result in
+                        self?.provider!.request(.getLocalTrucks(lat: lat, long: long, radius: 8000, offset: (self?.offset)!)) { result in
                             switch result {
                             case let .success(response):
                                 let json = JSON(response.data)
@@ -133,29 +136,32 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
         var trucks: [Truck] = []
         for i in 0..<trucksJSON.count {
             let id = trucksJSON[i]["truck_id"].int!
-            let handle = trucksJSON[i]["twitter_handle"].string!
+            let handle = trucksJSON[i]["twitter_handle"].string
             let url = trucksJSON[i]["url"].string
             let name = trucksJSON[i]["name"].string!
             let phone = trucksJSON[i]["phone"].string
-            let address = trucksJSON[i]["address"].string
+            // TODO: Get address from coordinates
+//            let address = trucksJSON[i]["address"].string
+            let latitude = trucksJSON[i]["latitude"].double!
+            let longitude = trucksJSON[i]["longitude"].double!
             let dateOpen = trucksJSON[i]["date_open"].string
             let timeOpen = trucksJSON[i]["time_open"].string
             let broadcasting = trucksJSON[i]["broadcasting"].bool!
-            let location = CLLocationCoordinate2D.init(latitude: 0, longitude: 0)
+            let location = CLLocationCoordinate2D.init(latitude: latitude, longitude: longitude)
             
             // Create the truck object
             let truck = Truck(id: id, handle: handle, url: url, name: name,
-                              phone: phone, address: address, dateOpen: dateOpen,
+                              phone: phone, dateOpen: dateOpen,
                               timeOpen: timeOpen, broadcasting: broadcasting, coordinate: location)
             trucks.append(truck)
             
-            // Get coordinate from address string
-            if (address != nil) {
-                addressFromString(address: address!, completion: {
-                    coordinate in
-                    truck.updateCoordinate(coordinate: coordinate)
-                })
-            }
+//            // Get coordinate from address string
+//            if (address != nil) {
+//                addressFromString(address: address!, completion: {
+//                    coordinate in
+//                    truck.updateCoordinate(coordinate: coordinate)
+//                })
+//            }
         
         }
         return trucks
@@ -208,7 +214,7 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
     func emptyDataSet(_ scrollView: UIScrollView, didTap button: UIButton) {
         let lat = defaults.object(forKey: "latitude") as! Float
         let long = defaults.object(forKey: "longitude") as! Float
-        self.provider!.request(.getLocalTrucks(lat: lat, long: long, radius: 100000)) { result in
+        self.provider!.request(.getLocalTrucks(lat: lat, long: long, radius: 8000, offset: self.offset)) { result in
             switch result {
             case let .success(response):
                 let json = JSON(response.data)
@@ -260,10 +266,46 @@ extension HomeTableViewController {
         }
         cell.selectionStyle = .none
         cell.nameLabel.text = truck.name
-        cell.address1Label.text = truck.address
+        cell.address1Label.text = truck.phone
         cell.address2Label.text = ""
         cell.truckImage.kf.setImage(with: truck.url)
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastElement = Trucks.trucks.count - 1
+        let firstElement = 0
+        // Scrolled to last item in current view
+        if indexPath.row == lastElement && !lastItems {
+            self.offset += 10
+            log.info("OFFSET: \(self.offset)")
+            let lat: Float = defaults.object(forKey: "latitude") as! Float
+            let long: Float = defaults.object(forKey: "longitude") as! Float
+            // Load more trucks
+            self.provider!.request(.getLocalTrucks(lat: lat, long: long, radius: 8000, offset: self.offset)) { result in
+                switch result {
+                case let .success(response):
+                    let json = JSON(response.data)
+                    print(json.dictionary!)
+                    let jsonArray: [JSON] = json["data"].arrayValue
+                    if (jsonArray.count < 20) {
+                        // Reached the end, set end flag to true
+                        self.lastItems = true
+                    }
+                    Trucks.trucks.append(contentsOf: self.parseTrucks(trucksJSON: jsonArray))
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                case let .failure(error):
+                    log.error(error)
+                }
+            }
+        }
+        // Reset offset and lastItem flag up scroll up to top
+        if indexPath.row == firstElement {
+            self.offset = 0
+            self.lastItems = false
+        }
     }
     
     func didPressButton(_ tag: Int, _ followed: Bool) {

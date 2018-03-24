@@ -17,21 +17,21 @@ class Truck: NSObject, MKAnnotation {
     let url: URL
     let name: String
     let phone: String
-    let address: String
+    // let address: String
     let dateOpen: String
     let timeOpen: String
     let broadcasting: Bool
     let title: String?
     var coordinate: CLLocationCoordinate2D
     
-    init(id: Int, handle: String, url: String?, name: String, phone: String?, address: String?,
+    init(id: Int, handle: String?, url: String?, name: String, phone: String?,
          dateOpen: String?, timeOpen: String?, broadcasting: Bool, coordinate: CLLocationCoordinate2D) {
         self.id = id
-        self.handle = "@\(handle)"
+        self.handle = handle == nil ? "No twitter account" : "@\(handle!)"
         self.url = url == nil ? URL(string: "https://s3-us-west-1.amazonaws.com/api.truck-profile-images.munch-bunch/not-available.png")! : URL(string: url!)!
         self.name = name
         self.phone = phone == nil ? "No phone number available" : phone!
-        self.address = address == nil ? "No address available" : address!
+        // self.address = address == nil ? "No address available" : address!
         self.dateOpen = dateOpen == nil ? "" : dateOpen!
         self.timeOpen = timeOpen == nil ? "" : dateOpen!
         self.broadcasting = broadcasting
@@ -42,7 +42,7 @@ class Truck: NSObject, MKAnnotation {
     }
     
     var subtitle: String? {
-        return address
+        return phone
     }
     
     // Update the coordinate

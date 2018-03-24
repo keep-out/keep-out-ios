@@ -114,29 +114,32 @@ class BookmarksTableViewController: UITableViewController, TruckTableViewCellDel
         var trucks: [Truck] = []
         for i in 0..<trucksJSON.count {
             let id = trucksJSON[i]["truck_id"].int!
-            let handle = trucksJSON[i]["twitter_handle"].string!
+            let handle = trucksJSON[i]["twitter_handle"].string
             let url = trucksJSON[i]["url"].string
             let name = trucksJSON[i]["name"].string!
             let phone = trucksJSON[i]["phone"].string
-            let address = trucksJSON[i]["address"].string
+            // TODO: Get address from coordinates
+            //            let address = trucksJSON[i]["address"].string
+            let latitude = trucksJSON[i]["latitude"].double!
+            let longitude = trucksJSON[i]["longitude"].double!
             let dateOpen = trucksJSON[i]["date_open"].string
             let timeOpen = trucksJSON[i]["time_open"].string
             let broadcasting = trucksJSON[i]["broadcasting"].bool!
-            let location = CLLocationCoordinate2D.init(latitude: 0, longitude: 0)
+            let location = CLLocationCoordinate2D.init(latitude: latitude, longitude: longitude)
             
             // Create the truck object
             let truck = Truck(id: id, handle: handle, url: url, name: name,
-                              phone: phone, address: address, dateOpen: dateOpen,
+                              phone: phone, dateOpen: dateOpen,
                               timeOpen: timeOpen, broadcasting: broadcasting, coordinate: location)
             trucks.append(truck)
             
-            // Get coordinate from address string
-            if (address != nil) {
-                addressFromString(address: address!, completion: {
-                    coordinate in
-                    truck.updateCoordinate(coordinate: coordinate)
-                })
-            }
+            //            // Get coordinate from address string
+            //            if (address != nil) {
+            //                addressFromString(address: address!, completion: {
+            //                    coordinate in
+            //                    truck.updateCoordinate(coordinate: coordinate)
+            //                })
+            //            }
             
         }
         return trucks
@@ -278,7 +281,7 @@ extension BookmarksTableViewController {
         cell.setSelected()
         cell.selectionStyle = .none
         cell.nameLabel.text = truck.name
-        cell.address1Label.text = truck.address
+        cell.address1Label.text = truck.phone
         cell.address2Label.text = ""
         cell.truckImage.kf.setImage(with: truck.url)
         return cell

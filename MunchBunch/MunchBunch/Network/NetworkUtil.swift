@@ -22,7 +22,7 @@ enum Service {
     case deleteBookmark(userId: Int, truckId: Int)
     
     // Truck endpoints
-    case getLocalTrucks(lat: Float, long: Float, radius: Int)
+    case getLocalTrucks(lat: Float, long: Float, radius: Int, offset: Int)
     case getTruckMainInfo
     case getAllTrucks
     case getTruck(id: Int)
@@ -91,8 +91,8 @@ extension Service: TargetType {
             return .requestParameters(parameters: ["user_id": userId,
                 "truck_id": truckId], encoding: JSONEncoding.default)
             
-        case .getLocalTrucks(let lat, let long, let radius):
-            return .requestParameters(parameters: ["lat": lat, "long": long, "radius": radius], encoding: JSONEncoding.default)
+        case .getLocalTrucks(let lat, let long, let radius, let offset):
+            return .requestParameters(parameters: ["lat": lat, "long": long, "radius": radius, "offset": offset], encoding: JSONEncoding.default)
             
         case .getAllBookmarks, .getAllTrucks, .getTruck, .getAllUsers, .getUser, .deleteUser, .getTruckMainInfo:
             return .requestPlain
@@ -121,7 +121,7 @@ extension Service: TargetType {
             return GET_USER_SAMPLE.utf8Encoded
         case .deleteUser(_):
             return DELETE_USER_SAMPLE.utf8Encoded
-        case .getLocalTrucks(_, _, _):
+        case .getLocalTrucks(_, _, _, _):
             return GET_LOCAL_TRUCKS_SAMPLE.utf8Encoded
         case .getTruckMainInfo:
             return GET_TRUCK_MAIN_INFO_SAMPLE.utf8Encoded
