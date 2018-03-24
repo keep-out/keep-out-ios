@@ -21,7 +21,8 @@ struct Trucks {
     static var trucks: [Truck] = []
 }
 
-class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate, CLLocationManagerDelegate {
+class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate,
+    CLLocationManagerDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     
     let defaults = UserDefaults.standard
     var provider: MoyaProvider<Service>?
@@ -35,6 +36,9 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.emptyDataSetSource = self
+        tableView.emptyDataSetDelegate = self
+        tableView.tableFooterView = UIView()
         
         self.navigationItem.title = "Home"
         view.backgroundColor = FlatWhite()
@@ -51,72 +55,78 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
             locationManager.requestLocation()
         }
         
-        self.tableView.cr.addHeadRefresh(animator: FastAnimator()) { [weak self] in
-            // TODO: Make network request to update trucks
-            Trucks.trucks.removeAll()
-            // Get JWT or refresh if expired
-            if let token = self?.defaults.object(forKey: "token") as? String {
-                self?.provider = MoyaProvider<Service>(plugins: [AuthPlugin(token: token)])
-                // loadTrucks(token: token)
-                let userId: Int! = self!.defaults.object(forKey: "userId") as? Int
-                self?.provider!.request(.getAllBookmarks(id: userId)) { result in
-                    switch result {
-                    case let .success(response):
-                        let bookmarks = JSON(response.data)
-                        let bookmarksArray: [JSON] = bookmarks["data"].arrayValue
-                        for i in 0..<bookmarksArray.count {
-                            self?.bookmarkIds.append(bookmarksArray[i]["truck_id"].int!)
+        if let lat = defaults.object(forKey: "latitude") as? Float {
+            if let long = defaults.object(forKey: "longitude") as? Float {
+                self.tableView.cr.addHeadRefresh(animator: FastAnimator()) { [weak self] in
+                    // TODO: Make network request to update trucks
+                    Trucks.trucks.removeAll()
+                    // Get JWT or refresh if expired
+                    if let token = self?.defaults.object(forKey: "token") as? String {
+                        self?.provider = MoyaProvider<Service>(plugins: [AuthPlugin(token: token)])
+                        // loadTrucks(token: token)
+                        let userId: Int! = self!.defaults.object(forKey: "userId") as? Int
+                        self?.provider!.request(.getAllBookmarks(id: userId)) { result in
+                            switch result {
+                            case let .success(response):
+                                let bookmarks = JSON(response.data)
+                                let bookmarksArray: [JSON] = bookmarks["data"].arrayValue
+                                for i in 0..<bookmarksArray.count {
+                                    self?.bookmarkIds.append(bookmarksArray[i]["truck_id"].int!)
+                                }
+                            case let .failure(error):
+                                log.error(error)
+                            }
                         }
-                    case let .failure(error):
-                        log.error(error)
-                    }
-                }
-                self?.provider!.request(.getLocalTrucks(lat: self?.defaults.value(forKey: "latitude") as! Float, long: self?.defaults.value(forKey: "longitude") as! Float, radius: 100000)) { result in
-                    switch result {
-                    case let .success(response):
-                        let json = JSON(response.data)
-                        print(json.dictionary!)
-                        let jsonArray: [JSON] = json["data"].arrayValue
-                        Trucks.trucks = (self?.parseTrucks(trucksJSON: jsonArray))!
-                        DispatchQueue.main.async {
-                            self?.tableView.reloadData()
+                        print("LATITUDE: \(lat)")
+                        print("LONGITUDE: \(long)")
+                        self?.provider!.request(.getLocalTrucks(lat: lat, long: long, radius: 100000)) { result in
+                            switch result {
+                            case let .success(response):
+                                let json = JSON(response.data)
+                                print(json.dictionary!)
+                                let jsonArray: [JSON] = json["data"].arrayValue
+                                Trucks.trucks = (self?.parseTrucks(trucksJSON: jsonArray))!
+                                DispatchQueue.main.async {
+                                    self?.tableView.reloadData()
+                                }
+                            case let .failure(error):
+                                log.error(error)
+                            }
                         }
-                    case let .failure(error):
-                        log.error(error)
+                    } else {
+                        // Get new JWT
+                        let username: String = KeychainWrapper.standard.string(forKey: "username")!
+                        let password: String = KeychainWrapper.standard.string(forKey: "password")!
+                        let parameters = [
+                            "username":username,
+                            "password":password
+                        ]
+                        Alamofire.request(SERVER_URL + AUTHENTICATE, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+                            switch response.result {
+                            case .success(let data):
+                                log.info("JWT refreshed")
+                                
+                                let json = JSON(data)
+                                let token = json["data"]["token"].string
+                                self?.defaults.set(token, forKey: "token")
+                                
+                            // Need to handle network error - user will not be able to access page
+                            case .failure(let error):
+                                log.error(error)
+                            }
+                        }
                     }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                        self?.tableView.reloadData()
+                        self?.tableView.cr.endHeaderRefresh()
+                        self?.tableView.cr.resetNoMore()
+                    })
                 }
-            } else {
-                // Get new JWT
-                let username: String = KeychainWrapper.standard.string(forKey: "username")!
-                let password: String = KeychainWrapper.standard.string(forKey: "password")!
-                let parameters = [
-                    "username":username,
-                    "password":password
-                ]
-                Alamofire.request(SERVER_URL + AUTHENTICATE, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-                    switch response.result {
-                    case .success(let data):
-                        log.info("JWT refreshed")
-
-                        let json = JSON(data)
-                        let token = json["data"]["token"].string
-                        self?.defaults.set(token, forKey: "token")
-
-                    // Need to handle network error - user will not be able to access page
-                    case .failure(let error):
-                        log.error(error)
-                    }
-                }
+                self.tableView.cr.beginHeaderRefresh()
+                // Adds edit bar button item to the nav bar
+                // self.navigationItem.rightBarButtonItem = self.editButtonItem
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-                self?.tableView.reloadData()
-                self?.tableView.cr.endHeaderRefresh()
-                self?.tableView.cr.resetNoMore()
-            })
         }
-        self.tableView.cr.beginHeaderRefresh()
-        // Adds edit bar button item to the nav bar
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     func parseTrucks(trucksJSON: [JSON]) -> [Truck] {
@@ -173,6 +183,44 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
                     return
             }
             completion(location.coordinate)
+        }
+    }
+    
+    // MARK - POC of DZEmptyDataSet
+    func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
+        let str = "No nearby trucks"
+        let attrs = [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.headline)]
+        return NSAttributedString(string: str, attributes: attrs)
+    }
+    
+    func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
+        let str = ""
+        let attrs = [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)]
+        return NSAttributedString(string: str, attributes: attrs)
+    }
+    
+    func buttonTitle(forEmptyDataSet scrollView: UIScrollView, for state: UIControlState) -> NSAttributedString? {
+        let str = "Refresh Data"
+        let attrs = [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.callout)]
+        return NSAttributedString(string: str, attributes: attrs)
+    }
+    
+    func emptyDataSet(_ scrollView: UIScrollView, didTap button: UIButton) {
+        let lat = defaults.object(forKey: "latitude") as! Float
+        let long = defaults.object(forKey: "longitude") as! Float
+        self.provider!.request(.getLocalTrucks(lat: lat, long: long, radius: 100000)) { result in
+            switch result {
+            case let .success(response):
+                let json = JSON(response.data)
+                print(json.dictionary!)
+                let jsonArray: [JSON] = json["data"].arrayValue
+                Trucks.trucks = (self.parseTrucks(trucksJSON: jsonArray))
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            case let .failure(error):
+                log.error(error)
+            }
         }
     }
 
