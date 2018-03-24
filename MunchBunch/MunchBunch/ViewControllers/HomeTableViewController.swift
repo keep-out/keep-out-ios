@@ -57,14 +57,14 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.requestLocation()
         }
-        offset = 0
-        lastItems = false
         
         if let lat = defaults.object(forKey: "latitude") as? Float {
             if let long = defaults.object(forKey: "longitude") as? Float {
                 self.tableView.cr.addHeadRefresh(animator: FastAnimator()) { [weak self] in
                     // TODO: Make network request to update trucks
                     Trucks.trucks.removeAll()
+                    self?.offset = 0
+                    self?.lastItems = false
                     // Get JWT or refresh if expired
                     if let token = self?.defaults.object(forKey: "token") as? String {
                         self?.provider = MoyaProvider<Service>(plugins: [AuthPlugin(token: token)])
@@ -240,6 +240,17 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
 // MARK: - Table view data source
 extension HomeTableViewController {
     
+    // Helper method to reverse geocode a coordinate to a readable address string
+    func geocode(latitude: Double, longitude: Double, completion: @escaping (CLPlacemark?, Error?) -> ())  {
+        CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: latitude, longitude: longitude)) { placemarks, error in
+            guard let placemark = placemarks?.first, error == nil else {
+                completion(nil, error)
+                return
+            }
+            completion(placemark, nil)
+        }
+    }
+    
     // If we have no permission to access user location, then ask user for permission.
     func isAuthorizedtoGetUserLocation() {
         if CLLocationManager.authorizationStatus() != .authorizedWhenInUse     {
@@ -266,15 +277,22 @@ extension HomeTableViewController {
         }
         cell.selectionStyle = .none
         cell.nameLabel.text = truck.name
-        cell.address1Label.text = truck.phone
-        cell.address2Label.text = ""
+        geocode(latitude: truck.coordinate.latitude, longitude: truck.coordinate.longitude) {
+            placemark, error in
+            guard let placemark = placemark, error == nil else { return }
+            DispatchQueue.main.async {
+                cell.address1Label.text = "\(placemark.subThoroughfare ?? "") \(placemark.thoroughfare ?? "")"
+                cell.address2Label.text = "\(placemark.locality ?? ""), \(placemark.administrativeArea ?? "") \(placemark.postalCode ?? "")"
+            }
+        }
+//        cell.address1Label.text = truck.phone
+//        cell.address2Label.text = ""
         cell.truckImage.kf.setImage(with: truck.url)
         return cell
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let lastElement = Trucks.trucks.count - 1
-        let firstElement = 0
         // Scrolled to last item in current view
         if indexPath.row == lastElement && !lastItems {
             self.offset += 10
@@ -288,7 +306,7 @@ extension HomeTableViewController {
                     let json = JSON(response.data)
                     print(json.dictionary!)
                     let jsonArray: [JSON] = json["data"].arrayValue
-                    if (jsonArray.count < 20) {
+                    if (jsonArray.count < 10) {
                         // Reached the end, set end flag to true
                         self.lastItems = true
                     }
@@ -300,11 +318,6 @@ extension HomeTableViewController {
                     log.error(error)
                 }
             }
-        }
-        // Reset offset and lastItem flag up scroll up to top
-        if indexPath.row == firstElement {
-            self.offset = 0
-            self.lastItems = false
         }
     }
     
