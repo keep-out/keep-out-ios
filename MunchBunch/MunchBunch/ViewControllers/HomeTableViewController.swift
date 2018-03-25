@@ -287,8 +287,19 @@ extension HomeTableViewController {
         }
 //        cell.address1Label.text = truck.phone
 //        cell.address2Label.text = ""
+        
+        cell.distanceLabel.text = "\(String(format: "%.01f", getDistanceToTruck(truck: truck))) mi"
         cell.truckImage.kf.setImage(with: truck.url)
         return cell
+    }
+    
+    func getDistanceToTruck(truck: Truck) -> Double {
+        let userLat = defaults.object(forKey: "latitude") as! Double
+        let userLong = defaults.object(forKey: "longitude") as! Double
+        let userLocation = CLLocation(latitude: userLat, longitude: userLong)
+        let truckLocation = CLLocation(latitude: truck.coordinate.latitude, longitude: truck.coordinate.longitude)
+        let distanceInMeters = userLocation.distance(from: truckLocation)
+        return distanceInMeters / 1609.34 // Convert to miles
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

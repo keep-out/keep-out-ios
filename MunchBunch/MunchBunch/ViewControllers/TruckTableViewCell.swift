@@ -23,6 +23,7 @@ class TruckTableViewCell: UITableViewCell {
     @IBOutlet weak var address1Label: UILabel!
     @IBOutlet weak var address2Label: UILabel!
     @IBOutlet weak var followIcon: UIButton!
+    @IBOutlet weak var distanceLabel: UILabel!
     
     weak var truckTableViewCellDelegate: TruckTableViewCellDelegate?
     
