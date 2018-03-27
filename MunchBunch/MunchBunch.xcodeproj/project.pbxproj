@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E406C62206A1FAA0051D0C5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2E406C61206A1FAA0051D0C5 /* GoogleService-Info.plist */; };
 		9D0E5D41200B603500CDE9B4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E5D40200B603500CDE9B4 /* AppDelegate.swift */; };
 		9D0E5D43200B603500CDE9B4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E5D42200B603500CDE9B4 /* LoginViewController.swift */; };
 		9D0E5D46200B603500CDE9B4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D0E5D44200B603500CDE9B4 /* Main.storyboard */; };
@@ -23,7 +24,6 @@
 		9D9C3A4E201EA9F000DACDBF /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A4D201EA9F000DACDBF /* HomeTableViewController.swift */; };
 		9D9C3A52201FD5ED00DACDBF /* TruckTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A51201FD5ED00DACDBF /* TruckTableViewCell.swift */; };
 		9D9C3A5B20214B9100DACDBF /* GeoUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A5A20214B9100DACDBF /* GeoUtil.swift */; };
-		9D9DAADA204D1C0000FAFB6F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D9DAAD9204D1C0000FAFB6F /* GoogleService-Info.plist */; };
 		9DB339F420411532005B7E04 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB339F320411532005B7E04 /* SampleData.swift */; };
 		9DC3D069200C5940000B6A4B /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3D068200C5940000B6A4B /* SignUpViewController.swift */; };
 		9DC3D06B200C5AC2000B6A4B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC3D06A200C5AC2000B6A4B /* Constants.swift */; };
@@ -38,6 +38,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2E406C61206A1FAA0051D0C5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6B6B110625315CA8C1D3CD93 /* Pods-MunchBunch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MunchBunch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MunchBunch/Pods-MunchBunch.debug.xcconfig"; sourceTree = "<group>"; };
 		9BB420E5813E33ACA1B31E3F /* Pods_MunchBunch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MunchBunch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D0E5D3D200B603500CDE9B4 /* MunchBunch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MunchBunch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,7 +60,6 @@
 		9D9C3A4D201EA9F000DACDBF /* HomeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
 		9D9C3A51201FD5ED00DACDBF /* TruckTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruckTableViewCell.swift; sourceTree = "<group>"; };
 		9D9C3A5A20214B9100DACDBF /* GeoUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoUtil.swift; sourceTree = "<group>"; };
-		9D9DAAD9204D1C0000FAFB6F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9DB339F320411532005B7E04 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		9DC3D068200C5940000B6A4B /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		9DC3D06A200C5AC2000B6A4B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -107,6 +107,7 @@
 		9D0E5D3F200B603500CDE9B4 /* MunchBunch */ = {
 			isa = PBXGroup;
 			children = (
+				2E406C61206A1FAA0051D0C5 /* GoogleService-Info.plist */,
 				9D4527C52067A4430030A38F /* Views */,
 				9D9C3A48201C915E00DACDBF /* UIScrollView+EmptyDataSet.h */,
 				9D9C3A49201C916900DACDBF /* UIScrollView+EmptyDataSet.m */,
@@ -119,7 +120,6 @@
 				9D0E5D47200B603500CDE9B4 /* Assets.xcassets */,
 				9D0E5D49200B603500CDE9B4 /* LaunchScreen.storyboard */,
 				9D0E5D4C200B603500CDE9B4 /* Info.plist */,
-				9D9DAAD9204D1C0000FAFB6F /* GoogleService-Info.plist */,
 				9DC3D06A200C5AC2000B6A4B /* Constants.swift */,
 				9DC3D06C200CA1B6000B6A4B /* Extensions.swift */,
 				9DD7EFCA20113A600000DE7A /* MunchBunch-Bridging-Header.h */,
@@ -264,10 +264,10 @@
 			files = (
 				9D0E5D4B200B603500CDE9B4 /* LaunchScreen.storyboard in Resources */,
 				9D4527C72067A4800030A38F /* TruckDetailMapView.xib in Resources */,
-				9D9DAADA204D1C0000FAFB6F /* GoogleService-Info.plist in Resources */,
 				9D4527CD206903380030A38F /* TruckDetailViewController.xib in Resources */,
 				9D0E5D48200B603500CDE9B4 /* Assets.xcassets in Resources */,
 				9D0E5D46200B603500CDE9B4 /* Main.storyboard in Resources */,
+				2E406C62206A1FAA0051D0C5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
