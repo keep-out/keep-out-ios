@@ -63,6 +63,7 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
                 self.tableView.cr.addHeadRefresh(animator: FastAnimator()) { [weak self] in
                     // TODO: Make network request to update trucks
                     Trucks.trucks.removeAll()
+                    self?.bookmarkIds.removeAll()
                     self?.offset = 0
                     self?.lastItems = false
                     // Get JWT or refresh if expired
@@ -212,20 +213,22 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
     }
     
     func emptyDataSet(_ scrollView: UIScrollView, didTap button: UIButton) {
-        let lat = defaults.object(forKey: "latitude") as! Float
-        let long = defaults.object(forKey: "longitude") as! Float
-        self.provider!.request(.getLocalTrucks(lat: lat, long: long, radius: 8000, offset: self.offset)) { result in
-            switch result {
-            case let .success(response):
-                let json = JSON(response.data)
-                print(json.dictionary!)
-                let jsonArray: [JSON] = json["data"].arrayValue
-                Trucks.trucks = (self.parseTrucks(trucksJSON: jsonArray))
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
+        if let lat = defaults.object(forKey: "latitude") as? Float {
+            if let long = defaults.object(forKey: "longitude") as? Float {
+                self.provider!.request(.getLocalTrucks(lat: lat, long: long, radius: 8000, offset: self.offset)) { result in
+                    switch result {
+                    case let .success(response):
+                        let json = JSON(response.data)
+                        print(json.dictionary!)
+                        let jsonArray: [JSON] = json["data"].arrayValue
+                        Trucks.trucks = (self.parseTrucks(trucksJSON: jsonArray))
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
+                    case let .failure(error):
+                        log.error(error)
+                    }
                 }
-            case let .failure(error):
-                log.error(error)
             }
         }
     }

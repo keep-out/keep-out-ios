@@ -36,7 +36,8 @@ class TruckTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        truckImage.layer.masksToBounds = true
+        truckImage.contentMode = UIViewContentMode.scaleAspectFill
+        truckImage.clipsToBounds = true
         truckImage.layer.cornerRadius = 2
         nameLabel.textColor = FlatGreenDark()
         address1Label.textColor = FlatGrayDark()

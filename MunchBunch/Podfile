@@ -20,6 +20,5 @@ target 'MunchBunch' do
   pod 'Flurry-iOS-SDK/FlurrySDK' #Analytics Pod
   pod 'Flurry-iOS-SDK/FlurryAds' #Advertising Pod (requires Analytics)
   pod 'SwiftKeychainWrapper'
-  pod 'AlgoliaSearch-Client-Swift'
   pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git', :branch => 'wip/swift4'
 end

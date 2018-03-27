@@ -2,7 +2,7 @@
 //  TruckDetailViewController.swift
 //  MunchBunch
 //
-//  Created by Kevin Nguyen on 3/24/18.
+//  Created by Kevin Nguyen on 3/26/18.
 //  Copyright © 2018 munch-bunch-app. All rights reserved.
 //
 
@@ -18,10 +18,17 @@ import Kingfisher
 import Moya
 
 class TruckDetailViewController: UIViewController {
-
+    // Outlets
+    @IBOutlet weak var truckImage: UIImageView!
+    @IBOutlet weak var truckTitle: UILabel!
+    // Data
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.backgroundColor = FlatWhite()
+        truckImage.contentMode = UIViewContentMode.scaleAspectFill
+        truckImage.clipsToBounds = true
     }
 
     override func didReceiveMemoryWarning() {

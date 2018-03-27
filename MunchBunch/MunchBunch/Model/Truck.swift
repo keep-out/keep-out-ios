@@ -9,6 +9,7 @@
 import Foundation
 import MapKit
 import CoreLocation
+import Contacts
 
 class Truck: NSObject, MKAnnotation {
 
@@ -48,5 +49,13 @@ class Truck: NSObject, MKAnnotation {
     // Update the coordinate
     func updateCoordinate(coordinate: CLLocationCoordinate2D) {
         self.coordinate = coordinate
+    }
+    
+    func mapItem() -> MKMapItem {
+        let addressDict = [CNPostalAddressStreetKey: subtitle!]
+        let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: addressDict)
+        let mapItem = MKMapItem(placemark: placemark)
+        mapItem.name = title
+        return mapItem
     }
 }

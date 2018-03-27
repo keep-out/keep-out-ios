@@ -13,12 +13,17 @@ import CoreLocation
 import SwiftyJSON
 import SwiftyBeaver
 
-class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
-    
+private let kTruckAnnotationName = "kTruckAnnotationName"
+
+class MapViewController: UIViewController, CLLocationManagerDelegate,
+MKMapViewDelegate, TruckDetailMapViewDelegate {
+    // Outlets
     @IBOutlet weak var mapView: MKMapView!
     
+    // Data
     var locationManager: CLLocationManager = CLLocationManager()
-    let regionRadius: CLLocationDistance = 40000
+    let regionRadius: CLLocationDistance = 10000
+    var selectedTruck: Truck?
     
     let defaults = UserDefaults.standard
     
@@ -27,6 +32,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         checkLocationAuthorizationStatus()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        mapView.removeAnnotations(mapView.annotations)
+        mapView.addAnnotations(Trucks.trucks)
     }
 
     override func viewDidLoad() {
@@ -38,6 +49,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         // Initialize mapView, get nearby trucks, annotate mapView
         // TODO: Set to user's current location
+        
+        // mapView.register(TruckView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         
         mapView.delegate = self
         mapView.showsUserLocation = true
@@ -59,7 +72,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         let noLocation = CLLocationCoordinate2D()
         let viewRegion = MKCoordinateRegionMakeWithDistance(noLocation, 10000, 10000)
         mapView.setRegion(viewRegion, animated: false)
-        mapView.addAnnotations(Trucks.trucks)
         
         DispatchQueue.main.async {
             self.locationManager.startUpdatingLocation()
@@ -77,8 +89,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         let location = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
         
-        let span = MKCoordinateSpanMake(0.5, 0.5)
-        let region = MKCoordinateRegion (center:  location,span: span)
+        let span = MKCoordinateSpanMake(0.075, 0.075)
+        let region = MKCoordinateRegion (center: location, span: span)
         
         mapView.setRegion(region, animated: true)
     }
@@ -105,5 +117,37 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         // Pass the selected object to the new view controller.
     }
     */
+}
 
+extension MapViewController {
+//    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+//        let visibleRegion = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 10000, 10000)
+//        self.mapView.setRegion(self.mapView.regionThatFits(visibleRegion), animated: true)
+//    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation { return nil }
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: kTruckAnnotationName)
+        
+        if annotationView == nil {
+            annotationView = TruckView(annotation: annotation, reuseIdentifier: kTruckAnnotationName)
+            (annotationView as! TruckView).truckDetailDelegate = self
+        } else {
+            annotationView!.annotation = annotation
+        }
+        return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView,
+                 calloutAccessoryControlTapped control: UIControl) {
+        // performSegue(withIdentifier: "amazeBowlSegue", sender: self)
+        let location = view.annotation as! Truck
+        let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+        location.mapItem().openInMaps(launchOptions: launchOptions)
+    }
+    
+    func detailsRequestedForTruck(truck: Truck) {
+        self.selectedTruck = truck
+    }
+    
 }
