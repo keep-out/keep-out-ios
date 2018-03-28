@@ -14,8 +14,7 @@ class TwitterViewController: TWTRTimelineViewController {
 
     convenience init(handle: String) {
         let client = TWTRAPIClient()
-        let dataSource = TWTRUserTimelineDataSource(screenName: handle, apiClient: client)
-        
+        let dataSource = TWTRUserTimelineDataSource(screenName: handle, userID: nil, apiClient: client, maxTweetsPerRequest: 10, includeReplies: false, includeRetweets: false)
         self.init(dataSource: dataSource)
     }
     
@@ -24,7 +23,7 @@ class TwitterViewController: TWTRTimelineViewController {
     }
     
     required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError("not implemented")
     }
     
     func formatHandle(handle: String) -> String {
