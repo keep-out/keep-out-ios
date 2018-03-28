@@ -286,6 +286,8 @@ extension HomeTableViewController {
             DispatchQueue.main.async {
                 cell.address1Label.text = "\(placemark.subThoroughfare ?? "") \(placemark.thoroughfare ?? "")"
                 cell.address2Label.text = "\(placemark.locality ?? ""), \(placemark.administrativeArea ?? "") \(placemark.postalCode ?? "")"
+                truck.address1 = cell.address1Label.text!
+                truck.address2 = cell.address2Label.text!
             }
         }
 //        cell.address1Label.text = truck.phone
@@ -294,6 +296,20 @@ extension HomeTableViewController {
         cell.distanceLabel.text = "\(String(format: "%.01f", getDistanceToTruck(truck: truck))) mi"
         cell.truckImage.kf.setImage(with: truck.url)
         return cell
+    }
+    
+    // Cell tapped, create and show truck detail view
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let destination: TruckDetailViewController = TruckDetailViewController() // Truck detail view
+        let truck: Truck = Trucks.trucks[indexPath.row]
+        destination.imageURL = truck.url
+        destination.titleString = truck.name
+        destination.handleString = truck.handle
+        destination.coordinate = truck.coordinate
+        destination.address1String = truck.address1
+        destination.address2String = truck.address2
+        navigationController?.pushViewController(destination, animated: true)
+
     }
     
     func getDistanceToTruck(truck: Truck) -> Double {
