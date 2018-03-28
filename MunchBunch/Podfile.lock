@@ -42,6 +42,9 @@ PODS:
   - SwiftKeychainWrapper (3.0.1)
   - SwiftyBeaver (1.5.1)
   - SwiftyJSON (4.0.0)
+  - TwitterCore (3.1.0)
+  - TwitterKit (3.3.0):
+    - TwitterCore (>= 3.1.0)
   - Validator (3.0.1)
 
 DEPENDENCIES:
@@ -59,6 +62,7 @@ DEPENDENCIES:
   - SwiftKeychainWrapper
   - SwiftyBeaver
   - SwiftyJSON
+  - TwitterKit
   - Validator
 
 EXTERNAL SOURCES:
@@ -91,8 +95,10 @@ SPEC CHECKSUMS:
   SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
   SwiftyBeaver: 4f74563624b2c1e821c522c54142b5dd5ebb0f30
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
+  TwitterCore: 644d59e75abccb26cf0a9050d2c4dea0e5412241
+  TwitterKit: a2e60ddcedbf54091eac6f27685ca7a87681e1d7
   Validator: 309a430b6b5430a327d8c84a3246036badaa2dcb
 
-PODFILE CHECKSUM: 19374a459c3f36a5a3bd7c51025821374fc74f2f
+PODFILE CHECKSUM: 44b535ac345e97169a5d2e3107c871331b10dcb1
 
 COCOAPODS: 1.3.1

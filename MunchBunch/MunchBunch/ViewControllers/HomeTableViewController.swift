@@ -87,7 +87,6 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
                             switch result {
                             case let .success(response):
                                 let json = JSON(response.data)
-                                print(json.dictionary!)
                                 let jsonArray: [JSON] = json["data"].arrayValue
                                 Trucks.trucks = (self?.parseTrucks(trucksJSON: jsonArray))!
                                 DispatchQueue.main.async {
@@ -156,13 +155,14 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
                               timeOpen: timeOpen, broadcasting: broadcasting, coordinate: location)
             trucks.append(truck)
             
-//            // Get coordinate from address string
-//            if (address != nil) {
-//                addressFromString(address: address!, completion: {
-//                    coordinate in
-//                    truck.updateCoordinate(coordinate: coordinate)
-//                })
-//            }
+            geocode(latitude: truck.coordinate.latitude, longitude: truck.coordinate.longitude) {
+                placemark, error in
+                guard let placemark = placemark, error == nil else { return }
+                DispatchQueue.main.async {
+                    truck.address1 = "\(placemark.subThoroughfare ?? "") \(placemark.thoroughfare ?? "")"
+                    truck.address2 = "\(placemark.locality ?? ""), \(placemark.administrativeArea ?? "") \(placemark.postalCode ?? "")"
+                }
+            }
         
         }
         return trucks
@@ -170,7 +170,6 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        print("locations = \(locValue.latitude) \(locValue.longitude)")
         defaults.set(locValue.latitude, forKey: "latitude")
         defaults.set(locValue.longitude, forKey: "longitude")
     }
@@ -219,7 +218,6 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
                     switch result {
                     case let .success(response):
                         let json = JSON(response.data)
-                        print(json.dictionary!)
                         let jsonArray: [JSON] = json["data"].arrayValue
                         Trucks.trucks = (self.parseTrucks(trucksJSON: jsonArray))
                         DispatchQueue.main.async {
@@ -280,18 +278,8 @@ extension HomeTableViewController {
         }
         cell.selectionStyle = .none
         cell.nameLabel.text = truck.name
-        geocode(latitude: truck.coordinate.latitude, longitude: truck.coordinate.longitude) {
-            placemark, error in
-            guard let placemark = placemark, error == nil else { return }
-            DispatchQueue.main.async {
-                cell.address1Label.text = "\(placemark.subThoroughfare ?? "") \(placemark.thoroughfare ?? "")"
-                cell.address2Label.text = "\(placemark.locality ?? ""), \(placemark.administrativeArea ?? "") \(placemark.postalCode ?? "")"
-                truck.address1 = cell.address1Label.text!
-                truck.address2 = cell.address2Label.text!
-            }
-        }
-//        cell.address1Label.text = truck.phone
-//        cell.address2Label.text = ""
+        cell.address1Label.text = truck.address1
+        cell.address2Label.text = truck.address2
         
         cell.distanceLabel.text = "\(String(format: "%.01f", getDistanceToTruck(truck: truck))) mi"
         cell.truckImage.kf.setImage(with: truck.url)
@@ -328,7 +316,6 @@ extension HomeTableViewController {
         // Scrolled to last item in current view
         if indexPath.row == lastElement && !lastItems {
             self.offset += 10
-            log.info("OFFSET: \(self.offset)")
             let lat: Float = defaults.object(forKey: "latitude") as! Float
             let long: Float = defaults.object(forKey: "longitude") as! Float
             // Load more trucks
@@ -336,7 +323,6 @@ extension HomeTableViewController {
                 switch result {
                 case let .success(response):
                     let json = JSON(response.data)
-                    print(json.dictionary!)
                     let jsonArray: [JSON] = json["data"].arrayValue
                     if (jsonArray.count < 10) {
                         // Reached the end, set end flag to true

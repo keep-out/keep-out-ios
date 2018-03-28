@@ -64,6 +64,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = tabBarViewController
         }
         self.window?.makeKeyAndVisible()
+        
+        // Twitter init
+        TWTRTwitter.sharedInstance().start(withConsumerKey:"B1vBU6xSkzSHdIXNSdmTykril", consumerSecret:"oOTtJR1FFdbBExnIcW5T2Oy11jKhttd5qWcGLCcLNgNHqfGoD4")
+        
         log.info("Application started")
         
         return true

@@ -13,6 +13,7 @@ target 'MunchBunch' do
   pod 'SwiftyJSON'
   pod 'CRRefresh'
   pod 'SwiftyBeaver'
+  pod 'TwitterKit'
   pod 'Validator'
   pod 'SkeletonView'
   pod 'GoogleAnalytics'

@@ -17,6 +17,7 @@ import SwiftyBeaver
 import SwiftKeychainWrapper
 import Kingfisher
 import Moya
+import TwitterKit
 
 class TruckDetailViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
@@ -29,9 +30,8 @@ class TruckDetailViewController: UIViewController, CLLocationManagerDelegate, MK
     @IBOutlet weak var getDirectionsButton: UIButton!
     @IBOutlet weak var address1: UILabel!
     @IBOutlet weak var address2: UILabel!
-    @IBOutlet weak var truckHandle: UILabel!
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var twitterFeed: UITableView!
+    @IBOutlet weak var twitterFeedContainer: UIView!
     
     // Data
     var imageURL: URL!
@@ -45,6 +45,13 @@ class TruckDetailViewController: UIViewController, CLLocationManagerDelegate, MK
     var locationManager: CLLocationManager = CLLocationManager()
     let regionRadius: CLLocationDistance = 10000
     let defaults = UserDefaults.standard
+    var twitterViewController: TwitterViewController!
+    
+//    override func viewWillLayoutSubviews()
+//    {
+//        super.viewWillLayoutSubviews();
+//        self.scrollView.contentSize.height = 1000; // Or whatever you want it to be.
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +68,12 @@ class TruckDetailViewController: UIViewController, CLLocationManagerDelegate, MK
         }
         address1.text = address1String
         address2.text = address2String
-        truckHandle.text = handleString
+        
+        // Twitter init
+        twitterViewController = TwitterViewController(handle: handleString!)
+        self.addChildViewController(twitterViewController)
+        self.twitterFeedContainer.addSubview(twitterViewController.view)
+        twitterViewController.didMove(toParentViewController: self)
         
         // mapView init
         mapView.delegate = self
