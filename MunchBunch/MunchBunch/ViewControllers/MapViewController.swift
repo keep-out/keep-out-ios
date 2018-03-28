@@ -54,8 +54,6 @@ MKMapViewDelegate, TruckDetailMapViewDelegate {
         
         mapView.delegate = self
         mapView.showsUserLocation = true
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.delegate = self
         
         //Check for Location Services
         if (CLLocationManager.locationServicesEnabled()) {
@@ -84,7 +82,7 @@ MKMapViewDelegate, TruckDetailMapViewDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let userLocation:CLLocation = locations[0] as CLLocation
+        let userLocation: CLLocation = locations[0] as CLLocation
         locationManager.stopUpdatingLocation()
         
         let location = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)

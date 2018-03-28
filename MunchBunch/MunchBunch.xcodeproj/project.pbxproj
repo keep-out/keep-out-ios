@@ -18,6 +18,7 @@
 		9D4527C72067A4800030A38F /* TruckDetailMapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D4527C62067A4800030A38F /* TruckDetailMapView.xib */; };
 		9D4527CC206903380030A38F /* TruckDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4527CA206903380030A38F /* TruckDetailViewController.swift */; };
 		9D4527CD206903380030A38F /* TruckDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D4527CB206903380030A38F /* TruckDetailViewController.xib */; };
+		9D4527CF206B7C4A0030A38F /* SimpleTruck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4527CE206B7C4A0030A38F /* SimpleTruck.swift */; };
 		9D7F460D2040AB43002B6F41 /* NetworkUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D7F460C2040AB43002B6F41 /* NetworkUtil.swift */; };
 		9D9C3A4A201C916900DACDBF /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A49201C916900DACDBF /* UIScrollView+EmptyDataSet.m */; };
 		9D9C3A4C201E76AB00DACDBF /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9C3A4B201E76AB00DACDBF /* TabBarViewController.swift */; };
@@ -53,6 +54,7 @@
 		9D4527C62067A4800030A38F /* TruckDetailMapView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TruckDetailMapView.xib; sourceTree = "<group>"; };
 		9D4527CA206903380030A38F /* TruckDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruckDetailViewController.swift; sourceTree = "<group>"; };
 		9D4527CB206903380030A38F /* TruckDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TruckDetailViewController.xib; sourceTree = "<group>"; };
+		9D4527CE206B7C4A0030A38F /* SimpleTruck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTruck.swift; sourceTree = "<group>"; };
 		9D7F460C2040AB43002B6F41 /* NetworkUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtil.swift; sourceTree = "<group>"; };
 		9D9C3A48201C915E00DACDBF /* UIScrollView+EmptyDataSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+EmptyDataSet.h"; path = "../../../../../Downloads/DZNEmptyDataSet-master/Source/UIScrollView+EmptyDataSet.h"; sourceTree = "<group>"; };
 		9D9C3A49201C916900DACDBF /* UIScrollView+EmptyDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+EmptyDataSet.m"; path = "../../../../../Downloads/DZNEmptyDataSet-master/Source/UIScrollView+EmptyDataSet.m"; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				9DC3D070200F515E000B6A4B /* Truck.swift */,
 				9DC3D076200F52DF000B6A4B /* User.swift */,
 				9DD7EFC82010AAB80000DE7A /* ValidationError.swift */,
+				9D4527CE206B7C4A0030A38F /* SimpleTruck.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 				9D9C3A52201FD5ED00DACDBF /* TruckTableViewCell.swift in Sources */,
 				9DB339F420411532005B7E04 /* SampleData.swift in Sources */,
 				9DD7EFCF2011411F0000DE7A /* BookmarksTableViewController.swift in Sources */,
+				9D4527CF206B7C4A0030A38F /* SimpleTruck.swift in Sources */,
 				9DC3D06D200CA1B6000B6A4B /* Extensions.swift in Sources */,
 				9D9C3A5B20214B9100DACDBF /* GeoUtil.swift in Sources */,
 				9D9C3A4E201EA9F000DACDBF /* HomeTableViewController.swift in Sources */,
