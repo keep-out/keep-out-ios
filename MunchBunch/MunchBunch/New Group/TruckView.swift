@@ -8,8 +8,9 @@
 
 import Foundation
 import MapKit
+import SpriteKit
 
-private let kTruckMapPinImage = UIImage(named: "mapPin")!
+private let kTruckMapPinImage = UIImage(named: "mapPin512")!
 private let kTruckMapAnimationTime = 0.300
 
 class TruckView: MKAnnotationView {
@@ -25,13 +26,23 @@ class TruckView: MKAnnotationView {
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         self.canShowCallout = false
-        self.image = resizeImage(image: kTruckMapPinImage)
+        
+        let nodeTexture = SKTexture(imageNamed: "mapPin512")
+        nodeTexture.filteringMode = .nearest
+        let node = SKSpriteNode(texture: nodeTexture)
+        let image = UIImage(cgImage: (node.texture?.cgImage())!)
+        self.image = resizeImage(image: image)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.canShowCallout = false
-        self.image = resizeImage(image: kTruckMapPinImage)
+        
+        let nodeTexture = SKTexture(imageNamed: "mapPin512")
+        nodeTexture.filteringMode = .nearest
+        let node = SKSpriteNode(texture: nodeTexture)
+        let image = UIImage(cgImage: (node.texture?.cgImage())!)
+        self.image = resizeImage(image: image)
     }
     
     func resizeImage(image: UIImage) -> UIImage {
@@ -73,11 +84,9 @@ class TruckView: MKAnnotationView {
                     UIView.animate(withDuration: kTruckMapAnimationTime, animations: {
                         self.customCalloutView!.alpha = 0.0
                     }, completion: { (success) in
-                        print("REMOVING CALLOUT")
                         self.customCalloutView!.removeFromSuperview()
                     })
                 } else {
-                    print("REMOVING CALLOUT")
                     self.customCalloutView!.removeFromSuperview() // Just remove it
                 }
             }
@@ -110,6 +119,4 @@ class TruckView: MKAnnotationView {
         super.prepareForReuse()
         self.customCalloutView?.removeFromSuperview()
     }
-    
-    
 }
