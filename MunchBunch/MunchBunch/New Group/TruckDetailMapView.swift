@@ -93,6 +93,7 @@ class TruckDetailMapView: UIView {
     
     @IBAction func detailButtonPressed(_ sender: Any) {
         // TODO: Segue to truck detail view
+        delegate?.detailsRequestedForTruck(truck: truck)
     }
     //    // MARK: - Hit test. We need to override this to detect hits in our custom callout
 //    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
