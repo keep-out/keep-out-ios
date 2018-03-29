@@ -25,6 +25,8 @@ class TruckDetailViewController: UIViewController, CLLocationManagerDelegate, MK
     // Outlets
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var middleView: UIView!
     @IBOutlet weak var truckImage: UIImageView!
     @IBOutlet weak var truckTitle: UILabel!
     @IBOutlet weak var truckPhone: UIButton!
@@ -63,6 +65,21 @@ class TruckDetailViewController: UIViewController, CLLocationManagerDelegate, MK
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        contentView.backgroundColor = UIColor(red:0.88, green:0.91, blue:0.91, alpha:1.0)
+        
+        // Top view
+        topView.layer.cornerRadius = 3
+        topView.clipsToBounds = true
+        
+        // Middle view
+        middleView.layer.cornerRadius = 3
+        middleView.clipsToBounds = true
+        
+        // Twitter feed view
+        twitterFeedContainer.layer.cornerRadius = 3
+        twitterFeedContainer.clipsToBounds = true
+        
+        getDirectionsButton.layer.cornerRadius = 3
         truckImage.contentMode = UIViewContentMode.scaleAspectFill
         truckImage.clipsToBounds = true
         truckImage.kf.setImage(with: imageURL)
@@ -90,6 +107,7 @@ class TruckDetailViewController: UIViewController, CLLocationManagerDelegate, MK
         twitterViewController = TwitterViewController(handle: handleString!)
         self.addChildViewController(twitterViewController)
         self.twitterFeedContainer.addSubview(twitterViewController.view)
+        twitterViewController.view.frame = CGRect(x: 0, y: 0, width: twitterFeedContainer.frame.width, height: twitterFeedContainer.frame.height)
         twitterViewController.didMove(toParentViewController: self)
         
         // mapView init

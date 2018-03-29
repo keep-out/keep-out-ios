@@ -31,5 +31,4 @@ class TwitterViewController: TWTRTimelineViewController {
         result.removeFirst()
         return result
     }
-
 }
