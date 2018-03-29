@@ -20,14 +20,14 @@ class Truck: NSObject, MKAnnotation {
     let phone: String
     var address1: String
     var address2: String
+    let rating: Double
     let dateOpen: String
     let timeOpen: String
     let broadcasting: Bool
     let title: String?
     var coordinate: CLLocationCoordinate2D
     
-    init(id: Int, handle: String?, url: String?, name: String, phone: String?,
-         dateOpen: String?, timeOpen: String?, broadcasting: Bool, coordinate: CLLocationCoordinate2D) {
+    init(id: Int, handle: String?, url: String?, name: String, phone: String?, rating: Double, dateOpen: String?, timeOpen: String?, broadcasting: Bool, coordinate: CLLocationCoordinate2D) {
         self.id = id
         self.handle = handle == nil ? "No twitter account" : "@\(handle!)"
         self.url = url == nil ? URL(string: "https://s3-us-west-1.amazonaws.com/api.truck-profile-images.munch-bunch/not-available.png")! : URL(string: url!)!
@@ -35,6 +35,7 @@ class Truck: NSObject, MKAnnotation {
         self.phone = phone == nil ? "No phone number available" : phone!
         self.address1 = ""
         self.address2 = ""
+        self.rating = rating
         self.dateOpen = dateOpen == nil ? "" : dateOpen!
         self.timeOpen = timeOpen == nil ? "" : dateOpen!
         self.broadcasting = broadcasting

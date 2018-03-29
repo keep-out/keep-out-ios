@@ -17,6 +17,7 @@ import SwiftyBeaver
 import SwiftKeychainWrapper
 import Kingfisher
 import Moya
+import FontAwesomeKit
 import TwitterKit
 
 class TruckDetailViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
@@ -32,6 +33,9 @@ class TruckDetailViewController: UIViewController, CLLocationManagerDelegate, MK
     @IBOutlet weak var address2: UILabel!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var twitterFeedContainer: UIView!
+    @IBOutlet weak var thumbsUp: UIButton!
+    @IBOutlet weak var rating: UILabel!
+    @IBOutlet weak var thumbsDown: UIButton!
     
     // Data
     var imageURL: URL!
@@ -42,16 +46,19 @@ class TruckDetailViewController: UIViewController, CLLocationManagerDelegate, MK
     var coordinate: CLLocationCoordinate2D!
     var address1String: String!
     var address2String: String!
+    var ratingVal: Double!
     var locationManager: CLLocationManager = CLLocationManager()
     let regionRadius: CLLocationDistance = 10000
     let defaults = UserDefaults.standard
     var twitterViewController: TwitterViewController!
     
-//    override func viewWillLayoutSubviews()
-//    {
-//        super.viewWillLayoutSubviews();
-//        self.scrollView.contentSize.height = 1000; // Or whatever you want it to be.
-//    }
+    // Thumbs up/down icons
+    let thumbsUpIcon: UIImage = FAKFontAwesome.thumbsOUpIcon(withSize: 20).image(with: CGSize(width: 30, height: 30))
+    let thumbsDownIcon: UIImage = FAKFontAwesome.thumbsODownIcon(withSize: 20).image(with: CGSize(width: 30, height: 30))
+    let thumbsUpIconSelected: UIImage = FAKFontAwesome.thumbsUpIcon(withSize: 20).image(with: CGSize(width: 30, height: 30))
+    let thumbsDownIconSelected: UIImage = FAKFontAwesome.thumbsDownIcon(withSize: 20).image(with: CGSize(width: 30, height: 30))
+    var thumbsUpSelected: Bool = false
+    var thumbsDownSelected: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,6 +75,16 @@ class TruckDetailViewController: UIViewController, CLLocationManagerDelegate, MK
         }
         address1.text = address1String
         address2.text = address2String
+        thumbsUp.setImage(thumbsUpIcon, for: .normal)
+        thumbsUp.tintColor = FlatGreen()
+        thumbsDown.setImage(thumbsDownIcon, for: .normal)
+        thumbsDown.tintColor = FlatRed()
+        rating.text = "\(Int(ratingVal * 100))%"
+        if ratingVal < 0.69 {
+            rating.textColor = FlatRed()
+        } else {
+            rating.textColor = FlatGreen()
+        }
         
         // Twitter init
         twitterViewController = TwitterViewController(handle: handleString!)
@@ -126,4 +143,39 @@ class TruckDetailViewController: UIViewController, CLLocationManagerDelegate, MK
         }
     }
     
+    @IBAction func thumbsUpTouched(_ sender: Any) {
+        if (!thumbsUpSelected) {
+            thumbsUp.setImage(thumbsUpIconSelected, for: .normal)
+            thumbsUpSelected = true;
+            // TODO: Add thumbs up
+            // Check if thumbs down selected (if so, then undo thumbs down)
+            if (thumbsDownSelected) {
+                thumbsDown.setImage(thumbsDownIcon, for: .normal)
+                thumbsDownSelected = false
+                // TODO: Undo thumbs down
+            }
+        } else {
+            thumbsUp.setImage(thumbsUpIcon, for: .normal)
+            thumbsUpSelected = false;
+            // TODO: Undo thumbs up
+        }
+    }
+    
+    @IBAction func thumbsDownTouched(_ sender: Any) {
+        if (!thumbsDownSelected) {
+            thumbsDown.setImage(thumbsDownIconSelected, for: .normal)
+            thumbsDownSelected = true;
+            // TODO: Add thumbs down
+            // Check if thumbs up selected (if so, then undo thumbs up)
+            if (thumbsUpSelected) {
+                thumbsUp.setImage(thumbsUpIcon, for: .normal)
+                thumbsUpSelected = true
+                // TODO: Undo thumbs up
+            }
+        } else {
+            thumbsDown.setImage(thumbsDownIcon, for: .normal)
+            thumbsDownSelected = false;
+            // Undo thumbs down
+        }
+    }
 }

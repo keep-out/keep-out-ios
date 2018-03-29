@@ -122,6 +122,7 @@ class BookmarksTableViewController: UITableViewController, TruckTableViewCellDel
             //            let address = trucksJSON[i]["address"].string
             let latitude = trucksJSON[i]["latitude"].double!
             let longitude = trucksJSON[i]["longitude"].double!
+            let rating = trucksJSON[i]["rating"].double!
             let dateOpen = trucksJSON[i]["date_open"].string
             let timeOpen = trucksJSON[i]["time_open"].string
             let broadcasting = trucksJSON[i]["broadcasting"].bool!
@@ -129,18 +130,9 @@ class BookmarksTableViewController: UITableViewController, TruckTableViewCellDel
             
             // Create the truck object
             let truck = Truck(id: id, handle: handle, url: url, name: name,
-                              phone: phone, dateOpen: dateOpen,
+                              phone: phone, rating: rating, dateOpen: dateOpen,
                               timeOpen: timeOpen, broadcasting: broadcasting, coordinate: location)
             trucks.append(truck)
-            
-            //            // Get coordinate from address string
-            //            if (address != nil) {
-            //                addressFromString(address: address!, completion: {
-            //                    coordinate in
-            //                    truck.updateCoordinate(coordinate: coordinate)
-            //                })
-            //            }
-            
         }
         return trucks
     }

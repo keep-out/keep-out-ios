@@ -144,6 +144,7 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
 //            let address = trucksJSON[i]["address"].string
             let latitude = trucksJSON[i]["latitude"].double!
             let longitude = trucksJSON[i]["longitude"].double!
+            let rating = trucksJSON[i]["rating"].double!
             let dateOpen = trucksJSON[i]["date_open"].string
             let timeOpen = trucksJSON[i]["time_open"].string
             let broadcasting = trucksJSON[i]["broadcasting"].bool!
@@ -151,7 +152,7 @@ class HomeTableViewController: UITableViewController, TruckTableViewCellDelegate
             
             // Create the truck object
             let truck = Truck(id: id, handle: handle, url: url, name: name,
-                              phone: phone, dateOpen: dateOpen,
+                              phone: phone, rating: rating, dateOpen: dateOpen,
                               timeOpen: timeOpen, broadcasting: broadcasting, coordinate: location)
             trucks.append(truck)
             
@@ -298,6 +299,7 @@ extension HomeTableViewController {
         destination.coordinate = truck.coordinate
         destination.address1String = truck.address1
         destination.address2String = truck.address2
+        destination.ratingVal = truck.rating
         navigationController?.pushViewController(destination, animated: true)
 
     }
